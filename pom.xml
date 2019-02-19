@@ -181,7 +181,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- copy launcher script to app folder -->
+					<!-- copy assets to app folder -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-resources-plugin</artifactId>
@@ -199,7 +199,7 @@
 										<resource>
 											<directory>assets/linux</directory>
 											<includes>
-												<include>LICENSE</include>
+												<include>../../LICENSE</include>
 												<include>teuton.png</include>
 											</includes>
 										</resource>
@@ -247,6 +247,14 @@
 											<mapper>
 												<type>perm</type>
 												<prefix>/usr/share/applications</prefix>
+											</mapper>
+										</data>
+										<data>
+											<type>file</type>
+											<src>assets/linux/${project.name}.policy</src>
+											<mapper>
+												<type>perm</type>
+												<prefix>/usr/share/polkit-1/actions</prefix>
 											</mapper>
 										</data>
 										<data>
