@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane fx:id="root" prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+	<center>
+		<AnchorPane BorderPane.alignment="CENTER">
+			<children>
+				<TabPane fx:id="tabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<tabs>
+						<Tab fx:id="challengeTab" closable="false" text="Reto">
+							<content>
+								<WebView fx:id="challengeView" />
+							</content>
+						</Tab>
+						<Tab fx:id="goalsTab" closable="false" text="Objetivos">
+							<content>
+								<SplitPane dividerPositions="0.35">
+									<items>
+										<ListView fx:id="goalsList" />
+										<WebView fx:id="goalView" />
+									</items>
+								</SplitPane>
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+				<HBox spacing="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+					<children>
+						<JFXButton fx:id="startButton" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" onAction="#onStartAction" ripplerFill="WHITE">
+							<tooltip>
+								<Tooltip text="Iniciar reto" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="WHITE" glyphName="PLAY" size="24" />
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="pauseButton" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" onAction="#onPauseAction" ripplerFill="WHITE">
+							<tooltip>
+								<Tooltip text="Pausar reto" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="WHITE" glyphName="PAUSE" size="24" />
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="restartButton" contentDisplay="GRAPHIC_ONLY" layoutX="50.0" layoutY="10.0" onAction="#onRestartAction" ripplerFill="WHITE">
+							<tooltip>
+								<Tooltip text="Reiniciar reto" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="24" />
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="closeButton" contentDisplay="GRAPHIC_ONLY" layoutX="92.0" layoutY="10.0" onAction="#onCloseAction" ripplerFill="WHITE">
+							<tooltip>
+								<Tooltip text="Cerrar reto" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="24" />
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</children>
+		</AnchorPane>
+	</center>
+</BorderPane>

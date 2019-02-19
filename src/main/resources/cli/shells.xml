@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shells>
+    <shell executable="powershell.exe" name="PowerShell">
+        <argument>-Command</argument>
+        <argument>${command}</argument>
+    </shell>
+    <shell executable="powershell.exe" name="PowerShellScript">
+        <argument>-NoProfile</argument>
+        <argument>-ExecutionPolicy</argument>
+        <argument>Bypass</argument>
+        <argument>-File</argument>
+        <argument>${script}</argument>
+        <argument>${params}</argument>
+    </shell>
+    <shell executable="powershell.exe" name="PowerShellScriptAsAdmin">
+        <argument>-ExecutionPolicy</argument>
+        <argument>Bypass</argument>
+        <argument>-Command</argument>
+        <argument>Start-Process -FilePath powershell -ArgumentList '-File ${script} ${params}' -Verb RunAs -Wait -WindowStyle Hidden -ErrorAction Stop</argument>
+    </shell>
+    <shell executable="cmd.exe" name="CMD">
+        <argument>/c</argument>
+        <argument>${command}</argument>
+    </shell>
+    <shell executable="cmd.exe" name="CMDScript">
+        <argument>/d</argument>
+        <argument>/c</argument>
+        <argument>${script}</argument>
+        <argument>${params}</argument>
+    </shell>
+    <shell executable="bash" name="BASH">
+        <argument>-c</argument>
+        <argument>${command}</argument>
+    </shell>
+    <shell executable="bash" name="BASHScript">
+        <argument>${script}</argument>
+        <argument>${params}</argument>
+    </shell>
+</shells>
