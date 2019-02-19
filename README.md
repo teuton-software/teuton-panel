@@ -4,7 +4,11 @@ Graphical front-end for [TEUTON](https://github.com/dvarrui/teuton).
 
 ![logo](logo.png)
 
-## Developers
+## For users
+
+[TODO]
+
+## For developers
 
 Requirements for building `teuton-panel`:
 
@@ -33,6 +37,12 @@ mvn package
 It generates:
 
 * A native application in `target/app` directory with a bundled JRE.
-* A `teuton-panel_x.y.z_amd64.deb` package file on Debian based GNU/Linux. 
-* A `teuton-panel_x.y.z_amd64.rpm` package file on RedHat based GNU/Linux [future releases]
-* A `teuton-panel_x.y.z_amd64.exe` installer file on Windows.
+* A `teuton-panel_x.y.z.deb` package file onGNU/Linux. 
+* A `teuton-panel_x.y.z.rpm` package file on GNU/Linux [future release]
+* A `teuton-panel_x.y.z.exe` installer file on Windows.
+
+> **x.y.z** is the version number (e.g. 1.2.3).
+
+## Thanks to
+
+* **Javier Valencia Rodríguez**: for testing the app and helping to fix some issues.
