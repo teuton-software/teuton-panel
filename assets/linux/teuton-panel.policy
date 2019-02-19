@@ -5,7 +5,7 @@
 
 	<vendor>Teuton Software</vendor>
 	<vendor_url>http://github.com/fvarrui/teuton-panel</vendor_url>
-	<action id="teuton.panel">
+	<action id="teuton-panel">
 
 		<description gettext-domain="teuton-panel">Run Teuton Panel as root</description>
 		<message gettext-domain="teuton-panel">Authentication is required to run the Teuton Panel as root</message>
