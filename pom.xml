@@ -281,6 +281,28 @@
 							</execution>
 						</executions>
 					</plugin>
+					<!-- generate rpm package from deb -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>generate-windows-installer</id>
+								<phase>package</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>assets/linux/deb-to-rpm.sh</executable>
+									<arguments>
+										<argument>${project.build.directory}/${project.name}_${teuton.panel.version}.deb</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
