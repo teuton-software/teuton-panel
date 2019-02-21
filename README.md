@@ -15,7 +15,7 @@ Requirements for building `teuton-panel`:
 * [**OpenJDK**](https://adoptopenjdk.net/) (11.0.2)
 * [**Maven**](https://maven.apache.org) (3.5.4+)
 * [**Inno Setup**](http://www.jrsoftware.org/isinfo.php) (5+): *to build EXE installer on Windows*
-* **rpmbuild**: *to build RPM on GNU/Linux*
+* **alien & rpmbuild**: *to generate RPM on GNU/Linux*
 
 ### How to build the application 
 

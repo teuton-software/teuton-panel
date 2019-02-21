@@ -10,6 +10,10 @@ exist_command rpmbuild
 filename=$1
 basename=$(basename -- $1)
 package="${file%.*}"
+
+echo $filename
+echo $basename
+echo $package
+
 alien -g --to-rpm $file
-cd $basename/$package
-rpmbuild --buildroot $(pwd) --nodeps -bb $package.spec
+rpmbuild --buildroot $basename/$package --nodeps -bb $package.spec
