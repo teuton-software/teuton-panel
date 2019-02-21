@@ -289,7 +289,7 @@
 						<executions>
 							<execution>
 								<id>generate-windows-installer</id>
-								<phase>package</phase>
+								<phase>install</phase>
 								<goals>
 									<goal>exec</goal>
 								</goals>
