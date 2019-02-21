@@ -215,6 +215,7 @@
 						<version>1.7</version>
 						<executions>
 							<execution>
+								<id>generate-deb-package</id>
 								<phase>package</phase>
 								<goals>
 									<goal>jdeb</goal>
@@ -288,8 +289,8 @@
 						<version>1.6.0</version>
 						<executions>
 							<execution>
-								<id>generate-windows-installer</id>
-								<phase>install</phase>
+								<id>generate-rpm-package</id>
+								<phase>package</phase>
 								<goals>
 									<goal>exec</goal>
 								</goals>
