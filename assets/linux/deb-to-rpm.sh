@@ -1,5 +1,3 @@
-  GNU nano 2.9.3                                            assets/linux/deb-to-rpm.sh                                                        
-
 #!/bin/bash
 
 function exist_command() {
