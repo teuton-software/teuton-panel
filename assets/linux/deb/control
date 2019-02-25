@@ -1,8 +1,0 @@
-Package: teuton-panel
-Version: 0.0.2
-Section: misc
-Priority: optional
-Architecture: amd64
-Maintainer: Teuton Software <teuton.software@☺protonmail.com>
-Description: Graphical front-end for TEUTON
-Distribution: development

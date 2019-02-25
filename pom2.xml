@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>teuton</groupId>
+	<artifactId>teuton-panel</artifactId>
+
+	<name>teuton-panel</name>
+	<description>Graphical front-end for TEUTON software</description>
+	<version>0.0.2</version>
+
+	<organization>
+		<name>Teuton Software</name>
+		<url>mail:teuton.software@protonmail.com</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>GPL-3.0</name>
+			<comments>GNU General Public License v3.0</comments>
+			<url>https://github.com/fvarrui/teuton-panel/blob/master/LICENSE</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>fvarrui</id>
+			<name>Fran Vargas</name>
+			<url>https://github.com/fvarrui</url>
+		</developer>
+		<developer>
+			<id>dvarrui</id>
+			<name>David Vargas</name>
+			<url>https://github.com/dvarrui</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/fvarrui/teuton-panel.git</connection>
+		<developerConnection>scm:git:ssh://github.com/fvarrui/teuton-panel.git</developerConnection>
+		<url>https://github.com/fvarrui/teuton-panel</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<jre.minVersion>11.0.2</jre.minVersion>
+
+		<!-- https://github.com/AdoptOpenJDK/openjdk11-binaries/releases -->
+		<jre.base.url>https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk11u-2019-02-14-01-37</jre.base.url>
+		<jre.folderName>jdk-11.0.2+9-jre</jre.folderName>
+
+		<jre.windows.file>OpenJDK11U-jre_x64_windows_hotspot_2019-02-14-01-37.zip</jre.windows.file>
+		<jre.linux.file>OpenJDK11U-jre_x64_linux_hotspot_2019-02-14-01-37.tar.gz</jre.linux.file>
+
+		<download.url>${jre.base.url}/${jre.file}</download.url>
+		<download.unpack>false</download.unpack>
+		<download.outputDirectory>${project.build.directory}/jre</download.outputDirectory>
+	</properties>
+
+	<profiles>
+
+		<!-- gnu/linux specific configuration -->
+		<profile>
+			<id>linux-platform</id>
+			<activation>
+				<os>
+					<family>linux</family>
+				</os>
+			</activation>
+			<properties>
+				<jre.file>${jre.linux.file}</jre.file>
+			</properties>
+			<build>
+				<plugins>
+					<!-- copy assets to app folder -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/app</outputDirectory>
+									<resources>
+										<resource>
+											<directory>assets/linux</directory>
+											<includes>
+												<include>../../LICENSE</include>
+												<include>teuton.png</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- generate deb package -->
+					<!-- generate rpm package from deb -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>generate-rpm-package</id>
+								<phase>package</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>assets/linux/deb-to-rpm.sh</executable>
+									<arguments>
+										<argument>${project.build.directory}/${project.name}_${teuton.panel.version}.deb</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+	<build>
+		<plugins>
+
+			<!-- download jre -->
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<executions>
+					<execution>
+						<id>download-jre</id>
+						<phase>package</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					
+				</configuration>
+			</plugin>
+
+			<!-- copy all dependencies to app folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>${project.build.directory}/app/libs</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<!-- generate runnable jar in app folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>libs/</classpathPrefix>
+							<mainClass>${exec.mainClass}</mainClass>
+						</manifest>
+					</archive>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<!-- unzip jre in app folder -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>truezip-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>unzip-jre</id>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<files>
+								<file>
+									<source>${project.build.directory}/jre/${jre.file}/${jre.folderName}</source>
+									<outputDirectory>${project.build.directory}/app</outputDirectory>
+									<destName>jre</destName>
+								</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- copy LICENSE file to app folder -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/app</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}</directory>
+									<include>LICENSE</include>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- read properties file -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>src/main/resources/teuton-panel.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.jensd</groupId>
+			<artifactId>fontawesomefx-commons</artifactId>
+			<version>11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>de.jensd</groupId>
+			<artifactId>fontawesomefx-controls</artifactId>
+			<version>11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>de.jensd</groupId>
+			<artifactId>fontawesomefx-fontawesome</artifactId>
+			<version>4.7.0-11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>9.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jfoenix</groupId>
+			<artifactId>jfoenix</artifactId>
+			<version>9.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark-all</artifactId>
+			<version>0.32.18</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-exec</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>11.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>11.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>11.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>11.0.1</version>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>bintray-jerady-maven</id>
+			<name>bintray</name>
+			<url>https://dl.bintray.com/jerady/maven</url>
+		</repository>
+	</repositories>
+
+</project>
