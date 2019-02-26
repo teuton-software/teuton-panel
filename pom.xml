@@ -84,7 +84,7 @@
 						<configuration>
 							<bundleJre>true</bundleJre>
 							<mainClass>${exec.mainClass}</mainClass>
-							<jreUrl>https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/tag/jdk11u-2019-02-22-14-20</jreUrl>
+							<administratorRequired>true</administratorRequired>
 						</configuration>
 					</execution>
 				</executions>
