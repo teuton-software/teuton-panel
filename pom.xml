@@ -13,7 +13,7 @@
 
 	<organization>
 		<name>Teuton Software</name>
-		<url>mail:teuton.software@protonmail.com</url>
+		<url>https://github.com/fvarrui/teuton-panel</url>
 	</organization>
 
 	<licenses>
@@ -45,9 +45,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
 	</properties>
 
 	<build>
@@ -85,6 +85,7 @@
 							<bundleJre>true</bundleJre>
 							<mainClass>${exec.mainClass}</mainClass>
 							<administratorRequired>true</administratorRequired>
+							<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 						</configuration>
 					</execution>
 				</executions>
