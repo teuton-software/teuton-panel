@@ -10,10 +10,10 @@
 	<name>teuton-panel</name>
 	<description>Graphical front-end for TEUTON software</description>
 	<version>0.0.2</version>
+	<url>https://github.com/fvarrui/teuton-panel</url>
 
 	<organization>
 		<name>Teuton Software</name>
-		<url>https://github.com/fvarrui/teuton-panel</url>
 	</organization>
 
 	<licenses>
