@@ -25,7 +25,7 @@ Execute next commands in BASH (GNU/Linux) or CMD (Windows):
 1. Download source code and change to the project directory:
 
 ```bash
-git clone https://github.com/fvarrui/teuton-panel.git
+git clone https://github.com/teuton-software/teuton-panel.git
 cd teuton-panel
 ```
 
