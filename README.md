@@ -2,7 +2,7 @@
 
 Graphical front-end for [TEUTON](https://github.com/dvarrui/teuton).
 
-![logo](logo.png)
+![Screenshot](docs/images/screenshot.png)
 
 ## For users
 
