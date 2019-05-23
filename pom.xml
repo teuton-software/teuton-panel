@@ -10,10 +10,11 @@
 	<name>teuton-panel</name>
 	<description>Graphical front-end for TEUTON software</description>
 	<version>0.0.2</version>
-	<url>https://github.com/fvarrui/teuton-panel</url>
+	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
 		<name>Teuton Software</name>
+		<url>https://github.com/teuton-software</url>
 	</organization>
 
 	<licenses>
@@ -38,43 +39,23 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/fvarrui/teuton-panel.git</connection>
-		<developerConnection>scm:git:ssh://github.com/fvarrui/teuton-panel.git</developerConnection>
-		<url>https://github.com/fvarrui/teuton-panel</url>
+		<connection>scm:git:git://github.com/teuton-software/teuton-panel.git</connection>
+		<developerConnection>scm:git:ssh://github.com/teuton-software/teuton-panel.git</developerConnection>
+		<url>https://github.com/teuton-software/teuton-panel</url>
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
 	</properties>
 
 	<build>
 		<plugins>
-
-			<!-- generate runnable jar in app folder -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.1</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>libs/</classpathPrefix>
-							<mainClass>${exec.mainClass}</mainClass>
-						</manifest>
-					</archive>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-				</configuration>
-			</plugin>
-
-			<!-- package application -->
 			<plugin>
 				<groupId>fvarrui.maven</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.4.0</version>
+				<version>0.8.0</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -83,14 +64,13 @@
 						</goals>
 						<configuration>
 							<bundleJre>true</bundleJre>
-							<mainClass>${exec.mainClass}</mainClass>
+							<mainClass>teuton.panel.ui.Main</mainClass>
 							<administratorRequired>true</administratorRequired>
 							<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
