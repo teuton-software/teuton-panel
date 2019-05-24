@@ -14,9 +14,7 @@ Requirements for building `teuton-panel`:
 
 * [**OpenJDK**](https://adoptopenjdk.net/) (11.0.2)
 * [**Maven**](https://maven.apache.org) (3.5.4+)
-* [**JavaPackager Maven plugin**](https://github.com/fvarrui/JavaPackager)
 * [**Inno Setup**](http://www.jrsoftware.org/isinfo.php) (5+): *to build EXE installer on Windows*
-* **alien & rpmbuild**: *to generate RPM on GNU/Linux*
 
 ### How to build the application 
 
@@ -35,9 +33,9 @@ cd teuton-panel
 mvn package
 ```
 
-It generates:
+It generates in `target`:
 
-* A native application in `target/app` directory with a bundled JRE.
+* A native application in `app` directory with a bundled JRE.
 * A `teuton-panel_x.y.z.deb` package file on GNU/Linux. 
 * A `teuton-panel_x.y.z.rpm` package file on GNU/Linux.
 * A `teuton-panel_x.y.z.exe` installer file on Windows.
