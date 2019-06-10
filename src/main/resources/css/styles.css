@@ -7,7 +7,7 @@
 .title {
 	-fx-font-size: 18pt;	
 	-fx-font-weight: bold;
-	-fx-text-fill: -teuton-darkgray;
+	-fx-text-fill: #635c67; /* darkgray */
 }
 
 .background {
@@ -25,11 +25,11 @@
 	-fx-padding: 0px;
 }
 .tab-pane *.tab-header-area *.tab-header-background {
-	-fx-background-color: #202340;
+	-fx-background-color: rgba(0, 194, 27, 0.5);  
 }
 
 .tab .tab-label {
-	-fx-text-fill: white;
+	-fx-text-fill: black;
 	-fx-font-size: 11pt;
 	-fx-font-weight: bold;
 }
@@ -45,9 +45,9 @@
 	-fx-text-fill: black;	
 }
 .tab:selected {
-	-fx-background-color: white;
+	-fx-background-color: rgba(255,255,255,0.5);
 	-fx-border-width: 4px 0px 0px 0px; 	
-	-fx-border-color: #0a84ff;	
+	-fx-border-color: #00c21b;	
 }
 
 #loadingPane {
@@ -57,7 +57,7 @@
 #settingsIcon {
 	-glyph-name: "GEAR";
 	-glyph-size: 24px;
-	-fx-fill: -teuton-green;
+	-fx-fill: #00c21b; /* green */
 }
 
 .modeButton .modeIcon {
@@ -77,7 +77,7 @@
 
 .modeButton {
      -jfx-button-type: RAISED;
-     -fx-background-color: -teuton-green;
+     -fx-background-color: #00c21b; /* green */
      -fx-text-fill: white;
 	 -fx-font-size: 12pt;
      -fx-effect: dropshadow(three-pass-box, derive(cadetblue, -20%), 10, 0, 4, 4); 
@@ -86,11 +86,52 @@
      -fx-background-color: rgb(0, 150, 0);
 }
 
+.toggleButton {
+     -jfx-button-type: RAISED;
+     -fx-background-color: rgb(0, 150, 0);
+     -fx-text-fill: lightgray;
+	 -fx-font-size: 10pt;
+     -fx-effect: dropshadow(three-pass-box, derive(cadetblue, -20%), 10, 0, 4, 4); 
+}
+.toggleButton:hover {
+     -fx-background-color: rgb(0, 150, 0);
+}
+.toggleButton:selected {
+     -fx-text-fill: white;
+     -fx-background-color: #00c21b; /* green */
+     -fx-effect: null; 
+}
+
 .output-text {
-	-fx-text-fill: -teuton-green;
+	-fx-text-fill: #00c21b; /* green */
 	-fx-font-family: consolas;
 	-fx-font-size: 10pt;
 }
 .output-text .content {
 	-fx-background-color: black
+}
+
+.transparent {
+	-fx-background-color: transparent;
+}
+
+.cases-label {
+	-fx-text-fill: black;
+	-fx-font-size: 11pt;
+	-fx-font-weight: bold;
+}
+.cases-header {
+	-fx-background-color: rgba(146, 168, 151, 0.5);
+}
+
+.title-label {
+	-fx-font-size: 18pt;	
+	-fx-font-weight: bold;
+	-fx-text-fill: #635c67; /* darkgray */
+}
+
+.title {
+	-fx-font-size: 11pt;	
+	-fx-font-weight: bold;
+	-fx-text-fill: #635c67; /* darkgray */
 }

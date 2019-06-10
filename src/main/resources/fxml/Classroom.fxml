@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import com.jfoenix.controls.JFXListView?>
+
+<BorderPane fx:id="root" prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+		<BorderPane BorderPane.alignment="CENTER">
+			<right>
+				<HBox alignment="CENTER_RIGHT" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
+					<children>
+						<JFXButton fx:id="startButton" contentDisplay="GRAPHIC_ONLY" onAction="#onStartAction" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Execute test" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="#635c67" glyphName="PLAY" size="24" />
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="pauseButton" contentDisplay="GRAPHIC_ONLY" onAction="#onPauseAction" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Pause execution" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="#635c67" glyphName="PAUSE" size="24" />
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</right>
+			<left>
+				<HBox prefWidth="100.0" BorderPane.alignment="CENTER">
+					<children>
+						<JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Back" />
+							</tooltip>
+							<graphic>
+								<FontAwesomeIconView fill="#635c67" glyphName="ARROW_LEFT" size="24" />
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</left>
+			<padding>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+			</padding>
+			<center>
+				<Label fx:id="testNameLabel" text="&lt;Test name&gt;" BorderPane.alignment="CENTER" />
+			</center>
+		</BorderPane>
+	</top>
+	<center>
+		<SplitPane dividerPositions="0.25" styleClass="transparent">
+			<items>
+				<BorderPane>
+					<center>
+						<JFXListView fx:id="casesList" prefHeight="200.0" prefWidth="200.0" styleClass="transparent" />
+					</center>
+					<top>
+						<HBox alignment="BOTTOM_LEFT" prefHeight="41.0" styleClass="cases-header" BorderPane.alignment="CENTER">
+							<children>
+								<Label styleClass="cases-label" text="Cases">
+									<HBox.margin>
+										<Insets bottom="5.0" left="10.0" />
+									</HBox.margin>
+								</Label>
+							</children>
+						</HBox>
+					</top>
+				</BorderPane>
+				<TabPane fx:id="tabPane">
+					<tabs>
+						<Tab fx:id="configTab" closable="false" text="Configuration">
+							<content>
+								<BorderPane>
+									<center>
+										<GridPane hgap="5.0" BorderPane.alignment="CENTER">
+											<columnConstraints>
+												<ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" prefWidth="200.0" />
+												<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+											</columnConstraints>
+											<rowConstraints>
+												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="ALWAYS" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+												<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+											</rowConstraints>
+											<padding>
+												<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+											</padding>
+											<children>
+												<Label text="Title:" />
+												<Label text="Script name:" GridPane.rowIndex="1" />
+												<Label text="Config file:" GridPane.rowIndex="2" />
+												<Label layoutX="15.0" layoutY="82.0" text="Test name:" GridPane.rowIndex="3" />
+												<Label layoutX="15.0" layoutY="112.0" text="Sequence:" GridPane.rowIndex="4" />
+												<CheckBox contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+												<Label style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" />
+												<Label layoutX="83.0" layoutY="22.0" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+												<Label layoutX="83.0" layoutY="52.0" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+												<Label layoutX="83.0" layoutY="82.0" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+												<Label layoutX="15.0" layoutY="142.0" text="Logs:" GridPane.rowIndex="5" />
+												<TextArea GridPane.columnIndex="1" GridPane.rowIndex="5" />
+												<Label layoutX="82.0" layoutY="22.0" text="Start time:" GridPane.rowIndex="6" />
+												<Label layoutX="53.0" layoutY="326.0" text="Fnsh time:" GridPane.rowIndex="7" />
+												<Label layoutX="53.0" layoutY="352.0" text="Duration:" GridPane.rowIndex="8" />
+												<Label layoutX="113.0" layoutY="20.0" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+												<Label layoutX="113.0" layoutY="20.0" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+												<Label layoutX="113.0" layoutY="352.0" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+											</children>
+										</GridPane>
+									</center>
+								</BorderPane>
+							</content>
+						</Tab>
+						<Tab fx:id="testsTab" closable="false" text="Tests">
+							<content>
+								<BorderPane>
+									<center>
+										<Accordion fx:id="testsPane" styleClass="tests" BorderPane.alignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+										</Accordion>
+									</center>
+								</BorderPane>
+							</content>
+						</Tab>
+						<Tab fx:id="resultsTab" closable="false" text="Results">
+							<content>
+								<BorderPane />
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+			</items>
+		</SplitPane>
+	</center>
+</BorderPane>

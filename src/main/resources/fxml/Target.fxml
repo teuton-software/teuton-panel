@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<fx:root fx:id="root" prefHeight="480.0" prefWidth="640.0" stylesheets="@../css/styles.css" text="&lt;target&gt;" type="TitledPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<content>
+		<GridPane hgap="5.0" vgap="5.0">
+			<columnConstraints>
+				<ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BASELINE" vgrow="ALWAYS" />
+			</rowConstraints>
+			<padding>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+			</padding>
+			<children>
+				<Label text="ID:" />
+				<Label text="Score:" GridPane.rowIndex="1" />
+				<Label text="Weight:" GridPane.rowIndex="2" />
+				<Label text="Description:" GridPane.rowIndex="3" />
+				<Label text="Command:" GridPane.rowIndex="4" />
+				<Label text="Duration:" GridPane.rowIndex="5" />
+				<Label text="Alterations:" GridPane.rowIndex="6" />
+				<Label text="Expected:" GridPane.rowIndex="7" />
+				<Label text="Result:" GridPane.rowIndex="8">
+					<GridPane.margin>
+						<Insets top="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="idLabel" text="01" GridPane.columnIndex="1" />
+				<Label fx:id="scoreLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label fx:id="weightLabel" text="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label fx:id="descriptionLabel" text="Test 1: Existe el fichero hosts" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label fx:id="commandLabel" text="powershell -file assets/test1.ps1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<Label fx:id="durationLabel" text="0.088" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+				<Label fx:id="alterationsLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+				<Label fx:id="expectedLabel" text="True" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+				<Label fx:id="resultLabel" text="El argumento 'assets/test1.ps1' para el parámetro -File no existe. Proporcione la ruta de acceso a un archivo '.ps1' existente como argumento para el parámetro -File." wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+			</children>
+		</GridPane>
+	</content>
+</fx:root>

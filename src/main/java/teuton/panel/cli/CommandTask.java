@@ -84,7 +84,7 @@ public class CommandTask extends Task<ExecutionResult> {
 		}
 
 		if (result.getExitValue() != 0) {
-			throw new Exception("Command execution failed:\n" + command.getValue());
+			throw new Exception(result.getError());
 		}
 
 		return result;

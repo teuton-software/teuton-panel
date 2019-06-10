@@ -11,28 +11,46 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" prefHeight="480.0" prefWidth="640.0"
+	styleClass="background" stylesheets="@../css/styles.css"
+	xmlns="http://javafx.com/javafx/8.0.111"
+	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<BorderPane AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
 			<center>
-				<VBox alignment="CENTER" fillWidth="false" spacing="20.0" BorderPane.alignment="CENTER">
+				<VBox alignment="CENTER" fillWidth="false" spacing="20.0"
+					BorderPane.alignment="CENTER">
 					<children>
-						<Label styleClass="title" text="Select mode" />
+						<Label styleClass="title-label" text="Select mode" />
 						<VBox spacing="15.0" VBox.vgrow="NEVER">
 							<children>
-								<JFXButton alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#onClassroomModeButtonAction" styleClass="modeButton" text="Classroom">
+								<JFXButton alignment="BASELINE_LEFT"
+									maxWidth="1.7976931348623157E308"
+									onAction="#onClassroomModeButtonAction" styleClass="modeButton"
+									text="Classroom">
 									<graphic>
-										<FontAwesomeIconView fx:id="classroomModeIcon" styleClass="modeIcon" />
+										<FontAwesomeIconView
+											fx:id="classroomModeIcon" styleClass="modeIcon" />
 									</graphic>
 								</JFXButton>
-								<JFXButton alignment="BASELINE_LEFT" layoutX="15.0" layoutY="15.0" maxWidth="1.7976931348623157E308" onAction="#onContestModeButtonAction" styleClass="modeButton" text="Contest">
+								<JFXButton alignment="BASELINE_LEFT" layoutX="15.0"
+									layoutY="15.0" maxWidth="1.7976931348623157E308"
+									onAction="#onContestModeButtonAction" styleClass="modeButton"
+									text="Contest">
 									<graphic>
-										<FontAwesomeIconView fx:id="contestModeIcon" styleClass="modeIcon" />
+										<FontAwesomeIconView
+											fx:id="contestModeIcon" styleClass="modeIcon" />
 									</graphic>
 								</JFXButton>
-								<JFXButton alignment="BASELINE_LEFT" layoutX="15.0" layoutY="52.0" maxWidth="1.7976931348623157E308" onAction="#onStandaloneModeButtonAction" styleClass="modeButton" text="Stand-alone">
+								<JFXButton alignment="BASELINE_LEFT" layoutX="15.0"
+									layoutY="52.0" maxWidth="1.7976931348623157E308"
+									onAction="#onStandaloneModeButtonAction"
+									styleClass="modeButton" text="Stand-alone">
 									<graphic>
-										<FontAwesomeIconView fx:id="standaloneModeIcon" styleClass="modeIcon" />
+										<FontAwesomeIconView
+											fx:id="standaloneModeIcon" styleClass="modeIcon" />
 									</graphic>
 								</JFXButton>
 							</children>
@@ -55,9 +73,12 @@
 				</HBox>
 			</bottom>
 		</BorderPane>
-		<HBox alignment="TOP_RIGHT" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+		<HBox alignment="TOP_RIGHT" AnchorPane.rightAnchor="5.0"
+			AnchorPane.topAnchor="5.0">
 			<children>
-				<JFXButton fx:id="settingsButton" contentDisplay="GRAPHIC_ONLY" defaultButton="true" onAction="#onSettingsAction" ripplerFill="BLACK">
+				<JFXButton fx:id="settingsButton"
+					contentDisplay="GRAPHIC_ONLY" defaultButton="true"
+					onAction="#onSettingsAction" ripplerFill="BLACK">
 					<tooltip>
 						<Tooltip text="Settings" />
 					</tooltip>

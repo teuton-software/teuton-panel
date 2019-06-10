@@ -1,5 +1,6 @@
 package teuton.panel.cli;
 
+import java.io.File;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.nio.charset.Charset;
@@ -90,6 +91,10 @@ public class Shell {
 	public ExecutionResult execute(Command command, Map<String, String> data, boolean waitFor) {
 		return execute(command, getArguments(), data, waitFor);
 	}
+	
+	public ExecutionResult execute(Command command, Map<String, String> data, boolean waitFor, File workingDirectory) {
+		return execute(command, getArguments(), data, waitFor, workingDirectory);
+	}
 
 	public ExecutionResult execute(Command command) {
 		return execute(command, Collections.emptyMap());
@@ -98,8 +103,12 @@ public class Shell {
 	public ExecutionResult execute(Command command, Map<String, String> data) {
 		return execute(command, data, true);
 	}
-
+	
 	private ExecutionResult execute(Command command, List<String> arguments, Map<String, String> data, boolean waitFor) {
+		return execute(command, arguments, data, waitFor, new File("."));
+	}
+
+	private ExecutionResult execute(Command command, List<String> arguments, Map<String, String> data, boolean waitFor, File workingDirectory) {
 		ExecutionResult result = new ExecutionResult();
 
 		try {
@@ -155,6 +164,7 @@ public class Shell {
 			Executor executor = new DefaultExecutor();
 			executor.setStreamHandler(streamHandler);
 			executor.setWatchdog(watchdog);
+			executor.setWorkingDirectory(workingDirectory);
 			executor.execute(cmdLine, handler);
 			
 			if (waitFor) {

@@ -9,9 +9,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
-import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
-import com.vladsch.flexmark.ext.emoji.EmojiExtension;
 import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
@@ -31,9 +29,7 @@ public class MarkdownUtils {
 			"<html>" + "\n" + 
 				"<head>" + "\n" + 
 					"<script>" + ResourceUtils.readResource("/markdown/js/markdown.js") + "</script>" + "\n" + 
-					"<script>" + ResourceUtils.readResource("/markdown/js/admonition.js") + "</script>" + "\n" + 
 					"<style>" + ResourceUtils.readResource("/markdown/css/markdown.css") + "</style>" + "\n" + 
-					"<style>" + ResourceUtils.readResource("/markdown/css/admonition.css") + "</style>" + "\n" + 
 				"</head>" + "\n" + 
 				"<body>";
 
@@ -53,12 +49,9 @@ public class MarkdownUtils {
 				FootnoteExtension.create(),
 				TablesExtension.create(), 
 				TypographicExtension.create(), 
-				StrikethroughExtension.create(),
-				AdmonitionExtension.create(), 
-				EmojiExtension.create()
+				StrikethroughExtension.create()
 				)
 			);
-		options.set(EmojiExtension.ROOT_IMAGE_PATH, MarkdownUtils.class.getResource("/markdown/emojis/").toString());
 		parser = Parser.builder(options).build();
 		renderer = HtmlRenderer.builder(options).build();
 	}

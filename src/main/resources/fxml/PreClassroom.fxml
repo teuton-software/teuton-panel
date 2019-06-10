@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="root" prefHeight="480.0" prefWidth="640.0"
+	styleClass="background" stylesheets="@../css/styles.css"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox alignment="CENTER" fillWidth="false" spacing="20.0"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<Label styleClass="title-label" text="Classroom">
+					<graphic>
+						<FontAwesomeIconView fill="#635c67"
+							glyphName="HOME" style="-glyph-size: 32;" />
+					</graphic>
+				</Label>
+				<HBox alignment="BASELINE_CENTER" spacing="5.0">
+					<children>
+						<Label layoutX="73.0" layoutY="10.0" text="Are you a" />
+						<ToggleButton fx:id="teacherButton"
+							mnemonicParsing="false" styleClass="toggleButton" text="teacher" />
+						<Label text="or a" />
+						<ToggleButton fx:id="studentButton"
+							mnemonicParsing="false" styleClass="toggleButton" text="student" />
+						<Label layoutX="184.0" layoutY="10.0" text="?" />
+					</children>
+				</HBox>
+				<HBox fx:id="folderPane" alignment="BASELINE_CENTER">
+					<children>
+						<JFXTextField fx:id="folderText"
+							alignment="BASELINE_LEFT" prefColumnCount="30"
+							promptText="Choose challenge folder to run" />
+						<JFXButton buttonType="RAISED"
+							contentDisplay="GRAPHIC_ONLY" onAction="#onChooseFolderAction"
+							ripplerFill="#92a897">
+							<graphic>
+								<FontAwesomeIconView glyphName="SAVE"
+									style="-fx-fill: #92a897; -glyph-size: 24;" />
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+				<JFXButton fx:id="startButton" onAction="#onStartAction"
+					styleClass="modeButton" text="Start" />
+			</children>
+		</VBox>
+		<HBox alignment="TOP_RIGHT" AnchorPane.leftAnchor="5.0"
+			AnchorPane.topAnchor="5.0">
+			<children>
+				<JFXButton fx:id="backButton"
+					contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction"
+					ripplerFill="#92a897">
+					<tooltip>
+						<Tooltip text="Back" />
+					</tooltip>
+					<graphic>
+						<FontAwesomeIconView fill="#635c67"
+							glyphName="ARROW_LEFT" size="24" />
+					</graphic>
+				</JFXButton>
+			</children>
+		</HBox>
+	</children>
+	<fx:define>
+		<javafx.scene.control.ToggleGroup fx:id="selectedProfile">
+			<toggles>
+				<fx:reference source="teacherButton" />
+				<fx:reference source="studentButton" />
+			</toggles>
+		</javafx.scene.control.ToggleGroup>
+	</fx:define>
+</AnchorPane>

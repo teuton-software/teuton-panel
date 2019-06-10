@@ -1,82 +1,83 @@
 package teuton.panel.ui.main;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import teuton.panel.ui.classroom.ClassroomController;
+import teuton.panel.ui.classroom.PreClassroomController;
 import teuton.panel.ui.mode.ModeController;
-import teuton.panel.ui.mode.standalone.StandaloneController;
-import teuton.panel.ui.utils.Controller;
+import teuton.panel.ui.standalone.StandaloneController;
+import teuton.panel.ui.utils.ParentController;
 
-public class MainController extends Controller<StackPane> {
+public class MainController extends ParentController {
 
+	// ===================================
 	// controllers
+	// ===================================
 
 	private ModeController modeController;
 	private StandaloneController standaloneController;
-
-	// model
-
-	private StringProperty shown;
-	private BooleanProperty loading;
-
+	private ClassroomController classroomController;
+	private PreClassroomController preClassroomController;
+	
+	// ===================================
 	// view
+	// ===================================
 
-	@FXML
-	private BorderPane viewPane;
+	private BorderPane view;
+	
+	// ===================================
+	// model
+	// ===================================
 
-	@FXML
-	private VBox loadingPane;
+	private ObjectProperty<File> selectedFile;
 
+	// ===================================
 	// initialization
+	// ===================================
 
-	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		// properties
-		shown = new SimpleStringProperty(this, "shown");
-		loading = new SimpleBooleanProperty(this, "loading");
+		
+		selectedFile = new SimpleObjectProperty<>();
+		
+		view = new BorderPane();		
+		getRoot().getChildren().add(view);
 
 		// create mode selector controller
 		modeController = new ModeController();
-		modeController.loadingProperty().bindBidirectional(loading);
+		modeController.selectedFileProperty().bindBidirectional(selectedFile);
 
 		// create standalone mode controller
 		standaloneController = new StandaloneController();
-		standaloneController.loadingProperty().bindBidirectional(loading);
 
-		// show loading pane "loading" property is true
-		loadingPane.visibleProperty().bind(loading);
+		// create classroom mode controller
+		classroomController = new ClassroomController();
+		classroomController.selectedFileProperty().bind(selectedFile);
+		
+		// create pre-classroom controller
+		preClassroomController = new PreClassroomController();
+		preClassroomController.selectedFileProperty().bindBidirectional(selectedFile);
+		preClassroomController.settingsProperty().bind(modeController.settingsProperty());
+		
+		// register controllers
+		registerController(modeController);
+		registerController(standaloneController);
+		registerController(classroomController);
+		registerController(preClassroomController);
 
-		// disable view pane when "loading" is enabled
-		viewPane.disableProperty().bind(loading);
-
-		// set a listener for changing view
-		shown.addListener((o, ov, nv) -> onShownChanged(nv));
-
-		shown.set("mode");
-		loading.set(false);
+		// init properties
+		setShown(ModeController.class);
 
 	}
 
-	private void onShownChanged(String nv) {
-		switch (nv) {
-		case "mode":
-			viewPane.setCenter(modeController.getRoot());
-			break;
-		case "standalone":
-			viewPane.setCenter(standaloneController.getRoot());
-			break;
-		default:
-			viewPane.setCenter(null);
-		}
+	@Override
+	protected void show(Parent node) {
+		view.setCenter(node);
 	}
 
 }

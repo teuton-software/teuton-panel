@@ -1,5 +1,6 @@
 package teuton.panel.cli;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Map;
 
@@ -86,6 +87,10 @@ public class Command {
 
 	public ExecutionResult execute(Map<String, String> data, boolean waitFor) {
 		return getShell().execute(this, MapUtils.merge(data, PROPERTIES_MAP), waitFor);
+	}
+	
+	public ExecutionResult execute(Map<String, String> data, boolean waitFor, File workingDirectory) {
+		return getShell().execute(this, MapUtils.merge(data, PROPERTIES_MAP), waitFor, workingDirectory);		
 	}
 
 }
