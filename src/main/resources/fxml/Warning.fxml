@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+
+<fx:root fx:id="root" alignment="CENTER" type="VBox"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../images/warning-icon-48x48.png" />
+			</image>
+		</ImageView>
+		<Label fx:id="messageLabel" text="&lt;message&gt;" />
+	</children>
+	<padding>
+		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+	</padding>
+</fx:root>

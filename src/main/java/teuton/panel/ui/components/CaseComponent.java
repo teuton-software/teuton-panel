@@ -7,14 +7,30 @@ import java.util.ResourceBundle;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import teuton.panel.ui.model.Case;
 
 public class CaseComponent extends TabPane implements Initializable {
 
-	private ObjectProperty<Case> _case = new SimpleObjectProperty<>();
+	// model
+	
+	private ObjectProperty<Case> _case;
+	
+	// view
+	
+	private ConfigComponent configComponent;
+	private TestComponent testComponent;
+	
+	@FXML
+	private Accordion testsPane; 
+	
+	@FXML
+	private Tab configTab, testsTab, resultsTab;
 
 	public CaseComponent() {
 		try {
@@ -29,17 +45,26 @@ public class CaseComponent extends TabPane implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		caseProperty().addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
+		
+		_case = new SimpleObjectProperty<>();
+		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
+		
+		configComponent = new ConfigComponent();
+		testComponent = new TestComponent();
+		
+		configTab.setContent(configComponent);
+		testsTab.setContent(testComponent);
 		
 	}
 
 	private void onCaseChanged(ObservableValue<? extends Case> o, Case ov, Case nv) {
 		if (ov != null) {
-			// TODO unbind
+			configComponent.configProperty().unbind();
+			testComponent.testProperty().unbind();
 		}
 		if (nv != null) {
-			// TODO bind
+			configComponent.configProperty().bind(nv.configProperty());
+			testComponent.testProperty().bind(nv.testProperty());
 		}
 		
 	}

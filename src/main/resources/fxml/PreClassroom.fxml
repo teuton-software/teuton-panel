@@ -29,10 +29,18 @@
 					<children>
 						<Label layoutX="73.0" layoutY="10.0" text="Are you a" />
 						<ToggleButton fx:id="teacherButton"
-							mnemonicParsing="false" styleClass="toggleButton" text="teacher" />
+							mnemonicParsing="false" styleClass="toggleButton" text="teacher">
+							<tooltip>
+								<Tooltip text="I'm a teacher" />
+							</tooltip>
+						</ToggleButton>
 						<Label text="or a" />
 						<ToggleButton fx:id="studentButton"
-							mnemonicParsing="false" styleClass="toggleButton" text="student" />
+							mnemonicParsing="false" styleClass="toggleButton" text="student">
+							<tooltip>
+								<Tooltip text="I'm a student" />
+							</tooltip>
+						</ToggleButton>
 						<Label layoutX="184.0" layoutY="10.0" text="?" />
 					</children>
 				</HBox>
@@ -51,8 +59,8 @@
 						</JFXButton>
 					</children>
 				</HBox>
-				<JFXButton fx:id="startButton" onAction="#onStartAction"
-					styleClass="modeButton" text="Start" />
+				<JFXButton fx:id="startButton" defaultButton="true"
+					onAction="#onStartAction" styleClass="modeButton" text="Start" />
 			</children>
 		</VBox>
 		<HBox alignment="TOP_RIGHT" AnchorPane.leftAnchor="5.0"
@@ -73,7 +81,8 @@
 		</HBox>
 	</children>
 	<fx:define>
-		<javafx.scene.control.ToggleGroup fx:id="selectedProfile">
+		<javafx.scene.control.ToggleGroup
+			fx:id="selectedProfile">
 			<toggles>
 				<fx:reference source="teacherButton" />
 				<fx:reference source="studentButton" />

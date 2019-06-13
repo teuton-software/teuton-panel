@@ -13,6 +13,7 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -20,9 +21,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import teuton.panel.cli.Command;
 import teuton.panel.cli.ExecutionResult;
+import teuton.panel.ui.components.CaseComponent;
+import teuton.panel.ui.components.WarningComponent;
 import teuton.panel.ui.mode.ModeController;
 import teuton.panel.ui.model.Case;
 import teuton.panel.ui.settings.CommandFactory;
@@ -41,11 +45,20 @@ public class ClassroomController extends Controller<BorderPane> {
 	// view
 	// ===================================
 
+	private CaseComponent caseComponent;
+	private WarningComponent warningComponent;
+
 	@FXML
-	private JFXButton startButton, pauseButton, backButton;
+	private JFXButton runButton, pauseButton, backButton;
 	
 	@FXML
 	private JFXListView<Case> casesList;
+	
+	@FXML
+	private Label testNameLabel;
+	
+	@FXML
+	private BorderPane casePane;
 
 	// ===================================
 	// constructor
@@ -61,21 +74,41 @@ public class ClassroomController extends Controller<BorderPane> {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+				
 		cases = new SimpleListProperty<>(FXCollections.observableArrayList());
+
 		selectedFile = new SimpleObjectProperty<>();
+		
+		warningComponent = new WarningComponent();
+		warningComponent.messageProperty().bind(Bindings.when(cases.emptyProperty()).then("Press 'Play' button to run the test").otherwise("Select a case from the list on the left"));
+
+		caseComponent = new CaseComponent();
 		
 		casesList.setCellFactory(v -> new CaseListCell());
 		casesList.itemsProperty().bind(cases);
+		casesList.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onCaseSelectionChanged(ov, nv));
 		
+		testNameLabel.textProperty().bind(selectedFile.asString());
+		
+		onCaseSelectionChanged(null, null);
 	}
 
 	// ===================================
 	// event listeners
 	// ===================================
 
+	private void onCaseSelectionChanged(Case ov, Case nv) {
+		if (nv == null) {
+			casePane.setCenter(warningComponent);
+			caseComponent.caseProperty().unbind();
+		} else {
+			casePane.setCenter(caseComponent);
+			caseComponent.caseProperty().bind(casesList.getSelectionModel().selectedItemProperty());
+		}
+	}
+
 	@FXML
-	private void onStartAction(ActionEvent e) {
+	private void onRunAction(ActionEvent e) {
 		System.out.println("start");
 		System.out.println(selectedFile.get().getAbsolutePath());
 		

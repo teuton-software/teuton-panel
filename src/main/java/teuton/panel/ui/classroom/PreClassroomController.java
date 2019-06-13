@@ -100,6 +100,11 @@ public class PreClassroomController extends Controller<AnchorPane> {
 				return;
 			}
 			
+			if (!new File(folder.get()).exists()) {
+				Dialogs.error("Challenge folder doesn't exist!", "Folder '" + folder.get() + "' can't be found.");
+				return;				
+			}
+			
 			setSelectedFile(new File(folder.get()));
 			
 		} else {

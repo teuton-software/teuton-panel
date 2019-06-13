@@ -7,14 +7,27 @@ import java.util.ResourceBundle;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import teuton.panel.ui.model.Config;
 
 public class ConfigComponent extends BorderPane implements Initializable {
 
+	// model
+	
 	private ObjectProperty<Config> config = new SimpleObjectProperty<>();
+	
+	// view
+	
+	@FXML
+	private Label membersLabel;
+	
+	@FXML
+	private CheckBox skipCheck;
 
 	public ConfigComponent() {
 		try {
@@ -36,10 +49,12 @@ public class ConfigComponent extends BorderPane implements Initializable {
 
 	private void onConfigChanged(ObservableValue<? extends Config> o, Config ov, Config nv) {
 		if (ov != null) {
-			// TODO unbind
+			membersLabel.textProperty().unbind();
+			skipCheck.selectedProperty().unbind();
 		}
 		if (nv != null) {
-			// TODO bind
+			membersLabel.textProperty().bind(nv.ttMembersProperty());
+			skipCheck.selectedProperty().bind(nv.ttSkipProperty());
 		}
 	}
 
