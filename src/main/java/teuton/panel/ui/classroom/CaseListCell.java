@@ -1,19 +1,20 @@
 package teuton.panel.ui.classroom;
 
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import com.jfoenix.controls.JFXListCell;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import teuton.panel.ui.model.Case;
 
 public class CaseListCell extends JFXListCell<Case> {
 
-	private FontAwesomeIconView icon;
+	private FontIcon icon;
 
 	public CaseListCell() {
 		super();
-		icon = new FontAwesomeIconView(FontAwesomeIcon.SQUARE_ALT);
-		icon.setGlyphSize(24);
+		icon = new FontIcon();
+		icon.setIconSize(24);
 	}
 
 	@Override
@@ -28,9 +29,9 @@ public class CaseListCell extends JFXListCell<Case> {
 		} else {
 
 			if (c.getResults().getGrade() >= 100.0)
-				icon.setIcon(FontAwesomeIcon.CHECK_SQUARE_ALT);
+				icon.setIconCode(FontAwesomeSolid.CHECK_SQUARE);
 			else
-				icon.setIcon(FontAwesomeIcon.SQUARE_ALT);
+				icon.setIconCode(FontAwesomeSolid.SQUARE);
 
 			setText("Case " + c.getResults().getCaseId());
 			setGraphic(icon);

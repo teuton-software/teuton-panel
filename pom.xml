@@ -86,19 +86,14 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>de.jensd</groupId>
-			<artifactId>fontawesomefx-commons</artifactId>
-			<version>11.0</version>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-javafx</artifactId>
+			<version>11.3.4</version>
 		</dependency>
 		<dependency>
-			<groupId>de.jensd</groupId>
-			<artifactId>fontawesomefx-controls</artifactId>
-			<version>11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>de.jensd</groupId>
-			<artifactId>fontawesomefx-fontawesome</artifactId>
-			<version>4.7.0-11</version>
+			<groupId>org.kordamp.ikonli</groupId>
+			<artifactId>ikonli-fontawesome5-pack</artifactId>
+			<version>11.3.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.controlsfx</groupId>
@@ -162,11 +157,12 @@
 		</dependency>
 	</dependencies>
 
+
 	<repositories>
 		<repository>
-			<id>bintray-jerady-maven</id>
-			<name>bintray</name>
-			<url>https://dl.bintray.com/jerady/maven</url>
+			<id>central</id>
+			<name>jcenter</name>
+			<url>http://jcenter.bintray.com</url>
 		</repository>
 	</repositories>
 

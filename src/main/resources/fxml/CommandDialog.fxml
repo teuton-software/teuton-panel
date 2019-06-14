@@ -8,7 +8,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="root" hgap="5.0" prefWidth="640.0" stylesheets="@../css/styles.css" vgap="5.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="root" hgap="5.0" prefWidth="640.0"
+	stylesheets="@../css/styles.css" vgap="5.0"
+	xmlns="http://javafx.com/javafx"
+	xmlns:fx="http://javafx.com/fxml/1">
 	<columnConstraints>
 		<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
 	</columnConstraints>
@@ -23,8 +26,11 @@
 	</padding>
 	<children>
 		<Label fx:id="messageLabel" text="&lt;Message&gt;" />
-		<ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" GridPane.rowIndex="1" />
-		<TextArea fx:id="outputText" editable="false" styleClass="output-text" GridPane.rowIndex="3" />
-      <Label text="Output:" GridPane.rowIndex="2" />
+		<ProgressBar fx:id="progressBar"
+			maxWidth="1.7976931348623157E308" progress="0.0"
+			GridPane.rowIndex="1" />
+		<TextArea fx:id="outputText" editable="false"
+			styleClass="output-text" GridPane.rowIndex="3" />
+		<Label text="Output:" GridPane.rowIndex="2" />
 	</children>
 </GridPane>

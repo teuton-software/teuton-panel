@@ -4,6 +4,7 @@
 
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="Accordion"
 	fx:id="root">
-	<!-- TODO Add Nodes -->
+
+
 </fx:root>
 

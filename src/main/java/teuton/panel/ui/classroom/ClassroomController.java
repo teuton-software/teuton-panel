@@ -24,7 +24,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import teuton.panel.cli.Command;
-import teuton.panel.cli.ExecutionResult;
+import teuton.panel.cli.CommandTask;
 import teuton.panel.ui.components.CaseComponent;
 import teuton.panel.ui.components.WarningComponent;
 import teuton.panel.ui.mode.ModeController;
@@ -91,6 +91,9 @@ public class ClassroomController extends Controller<BorderPane> {
 		testNameLabel.textProperty().bind(selectedFile.asString());
 		
 		onCaseSelectionChanged(null, null);
+		
+		getRoot().sceneProperty().addListener((o, ov, nv) -> onRunAction(null));
+		
 	}
 
 	// ===================================
@@ -119,22 +122,26 @@ public class ClassroomController extends Controller<BorderPane> {
 		
 		Command cmd = CommandFactory.getCommand("teuton.play");
 		
-		ExecutionResult result = cmd.execute(params, true, workingDirectory);
-		System.out.println(result.getOutput());
-		System.out.println(result.getError());
+		CommandTask task = new CommandTask("Playing teuton background task", cmd);
+		task.setOnSucceeded(v -> {
+
+			File outputDirectory = new File(workingDirectory, "var");
+			cases.clear();
+			FileUtils
+				.listFiles(outputDirectory, new WildcardFileFilter("case-*.json"), null)
+				.stream()
+				.forEach(f -> {
+					try {
+						cases.add(Case.load(f));
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
+				});
+			casesList.getSelectionModel().selectFirst();
+
+		});
 		
-		File outputDirectory = new File(workingDirectory, "var");
-		
-		FileUtils
-			.listFiles(outputDirectory, new WildcardFileFilter("case-*.json"), null)
-			.stream()
-			.forEach(f -> {
-				try {
-					cases.add(Case.load(f));
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			});
+		new Thread(task).start();
 		
 	}
 

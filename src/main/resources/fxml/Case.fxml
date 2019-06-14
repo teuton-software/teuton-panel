@@ -3,7 +3,10 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 
-<fx:root fx:id="root" styleClass="background" stylesheets="@../css/styles.css" type="TabPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" styleClass="background"
+	stylesheets="@../css/styles.css" type="TabPane"
+	xmlns="http://javafx.com/javafx"
+	xmlns:fx="http://javafx.com/fxml/1">
 	<tabs>
 		<Tab fx:id="configTab" closable="false" text="Configuration" />
 		<Tab fx:id="testsTab" closable="false" text="Tests" />

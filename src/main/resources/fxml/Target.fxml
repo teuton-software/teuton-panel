@@ -7,53 +7,76 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<fx:root fx:id="root" animated="false" stylesheets="@../css/styles.css" text="&lt;target&gt;" type="TitledPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" animated="false"
+	stylesheets="@../css/styles.css" type="TitledPane"
+	xmlns="http://javafx.com/javafx"
+	xmlns:fx="http://javafx.com/fxml/1">
 	<content>
-      <ScrollPane>
-         <content>
-      		<GridPane hgap="5.0">
-      			<columnConstraints>
-      				<ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
-      				<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-      			</columnConstraints>
-      			<rowConstraints>
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-      				<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BASELINE" vgrow="ALWAYS" />
-      			</rowConstraints>
-      			<padding>
-      				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-      			</padding>
-      			<children>
-      				<Label text="ID:" />
-      				<Label text="Score:" GridPane.rowIndex="1" />
-      				<Label text="Weight:" GridPane.rowIndex="2" />
-      				<Label text="Command:" GridPane.rowIndex="3" />
-      				<Label text="Duration:" GridPane.rowIndex="4" />
-      				<Label text="Alterations:" GridPane.rowIndex="5" />
-      				<Label text="Expected:" GridPane.rowIndex="6" />
-      				<Label alignment="BASELINE_LEFT" text="Result:" GridPane.rowIndex="7">
-      					<GridPane.margin>
-      						<Insets top="5.0" />
-      					</GridPane.margin>
-      				</Label>
-      				<Label fx:id="idLabel" text="01" GridPane.columnIndex="1" />
-      				<Label fx:id="scoreLabel" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      				<Label fx:id="weightLabel" text="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      				<Label fx:id="commandLabel" text="powershell -file assets/test1.ps1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      				<Label fx:id="durationLabel" text="0.088" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      				<Label fx:id="alterationsLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      				<Label fx:id="expectedLabel" text="True" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      				<Label fx:id="resultLabel" alignment="BASELINE_LEFT" text="El argumento 'assets/test1.ps1' para el parámetro -File no existe. Proporcione la ruta de acceso a un archivo '.ps1' existente como argumento para el parámetro -File." wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      			</children>
-      		</GridPane>
-         </content>
-      </ScrollPane>
+		<ScrollPane>
+			<content>
+				<GridPane hgap="5.0" vgap="5.0">
+					<columnConstraints>
+						<ColumnConstraints halignment="LEFT"
+							hgrow="NEVER" minWidth="10.0" />
+						<ColumnConstraints hgrow="ALWAYS"
+							minWidth="10.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" valignment="TOP"
+							vgrow="ALWAYS" />
+					</rowConstraints>
+					<padding>
+						<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+					</padding>
+					<children>
+						<Label text="ID:" />
+						<Label text="Score:" GridPane.rowIndex="1" />
+						<Label text="Weight:" GridPane.rowIndex="2" />
+						<Label text="Command:" GridPane.rowIndex="3" />
+						<Label text="Duration:" GridPane.rowIndex="4" />
+						<Label text="Alterations:" GridPane.rowIndex="5" />
+						<Label alignment="BASELINE_LEFT" text="Result:"
+							GridPane.rowIndex="7" />
+						<Label fx:id="idLabel" text="01" GridPane.columnIndex="1" />
+						<Label fx:id="scoreLabel" text="0.0"
+							GridPane.columnIndex="1" GridPane.rowIndex="1" />
+						<Label fx:id="weightLabel" text="1.0"
+							GridPane.columnIndex="1" GridPane.rowIndex="2" />
+						<Label fx:id="commandLabel"
+							text="powershell -file assets/test1.ps1" GridPane.columnIndex="1"
+							GridPane.rowIndex="3" />
+						<Label fx:id="durationLabel" text="0.088"
+							GridPane.columnIndex="1" GridPane.rowIndex="4" />
+						<Label fx:id="alterationsLabel" text="-"
+							GridPane.columnIndex="1" GridPane.rowIndex="5" />
+						<Label fx:id="expectedLabel" text="True"
+							GridPane.columnIndex="1" GridPane.rowIndex="6" />
+						<Label fx:id="resultLabel" alignment="BASELINE_LEFT"
+							text="El argumento 'assets/test1.ps1' para el parámetro ..."
+							wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+						<Label layoutX="15.0" layoutY="169.0" text="Expected:"
+							GridPane.rowIndex="6" />
+					</children>
+				</GridPane>
+			</content>
+		</ScrollPane>
 	</content>
+	<graphic>
+		<Label fx:id="targetLabel" contentDisplay="RIGHT"
+			text="&lt;target&gt;">
+			<graphic>
+				<FontIcon fx:id="targetIcon" iconColor="#37d04b"
+					iconLiteral="fas-check" />
+			</graphic>
+		</Label>
+	</graphic>
 </fx:root>

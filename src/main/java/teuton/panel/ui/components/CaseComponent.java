@@ -25,6 +25,7 @@ public class CaseComponent extends TabPane implements Initializable {
 	
 	private ConfigComponent configComponent;
 	private TestComponent testComponent;
+	private ResultsComponent resultsComponent;
 	
 	@FXML
 	private Accordion testsPane; 
@@ -51,9 +52,11 @@ public class CaseComponent extends TabPane implements Initializable {
 		
 		configComponent = new ConfigComponent();
 		testComponent = new TestComponent();
+		resultsComponent = new ResultsComponent();
 		
 		configTab.setContent(configComponent);
 		testsTab.setContent(testComponent);
+		resultsTab.setContent(resultsComponent);
 		
 	}
 
@@ -61,10 +64,12 @@ public class CaseComponent extends TabPane implements Initializable {
 		if (ov != null) {
 			configComponent.configProperty().unbind();
 			testComponent.testProperty().unbind();
+			resultsComponent.resultsProperty().unbind();
 		}
 		if (nv != null) {
 			configComponent.configProperty().bind(nv.configProperty());
 			testComponent.testProperty().bind(nv.testProperty());
+			resultsComponent.resultsProperty().bind(nv.resultsProperty());
 		}
 		
 	}

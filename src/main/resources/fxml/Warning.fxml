@@ -2,20 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
-<fx:root fx:id="root" alignment="CENTER" type="VBox"
-	xmlns="http://javafx.com/javafx/11.0.1"
+<fx:root fx:id="root" alignment="CENTER" spacing="5.0"
+	type="VBox" xmlns="http://javafx.com/javafx"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<ImageView pickOnBounds="true" preserveRatio="true">
-			<image>
-				<Image url="@../images/warning-icon-48x48.png" />
-			</image>
-		</ImageView>
+		<FontIcon iconColor="orange"
+			iconLiteral="fas-exclamation-triangle" iconSize="64" />
 		<Label fx:id="messageLabel" text="&lt;message&gt;" />
 	</children>
 	<padding>

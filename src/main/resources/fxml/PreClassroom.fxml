@@ -2,17 +2,17 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane fx:id="root" prefHeight="480.0" prefWidth="640.0"
 	styleClass="background" stylesheets="@../css/styles.css"
-	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns="http://javafx.com/javafx"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<VBox alignment="CENTER" fillWidth="false" spacing="20.0"
@@ -21,8 +21,8 @@
 			<children>
 				<Label styleClass="title-label" text="Classroom">
 					<graphic>
-						<FontAwesomeIconView fill="#635c67"
-							glyphName="HOME" style="-glyph-size: 32;" />
+						<FontIcon iconColor="#635c67"
+							iconLiteral="fas-graduation-cap" iconSize="24" />
 					</graphic>
 				</Label>
 				<HBox alignment="BASELINE_CENTER" spacing="5.0">
@@ -53,8 +53,8 @@
 							contentDisplay="GRAPHIC_ONLY" onAction="#onChooseFolderAction"
 							ripplerFill="#92a897">
 							<graphic>
-								<FontAwesomeIconView glyphName="SAVE"
-									style="-fx-fill: #92a897; -glyph-size: 24;" />
+								<FontIcon iconColor="#635c67" iconLiteral="fas-save"
+									iconSize="24" />
 							</graphic>
 						</JFXButton>
 					</children>
@@ -73,8 +73,8 @@
 						<Tooltip text="Back" />
 					</tooltip>
 					<graphic>
-						<FontAwesomeIconView fill="#635c67"
-							glyphName="ARROW_LEFT" size="24" />
+						<FontIcon iconColor="#635c67"
+							iconLiteral="fas-arrow-left" iconSize="24" />
 					</graphic>
 				</JFXButton>
 			</children>

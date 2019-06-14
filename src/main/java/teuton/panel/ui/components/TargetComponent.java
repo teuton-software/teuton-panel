@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.kordamp.ikonli.javafx.FontIcon;
+
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -19,6 +23,8 @@ public class TargetComponent extends TitledPane implements Initializable {
 	// model
 
 	private ObjectProperty<Target> target = new SimpleObjectProperty<Target>();
+	
+	private BooleanProperty completed = new SimpleBooleanProperty();
 	
 	// view
 
@@ -45,6 +51,12 @@ public class TargetComponent extends TitledPane implements Initializable {
 
     @FXML
     private Label resultLabel;
+    
+    @FXML
+    private Label targetLabel;
+    
+    @FXML
+    private FontIcon targetIcon;
 
 	public TargetComponent() {
 		try {
@@ -62,13 +74,17 @@ public class TargetComponent extends TitledPane implements Initializable {
 
 		target.addListener((o, ov, nv) -> onTargetChanged(o, ov, nv));
 		
+		targetLabel.minWidthProperty().bind(this.widthProperty());
+				
+		targetIcon.visibleProperty().bind(completed);
+				
 	}
 	
 	// listeners
 
 	private void onTargetChanged(ObservableValue<? extends Target> o, Target ov, Target nv) {
 		if (ov != null) {
-			textProperty().unbind();
+			targetLabel.textProperty().unbind();
 		    idLabel.textProperty().unbind();
 		    scoreLabel.textProperty().unbind();
 		    weightLabel.textProperty().unbind();
@@ -77,9 +93,10 @@ public class TargetComponent extends TitledPane implements Initializable {
 		    alterationsLabel.textProperty().unbind();
 		    expectedLabel.textProperty().unbind();
 		    resultLabel.textProperty().unbind();
+		    completed.unbind();
 		}
 		if (nv != null) {
-			textProperty().bind(nv.descriptionProperty());
+			targetLabel.textProperty().bind(nv.descriptionProperty());
 		    idLabel.textProperty().bind(nv.targetIdProperty());
 		    scoreLabel.textProperty().bind(nv.scoreProperty().asString("%.2f"));
 		    weightLabel.textProperty().bind(nv.weightProperty().asString("%.2f"));
@@ -88,6 +105,7 @@ public class TargetComponent extends TitledPane implements Initializable {
 		    alterationsLabel.textProperty().bind(nv.alterationsProperty());
 		    expectedLabel.textProperty().bind(nv.expectedProperty());
 		    resultLabel.textProperty().bind(nv.resultProperty());
+		    completed.bind(nv.scoreProperty().isEqualTo(nv.weightProperty()));
 		}
 	}
 

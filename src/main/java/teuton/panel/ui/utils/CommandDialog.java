@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory;
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import javafx.concurrent.Worker.State;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import teuton.panel.cli.CommandTask;
 import teuton.panel.utils.MessageConsumer;
 
@@ -53,11 +52,9 @@ public class CommandDialog extends Dialog<Void>  implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     	
     	task.setConsumer(new MessageConsumer(outputText));
-    	
-    	Text icon = (Text) FontAwesomeIconFactory.get().createIcon(FontAwesomeIcon.GEARS, "48px");
-	
+
     	setResizable(true);
-    	setGraphic(icon);
+    	setGraphic(new FontIcon("fas-cogs:48:darkgray"));
     		
     	getDialogPane().getButtonTypes().setAll(ButtonType.CANCEL);
     	getDialogPane().setContent(root);

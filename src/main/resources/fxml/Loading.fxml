@@ -8,8 +8,8 @@
 
 <VBox fx:id="root" alignment="CENTER"
 	stylesheets="@../css/styles.css"
-	xmlns="http://javafx.com/javafx/8.0.111"
-	xmlns:fx="http://javafx.com/fxml/1">
+	xmlns="http://javafx.com/javafx"
+	xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: rgba(0,0,0,0.5);">
 	<children>
 		<ImageView pickOnBounds="true" preserveRatio="true">
 			<image>
