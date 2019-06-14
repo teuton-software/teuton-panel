@@ -91,6 +91,7 @@
 			<version>11.3.4</version>
 		</dependency>
 		<dependency>
+			<!-- available icons list: https://fontawesome.com/icons?d=gallery&m=free -->
 			<groupId>org.kordamp.ikonli</groupId>
 			<artifactId>ikonli-fontawesome5-pack</artifactId>
 			<version>11.3.4</version>
