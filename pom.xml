@@ -9,7 +9,7 @@
 
 	<name>teuton-panel</name>
 	<description>Graphical front-end for TEUTON software</description>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
