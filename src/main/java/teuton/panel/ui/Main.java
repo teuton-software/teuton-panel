@@ -7,7 +7,6 @@ import teuton.panel.ui.app.TeutonPanelApp;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		System.out.println(System.getProperty("javafx.version"));
 		TeutonPanelApp.run(args);
 	}
 

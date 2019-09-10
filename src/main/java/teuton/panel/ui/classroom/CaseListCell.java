@@ -5,6 +5,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.jfoenix.controls.JFXListCell;
 
+import javafx.scene.paint.Color;
 import teuton.panel.ui.model.Case;
 
 public class CaseListCell extends JFXListCell<Case> {
@@ -15,6 +16,7 @@ public class CaseListCell extends JFXListCell<Case> {
 		super();
 		icon = new FontIcon();
 		icon.setIconSize(24);
+		icon.setIconCode(FontAwesomeSolid.USER_CIRCLE);
 	}
 
 	@Override
@@ -27,11 +29,15 @@ public class CaseListCell extends JFXListCell<Case> {
 			setGraphic(null);
 			
 		} else {
-
-			if (c.getResults().getGrade() >= 100.0)
-				icon.setIconCode(FontAwesomeSolid.CHECK_SQUARE);
-			else
-				icon.setIconCode(FontAwesomeSolid.SQUARE);
+			
+			int grade = c.getResults().getGrade();
+			Color gradeColor;
+			if (grade < 50) {
+				gradeColor = Color.RED.interpolate(Color.YELLOW, grade / 50.0);
+			} else {
+				gradeColor = Color.YELLOW.interpolate(Color.FORESTGREEN, (grade - 50.0) / 50.0);
+			}
+			icon.setIconColor(gradeColor);
 
 			setText("Case " + c.getResults().getCaseId());
 			setGraphic(icon);

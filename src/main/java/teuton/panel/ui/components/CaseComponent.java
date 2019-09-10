@@ -71,7 +71,6 @@ public class CaseComponent extends TabPane implements Initializable {
 			testComponent.testProperty().bind(nv.testProperty());
 			resultsComponent.resultsProperty().bind(nv.resultsProperty());
 		}
-		
 	}
 
 	public final ObjectProperty<Case> caseProperty() {

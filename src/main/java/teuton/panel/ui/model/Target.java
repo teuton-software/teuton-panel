@@ -143,5 +143,10 @@ public class Target {
 	public final void setResult(final String result) {
 		this.resultProperty().set(result);
 	}
+	
+	@Override
+	public String toString() {
+		return getDescription();
+	}
 
 }

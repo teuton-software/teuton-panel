@@ -14,14 +14,14 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
-import teuton.panel.ui.model.Target;
+import teuton.panel.ui.model.Group;
 import teuton.panel.ui.model.Test;
 
 public class TestComponent extends Accordion implements Initializable {
 
 	// model
 
-	private ListProperty<Target> targets = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ListProperty<Group> groups = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private ObjectProperty<Test> test = new SimpleObjectProperty<>();
 
 	// view
@@ -42,28 +42,28 @@ public class TestComponent extends Accordion implements Initializable {
 
 		test.addListener((o, ov, nv) -> onTestChanged(o, ov, nv));
 		
-		targets.addListener((Change<? extends Target> c) -> onTargetsChanged(c));
+		groups.addListener((Change<? extends Group> c) -> onGroupsChanged(c));
 
 
 	}
 	
-	private void onTargetsChanged(Change<? extends Target> changes) {
+	private void onGroupsChanged(Change<? extends Group> changes) {
 		getPanes().clear();
 		while (changes.next()) {
-			changes.getAddedSubList().stream().forEach(target -> {
-				TargetComponent targetComponent = new TargetComponent();
-				targetComponent.setTarget(target);
-				getPanes().add(targetComponent);
+			changes.getAddedSubList().stream().forEach(group -> {
+				GroupComponent groupComponent = new GroupComponent();
+				groupComponent.setGroup(group);
+				getPanes().add(groupComponent);
 			});
 		}
 	}
 
 	private void onTestChanged(ObservableValue<? extends Test> o, Test ov, Test nv) {
 		if (ov != null) {
-			targets.unbind();
+			groups.unbind();
 		}
 		if (nv != null) {
-			targets.bind(nv.targetsProperty());
+			groups.bind(nv.groupsProperty());
 		}
 	}
 

@@ -3,8 +3,6 @@ package teuton.panel.ui.classroom;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
@@ -31,6 +29,7 @@ import teuton.panel.ui.mode.ModeController;
 import teuton.panel.ui.model.Case;
 import teuton.panel.ui.settings.CommandFactory;
 import teuton.panel.ui.utils.Controller;
+import teuton.panel.ui.utils.Dialogs;
 
 public class ClassroomController extends Controller<BorderPane> {
 
@@ -112,17 +111,14 @@ public class ClassroomController extends Controller<BorderPane> {
 
 	@FXML
 	private void onRunAction(ActionEvent e) {
-		System.out.println("start");
-		System.out.println(selectedFile.get().getAbsolutePath());
-		
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("file", ".");
-		
+
 		File workingDirectory = selectedFile.get();
 		
 		Command cmd = CommandFactory.getCommand("teuton.play");
-		
+
 		CommandTask task = new CommandTask("Playing teuton background task", cmd);
+		task.setWorkingDirectory(workingDirectory);
+		task.getData().put("file", ".");
 		task.setOnSucceeded(v -> {
 
 			File outputDirectory = new File(workingDirectory, "var");
@@ -140,8 +136,17 @@ public class ClassroomController extends Controller<BorderPane> {
 			casesList.getSelectionModel().selectFirst();
 
 		});
+		task.setOnFailed(v -> {
+			Dialogs.exception(v.getSource().getException().getMessage(), "", v.getSource().getException());
+		});
+
+		System.out.println("start");
+		System.out.println(selectedFile.get().getAbsolutePath());
+
+//		new Thread(task).start();
 		
-		new Thread(task).start();
+		Dialogs.runCommand(task);
+
 		
 	}
 

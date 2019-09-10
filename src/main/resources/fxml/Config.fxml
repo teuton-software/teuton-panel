@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<fx:root fx:id="root" type="BorderPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
-		<GridPane hgap="5.0" BorderPane.alignment="CENTER">
+		<GridPane fx:id="propertiesPane" hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
 			<columnConstraints>
 				<ColumnConstraints halignment="LEFT" hgrow="NEVER" />
 				<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
 			</columnConstraints>
-			<rowConstraints>
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-			</rowConstraints>
-			<children>
-				<Label text="Members:" />
-				<Label text="Skip:" GridPane.rowIndex="1" />
-				<Label fx:id="membersLabel" style="-fx-font-weight: bold;" text="Label" GridPane.columnIndex="1" />
-				<CheckBox fx:id="skipCheck" disable="true" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-			</children>
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
 		</GridPane>
 	</center>
 </fx:root>

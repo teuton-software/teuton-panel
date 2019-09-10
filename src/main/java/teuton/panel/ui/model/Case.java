@@ -10,13 +10,18 @@ import org.hildan.fxgson.FxGson;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import javafx.beans.property.MapProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 
 public class Case {
 
 	@SerializedName("config")
-	private ObjectProperty<Config> config = new SimpleObjectProperty<>(new Config());
+	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(
+			FXCollections.observableHashMap());
 
 	@SerializedName("test")
 	private ObjectProperty<Test> test = new SimpleObjectProperty<>(new Test());
@@ -24,15 +29,21 @@ public class Case {
 	@SerializedName("results")
 	private ObjectProperty<Results> results = new SimpleObjectProperty<>(new Results());
 
-	public final ObjectProperty<Config> configProperty() {
+	public static Case load(File file) throws FileNotFoundException {
+		Reader json = new FileReader(file);
+		Gson gson = FxGson.create();
+		return gson.fromJson(json, Case.class);
+	}
+
+	public final MapProperty<String, Object> configProperty() {
 		return this.config;
 	}
 
-	public final Config getConfig() {
+	public final ObservableMap<String, Object> getConfig() {
 		return this.configProperty().get();
 	}
 
-	public final void setConfig(final Config config) {
+	public final void setConfig(final ObservableMap<String, Object> config) {
 		this.configProperty().set(config);
 	}
 
@@ -59,11 +70,5 @@ public class Case {
 	public final void setResults(final Results results) {
 		this.resultsProperty().set(results);
 	}
-	
-    public static Case load(File file) throws FileNotFoundException {
-    	Reader json = new FileReader(file); 
-		Gson gson = FxGson.create();
-		return gson.fromJson(json, Case.class);
-    }
 
 }

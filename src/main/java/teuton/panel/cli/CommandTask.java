@@ -1,7 +1,10 @@
 package teuton.panel.cli;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +28,8 @@ public class CommandTask extends Task<ExecutionResult> {
 	private static final Predicate<String> INFO_PREDICATE = INFO_REGEX.asPredicate();
 
 	private ObjectProperty<Command> command = new SimpleObjectProperty<>(this, "command");
+	private Map<String, String> data = new HashMap<String, String>();
+	private File workingDirectory = new File(".");
 
 	public CommandTask(String title, Command command) {
 		super();
@@ -34,8 +39,8 @@ public class CommandTask extends Task<ExecutionResult> {
 
 	@Override
 	protected ExecutionResult call() throws Exception {
-
-		ExecutionResult result = getCommand().execute(false);
+		
+		ExecutionResult result = getCommand().execute(data, false, workingDirectory);
 
 		BufferedReader outputReader = new BufferedReader(new InputStreamReader(result.getOutputStream()));
 		BufferedReader errorReader = new BufferedReader(new InputStreamReader(result.getErrorStream()));
@@ -46,7 +51,8 @@ public class CommandTask extends Task<ExecutionResult> {
 		updateProgress(0, 100);
 
 		Platform.runLater(() -> {
-			if (consumer != null) consumer.start();
+			if (consumer != null)
+				consumer.start();
 		});
 
 		while ((!isCancelled() && !result.isFinished()) || outputReader.ready() || errorReader.ready()) {
@@ -55,7 +61,8 @@ public class CommandTask extends Task<ExecutionResult> {
 
 				String line = outputReader.readLine();
 				output.append(line + "\n");
-				if (consumer != null) consumer.putMessage(line);
+				if (consumer != null)
+					consumer.putMessage(line);
 
 				// update progress bar
 				if (matches(line)) {
@@ -69,7 +76,8 @@ public class CommandTask extends Task<ExecutionResult> {
 			if (errorReader.ready()) {
 				String line = errorReader.readLine();
 				error.append(line + "\n");
-				if (consumer != null) consumer.putMessage(line);
+				if (consumer != null)
+					consumer.putMessage(line);
 			}
 
 		}
@@ -148,6 +156,18 @@ public class CommandTask extends Task<ExecutionResult> {
 
 	public void setConsumer(MessageConsumer consumer) {
 		this.consumer = consumer;
+	}
+
+	public Map<String, String> getData() {
+		return data;
+	}
+
+	public File getWorkingDirectory() {
+		return workingDirectory;
+	}
+
+	public void setWorkingDirectory(File workingDirectory) {
+		this.workingDirectory = workingDirectory;
 	}
 
 }
