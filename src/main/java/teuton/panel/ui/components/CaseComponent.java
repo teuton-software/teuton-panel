@@ -18,20 +18,20 @@ import teuton.panel.ui.model.Case;
 public class CaseComponent extends TabPane implements Initializable {
 
 	// model
-	
+
 	private ObjectProperty<Case> _case;
-	
+
 	// view
-	
+
 	private ConfigComponent configComponent;
-	private TestComponent testComponent;
+	private TargetComponent targetsComponent;
 	private ResultsComponent resultsComponent;
-	
+
 	@FXML
-	private Accordion testsPane; 
-	
+	private Accordion testsPane;
+
 	@FXML
-	private Tab configTab, testsTab, resultsTab;
+	private Tab configTab, targetsTab, resultsTab;
 
 	public CaseComponent() {
 		try {
@@ -46,29 +46,29 @@ public class CaseComponent extends TabPane implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		_case = new SimpleObjectProperty<>();
 		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
-		
+
 		configComponent = new ConfigComponent();
-		testComponent = new TestComponent();
+		targetsComponent = new TargetComponent();
 		resultsComponent = new ResultsComponent();
-		
+
 		configTab.setContent(configComponent);
-		testsTab.setContent(testComponent);
+		targetsTab.setContent(targetsComponent);
 		resultsTab.setContent(resultsComponent);
-		
+
 	}
 
 	private void onCaseChanged(ObservableValue<? extends Case> o, Case ov, Case nv) {
 		if (ov != null) {
 			configComponent.configProperty().unbind();
-			testComponent.testProperty().unbind();
+			targetsComponent.testProperty().unbind();
 			resultsComponent.resultsProperty().unbind();
 		}
 		if (nv != null) {
 			configComponent.configProperty().bind(nv.configProperty());
-			testComponent.testProperty().bind(nv.testProperty());
+			targetsComponent.testProperty().bind(nv.testProperty());
 			resultsComponent.resultsProperty().bind(nv.resultsProperty());
 		}
 	}

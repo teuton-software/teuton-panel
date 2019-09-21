@@ -11,7 +11,7 @@
 }
 
 .background {
-	-fx-background-image: url("../images/background-pattern.png");
+	/*-fx-background-image: url("../images/background-pattern.png");*/
 }
 
 .split-pane {

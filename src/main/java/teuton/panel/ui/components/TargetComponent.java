@@ -17,7 +17,7 @@ import javafx.scene.control.Accordion;
 import teuton.panel.ui.model.Group;
 import teuton.panel.ui.model.Test;
 
-public class TestComponent extends Accordion implements Initializable {
+public class TargetComponent extends Accordion implements Initializable {
 
 	// model
 
@@ -26,9 +26,9 @@ public class TestComponent extends Accordion implements Initializable {
 
 	// view
 
-	public TestComponent() {
+	public TargetComponent() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Test.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Target.fxml"));
 			loader.setController(this);
 			loader.setRoot(this);
 			loader.load();
@@ -43,7 +43,6 @@ public class TestComponent extends Accordion implements Initializable {
 		test.addListener((o, ov, nv) -> onTestChanged(o, ov, nv));
 		
 		groups.addListener((Change<? extends Group> c) -> onGroupsChanged(c));
-
 
 	}
 	

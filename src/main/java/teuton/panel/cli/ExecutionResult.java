@@ -17,6 +17,7 @@ import javafx.beans.property.StringProperty;
 
 /**
  * Command execution results.
+ * 
  * @author Fran Vargas
  */
 public class ExecutionResult {
@@ -166,17 +167,31 @@ public class ExecutionResult {
 	public final void setWatchdog(final ExecuteWatchdog watchdog) {
 		this.watchdogProperty().set(watchdog);
 	}
-	
+
 	public final BooleanProperty finishedProperty() {
 		return this.finished;
 	}
-	
+
 	public final void setFinished(boolean finished) {
 		this.finishedProperty().set(finished);
 	}
-	
+
 	public final boolean isFinished() {
 		return this.finishedProperty().get();
+	}
+
+	@Override
+	public String toString() {
+		return 
+				"ExecutionResult {" + "\n" +
+				"\t" + "command       : " + command.get() + "\n" +
+				"\t" + "shellCommand  : " + shellCommand.get() + "\n" +
+				"\t" + "executionTime : " + executionTime.get() + "\n" +
+				"\t" + "duration      : " + duration.get().toMillis() + "ms\n" +
+				"\t" + "exitValue     : " + exitValue.get() + "\n" +
+				"\t" + "output:\n" + output.get() + "\n" +
+				"\t" + "error:\n" + error.get() + "\n" +
+				"}";
 	}
 
 }

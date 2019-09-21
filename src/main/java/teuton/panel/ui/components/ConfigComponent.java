@@ -17,6 +17,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 
 public class ConfigComponent extends BorderPane implements Initializable {
 
@@ -52,7 +54,6 @@ public class ConfigComponent extends BorderPane implements Initializable {
 
 		propertiesPane.getChildren().clear();
 		
-		
 		int i = 0;
 		for (String name : nv.keySet()) {
 			
@@ -70,7 +71,15 @@ public class ConfigComponent extends BorderPane implements Initializable {
 				valueNode = valueLabel;
 			}
 			
-			propertiesPane.addRow(i++, nameLabel, valueNode);
+			RowConstraints constraint = new RowConstraints();
+			constraint.setMinHeight(10);
+			constraint.setPrefHeight(20);
+			constraint.setVgrow(Priority.NEVER);
+			
+			propertiesPane.addRow(i, nameLabel, valueNode);
+			propertiesPane.getRowConstraints().add(i, constraint);
+			
+			i++;
 		}
 
 	}

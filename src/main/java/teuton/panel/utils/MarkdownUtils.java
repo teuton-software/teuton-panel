@@ -7,20 +7,21 @@ import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 
-import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
 import com.vladsch.flexmark.ext.definition.DefinitionExtension;
 import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.typographic.TypographicExtension;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.parser.ParserEmulationProfile;
-import com.vladsch.flexmark.util.options.MutableDataSet;
+import com.vladsch.flexmark.util.ast.Document;
+import com.vladsch.flexmark.util.data.MutableDataSet;
 
 /**
- * Utilidades para procesar texto en formato Markdown y renderizarlo en HTML.
+ * Utils to render Markdown
  * @author fvarrui
  */
 public class MarkdownUtils {
@@ -41,6 +42,7 @@ public class MarkdownUtils {
 	private static HtmlRenderer renderer;
 
 	static {
+		
 		MutableDataSet options = new MutableDataSet();
 		options.setFrom(ParserEmulationProfile.KRAMDOWN);
 		options.set(Parser.EXTENSIONS, Arrays.asList(
@@ -50,19 +52,30 @@ public class MarkdownUtils {
 				TablesExtension.create(), 
 				TypographicExtension.create(), 
 				StrikethroughExtension.create()
+//				YamlFrontMatterExtension.create()
 				)
 			);
 		parser = Parser.builder(options).build();
 		renderer = HtmlRenderer.builder(options).build();
 	}
 
+	/**
+	 * Render Markdown string into HTML
+	 * @param markdown
+	 * @return html
+	 */
 	public static String render(String markdown) {
-		Node document = parser.parse(markdown);
+		Document document = parser.parse(markdown);
 		String body = renderer.render(document);
 		String html = TEMPLATE_BEGIN + body + TEMPLATE_END;
 		return html;
 	}
 	
+	/**
+	 * Render Markdown string to a temporary file
+	 * @param markdown
+	 * @return url to temporary file
+	 */
 	public static String renderToUrl(String markdown) {
 		try {
 			File temp = File.createTempFile("teuton-panel-", ".html");

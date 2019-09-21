@@ -38,11 +38,11 @@ public class GroupComponent extends TitledPane implements Initializable {
     @FXML
     private Label groupLabel;
     
-    @FXML
-    private TreeTableView<Object> targetsTreeTable;
-    
-    @FXML
-    private TreeTableColumn<Object, String> targetColumn, nameColumn, valueColumn;
+//    @FXML
+//    private TreeTableView<Object> targetsTreeTable;
+//    
+//    @FXML
+//    private TreeTableColumn<Object, String> targetColumn, nameColumn, valueColumn;
     
     @FXML
     private FontIcon rightIcon, failIcon;
@@ -70,28 +70,28 @@ public class GroupComponent extends TitledPane implements Initializable {
 		failIcon.managedProperty().bind(completed.not());
 		failIcon.visibleProperty().bind(failIcon.managedProperty());
 		
-		targetColumn.setCellValueFactory(v -> {
-			if (v.getValue().getValue() instanceof Target) {
-				return new SimpleStringProperty("" + v.getValue().getValue());
-			}
-			return new SimpleStringProperty();
-		});
-		
-		nameColumn.setCellValueFactory(v -> {
-			if (v.getValue().getValue() instanceof Pair) {
-				Pair<String,String> p = (Pair<String,String>) v.getValue().getValue();
-				return new SimpleStringProperty("" + p.getKey());
-			}
-			return new SimpleStringProperty();
-		});
-		
-		valueColumn.setCellValueFactory(v -> {
-			if (v.getValue().getValue() instanceof Pair) {
-				Pair<String,String> p = (Pair<String,String>) v.getValue().getValue();
-				return new SimpleStringProperty("" + p.getValue());
-			}
-			return new SimpleStringProperty();
-		});
+//		targetColumn.setCellValueFactory(v -> {
+//			if (v.getValue().getValue() instanceof Target) {
+//				return new SimpleStringProperty("" + v.getValue().getValue());
+//			}
+//			return new SimpleStringProperty();
+//		});
+//		
+//		nameColumn.setCellValueFactory(v -> {
+//			if (v.getValue().getValue() instanceof Pair) {
+//				Pair<String,String> p = (Pair<String,String>) v.getValue().getValue();
+//				return new SimpleStringProperty("" + p.getKey());
+//			}
+//			return new SimpleStringProperty();
+//		});
+//		
+//		valueColumn.setCellValueFactory(v -> {
+//			if (v.getValue().getValue() instanceof Pair) {
+//				Pair<String,String> p = (Pair<String,String>) v.getValue().getValue();
+//				return new SimpleStringProperty("" + p.getValue());
+//			}
+//			return new SimpleStringProperty();
+//		});
 				
 	}
 	
@@ -100,11 +100,11 @@ public class GroupComponent extends TitledPane implements Initializable {
 	private void onGroupChanged(ObservableValue<? extends Group> o, Group ov, Group nv) {
 		if (ov != null) {
 			groupLabel.textProperty().unbind();
-			targetsTreeTable.setRoot(null);
+//			targetsTreeTable.setRoot(null);
 		}
 		if (nv != null) {
 			groupLabel.textProperty().bind(nv.titleProperty());
-			targetsTreeTable.setRoot(createNodes(nv.getTargets()));
+//			targetsTreeTable.setRoot(createNodes(nv.getTargets()));
 //		    idLabel.textProperty().bind(nv.targetIdProperty());
 //		    scoreLabel.textProperty().bind(nv.scoreProperty().asString("%.2f"));
 //		    weightLabel.textProperty().bind(nv.weightProperty().asString("%.2f"));

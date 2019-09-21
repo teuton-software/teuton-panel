@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>com.vladsch.flexmark</groupId>
 			<artifactId>flexmark-all</artifactId>
-			<version>0.32.18</version>
+			<version>0.50.40</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -157,7 +157,6 @@
 			<version>3.1.2</version>
 		</dependency>
 	</dependencies>
-
 
 	<repositories>
 		<repository>

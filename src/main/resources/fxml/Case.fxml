@@ -8,8 +8,9 @@
 	xmlns="http://javafx.com/javafx"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<tabs>
+		<Tab fx:id="targetsTab" closable="false" text="Targets" />
 		<Tab fx:id="configTab" closable="false" text="Configuration" />
-		<Tab fx:id="testsTab" closable="false" text="Tests" />
 		<Tab fx:id="resultsTab" closable="false" text="Results" />
+		<Tab fx:id="logsTab" closable="false" text="Logs" />
 	</tabs>
 </fx:root>

@@ -39,7 +39,7 @@ public class PreClassroomController extends Controller<AnchorPane> {
 	// ===================================
 
 	@FXML
-	private JFXButton startButton, backButton, chooseFolderButton;
+	private JFXButton openButton, backButton, chooseFolderButton;
 
 	@FXML
 	private ToggleButton teacherButton, studentButton;
@@ -74,7 +74,7 @@ public class PreClassroomController extends Controller<AnchorPane> {
 
 		folder.bindBidirectional(folderText.textProperty());
 
-		startButton.disableProperty().bind(
+		openButton.disableProperty().bind(
 				teacherButton.selectedProperty().and(folder.isNotEmpty()).or(studentButton.selectedProperty()).not());
 
 		folderPane.visibleProperty().bind(teacherButton.selectedProperty());
@@ -92,7 +92,7 @@ public class PreClassroomController extends Controller<AnchorPane> {
 	// ===================================
 
 	@FXML
-	private void onStartAction(ActionEvent e) {
+	private void onOpenAction(ActionEvent e) {
 		if (teacherButton.isSelected()) {
 			
 			if (!settings.get().isTNode()) {
@@ -122,7 +122,7 @@ public class PreClassroomController extends Controller<AnchorPane> {
 	private void onChooseFolderAction(ActionEvent e) {
 		DirectoryChooser dialog = new DirectoryChooser();
 		dialog.setTitle("Choose challenge folder");
-		dialog.setInitialDirectory(new File(System.getProperty("user.home") + "/Documents/teuton"));
+		dialog.setInitialDirectory(new File(".")); // new File(System.getProperty("user.home")));
 		File file = dialog.showDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
 			folder.set(file.getAbsolutePath());

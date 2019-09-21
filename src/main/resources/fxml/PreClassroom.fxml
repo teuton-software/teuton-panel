@@ -12,8 +12,7 @@
 
 <AnchorPane fx:id="root" prefHeight="480.0" prefWidth="640.0"
 	styleClass="background" stylesheets="@../css/styles.css"
-	xmlns="http://javafx.com/javafx"
-	xmlns:fx="http://javafx.com/fxml/1">
+	xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<VBox alignment="CENTER" fillWidth="false" spacing="20.0"
 			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
@@ -59,8 +58,8 @@
 						</JFXButton>
 					</children>
 				</HBox>
-				<JFXButton fx:id="startButton" defaultButton="true"
-					onAction="#onStartAction" styleClass="modeButton" text="Start" />
+				<JFXButton fx:id="openButton" defaultButton="true"
+					onAction="#onOpenAction" styleClass="modeButton" text="Open challenge" />
 			</children>
 		</VBox>
 		<HBox alignment="TOP_RIGHT" AnchorPane.leftAnchor="5.0"

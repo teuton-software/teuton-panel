@@ -92,5 +92,9 @@ public class Command {
 	public ExecutionResult execute(Map<String, String> data, boolean waitFor, File workingDirectory) {
 		return getShell().execute(this, MapUtils.merge(data, PROPERTIES_MAP), waitFor, workingDirectory);		
 	}
+	
+	public ExecutionResult execute(boolean waitFor, File workingDirectory) {
+		return execute(Collections.emptyMap(), waitFor, workingDirectory);		
+	}
 
 }
