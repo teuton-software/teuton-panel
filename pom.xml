@@ -55,7 +55,7 @@
 			<plugin>
 				<groupId>fvarrui.maven</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.8.0</version>
+				<version>0.8.1</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -63,6 +63,7 @@
 							<goal>package</goal>
 						</goals>
 						<configuration>
+							<forceJreOptimization>true</forceJreOptimization>
 							<bundleJre>true</bundleJre>
 							<mainClass>teuton.panel.ui.Main</mainClass>
 							<administratorRequired>true</administratorRequired>
