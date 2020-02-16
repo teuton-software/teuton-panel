@@ -7,7 +7,6 @@
 	<groupId>teuton</groupId>
 	<artifactId>teuton-panel</artifactId>
 
-	<name>teuton-panel</name>
 	<description>Graphical front-end for TEUTON software</description>
 	<version>0.1.1</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
@@ -16,14 +15,6 @@
 		<name>Teuton Software</name>
 		<url>https://github.com/teuton-software</url>
 	</organization>
-
-	<licenses>
-		<license>
-			<name>GPL-3.0</name>
-			<comments>GNU General Public License v3.0</comments>
-			<url>LICENSE</url>
-		</license>
-	</licenses>
 
 	<developers>
 		<developer>
@@ -48,6 +39,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
 	</properties>
 
 	<build>
@@ -55,7 +47,7 @@
 			<plugin>
 				<groupId>fvarrui.maven</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.8.1</version>
+				<version>0.8.9</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -63,9 +55,7 @@
 							<goal>package</goal>
 						</goals>
 						<configuration>
-							<forceJreOptimization>true</forceJreOptimization>
 							<bundleJre>true</bundleJre>
-							<mainClass>teuton.panel.ui.Main</mainClass>
 							<administratorRequired>true</administratorRequired>
 							<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 						</configuration>
@@ -77,11 +67,8 @@
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>javapackager-repo</id>
+			<id>javapackager</id>
 			<url>https://github.com/fvarrui/JavaPackager/raw/master/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
 		</pluginRepository>
 	</pluginRepositories>
 
