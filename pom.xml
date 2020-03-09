@@ -8,7 +8,7 @@
 	<artifactId>teuton-panel</artifactId>
 
 	<description>Graphical front-end for TEUTON software</description>
-	<version>0.1.1</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
@@ -40,37 +40,31 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
+        <organizationEmail>teuton.software@protonmail.com</organizationEmail>
+		<administratorRequired>true</administratorRequired>
 	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>fvarrui.maven</groupId>
+				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.8.9</version>
-				<executions>
+				<version>0.9.1</version>				
+  				<executions>
 					<execution>
+						<id>bundle-jre</id>
 						<phase>package</phase>
 						<goals>
 							<goal>package</goal>
 						</goals>
 						<configuration>
 							<bundleJre>true</bundleJre>
-							<administratorRequired>true</administratorRequired>
-							<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>javapackager</id>
-			<url>https://github.com/fvarrui/JavaPackager/raw/master/releases</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencies>
 		<dependency>
