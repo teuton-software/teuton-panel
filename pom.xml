@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>teuton</groupId>
+	<groupId>io.github.teuton-software</groupId>
 	<artifactId>teuton-panel</artifactId>
 
 	<description>Graphical front-end for TEUTON software</description>
@@ -22,11 +22,6 @@
 			<name>Fran Vargas</name>
 			<url>https://github.com/fvarrui</url>
 		</developer>
-		<developer>
-			<id>dvarrui</id>
-			<name>David Vargas</name>
-			<url>https://github.com/dvarrui</url>
-		</developer>
 	</developers>
 
 	<scm>
@@ -39,9 +34,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<exec.mainClass>teuton.panel.ui.Main</exec.mainClass>
-        <organizationEmail>teuton.software@protonmail.com</organizationEmail>
-		<administratorRequired>true</administratorRequired>
+		<exec.mainClass>io.github.teuton.panel.Main</exec.mainClass>
 	</properties>
 
 	<build>
@@ -49,8 +42,8 @@
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.1</version>				
-  				<executions>
+				<version>0.9.4-SNAPSHOT</version>
+				<executions>
 					<execution>
 						<id>bundle-jre</id>
 						<phase>package</phase>
@@ -59,6 +52,45 @@
 						</goals>
 						<configuration>
 							<bundleJre>true</bundleJre>
+							<generateInstaller>false</generateInstaller>
+							<administratorRequired>true</administratorRequired>
+							<organizationEmail>teuton.software@protonmail.com</organizationEmail>
+							<createZipball>true</createZipball>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>de.saumya.mojo</groupId>
+				<artifactId>gem-maven-plugin</artifactId>
+				<version>1.1.8</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<configuration>
+							<includeRubygemsInResources>true</includeRubygemsInResources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/main/resources/rubygems</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/rubygems</directory>
+								</resource>
+							</resources>
+							<overwrite>true</overwrite>
 						</configuration>
 					</execution>
 				</executions>
@@ -89,9 +121,9 @@
 			<version>9.0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -138,13 +170,28 @@
 			<artifactId>fx-gson</artifactId>
 			<version>3.1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>rubygems</groupId>
+			<artifactId>teuton</artifactId>
+			<version>2.1.7</version>
+			<type>gem</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jruby</groupId>
+			<artifactId>jruby-complete</artifactId>
+			<version>9.2.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-engine-core</artifactId>
+			<version>2.0</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
 		<repository>
-			<id>central</id>
-			<name>jcenter</name>
-			<url>http://jcenter.bintray.com</url>
+			<id>rubygems</id>
+			<url>http://rubygems-proxy.torquebox.org/releases</url>
 		</repository>
 	</repositories>
 
