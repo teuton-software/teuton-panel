@@ -15,6 +15,7 @@ import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.typographic.TypographicExtension;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.parser.ParserEmulationProfile;
@@ -40,7 +41,8 @@ public class MarkdownUtils {
 				FootnoteExtension.create(),
 				TablesExtension.create(), 
 				TypographicExtension.create(), 
-				StrikethroughExtension.create()
+				StrikethroughExtension.create(),
+				YamlFrontMatterExtension.create()
 				)
 			);
 		

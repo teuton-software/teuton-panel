@@ -4,6 +4,10 @@
 	-teuton-green: #00c21b;
 }
 
+.jfx-spinner .arc { 
+	-fx-stroke: #635c67;
+}
+
 .title {
 	-fx-font-size: 18pt;	
 	-fx-font-weight: bold;

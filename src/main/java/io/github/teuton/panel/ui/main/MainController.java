@@ -57,7 +57,7 @@ public class MainController extends ParentController {
 
 		// create classroom mode controller
 		classroomController = new ClassroomController();
-		classroomController.selectedFileProperty().bind(selectedFile);
+		classroomController.challengeProperty().bind(selectedFile);
 		
 		// create pre-classroom controller
 		preClassroomController = new PreClassroomController();

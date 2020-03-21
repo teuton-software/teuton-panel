@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
@@ -12,36 +13,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="root" styleClass="background"
-	stylesheets="@../css/styles.css"
-	xmlns="http://javafx.com/javafx/11.0.1"
-	xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<top>
 		<BorderPane BorderPane.alignment="CENTER">
 			<right>
-				<HBox alignment="CENTER_RIGHT" prefWidth="100.0"
-					BorderPane.alignment="CENTER">
+				<HBox alignment="CENTER_RIGHT" prefWidth="100.0" BorderPane.alignment="CENTER">
 					<children>
-						<JFXButton fx:id="runButton"
-							contentDisplay="GRAPHIC_ONLY" onAction="#onRunAction"
-							ripplerFill="#92a897">
+                  <JFXSpinner fx:id="runningSpinner" prefHeight="32.0" prefWidth="37.0" startingAngle="0.0" />
+						<JFXButton fx:id="runButton" contentDisplay="GRAPHIC_ONLY" onAction="#onRunAction" ripplerFill="#92a897">
 							<tooltip>
 								<Tooltip text="Execute test" />
 							</tooltip>
 							<graphic>
-								<FontIcon iconColor="#635c67" iconLiteral="fas-play"
-									iconSize="24" />
-							</graphic>
-						</JFXButton>
-						<JFXButton fx:id="pauseButton"
-							contentDisplay="GRAPHIC_ONLY" onAction="#onPauseAction"
-							ripplerFill="#92a897">
-							<tooltip>
-								<Tooltip text="Pause execution" />
-							</tooltip>
-							<graphic>
-								<FontIcon iconColor="#635c67" iconLiteral="fas-pause"
-									iconSize="24" />
+								<FontIcon iconColor="#635c67" iconLiteral="fas-play" iconSize="24" />
 							</graphic>
 						</JFXButton>
 					</children>
@@ -50,15 +34,12 @@
 			<left>
 				<HBox prefWidth="100.0" BorderPane.alignment="CENTER">
 					<children>
-						<JFXButton fx:id="backButton"
-							contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction"
-							ripplerFill="#92a897">
+						<JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" ripplerFill="#92a897">
 							<tooltip>
 								<Tooltip text="Back" />
 							</tooltip>
 							<graphic>
-								<FontIcon iconColor="#635c67"
-									iconLiteral="fas-arrow-left" iconSize="24" />
+								<FontIcon iconColor="#635c67" iconLiteral="fas-arrow-left" iconSize="24" />
 							</graphic>
 						</JFXButton>
 					</children>
@@ -68,8 +49,7 @@
 				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 			</padding>
 			<center>
-				<Label fx:id="testNameLabel" text="&lt;Test title&gt;"
-					BorderPane.alignment="CENTER" />
+				<Label fx:id="testNameLabel" text="&lt;Test title&gt;" BorderPane.alignment="CENTER" />
 			</center>
 		</BorderPane>
 	</top>
@@ -78,16 +58,15 @@
 			<tabs>
 				<Tab fx:id="descriptionTab" closable="false" text="Description" />
 				<Tab fx:id="casesTab" closable="false" text="Cases">
-					<SplitPane dividerPositions="0.25"
-						styleClass="transparent">
+					<SplitPane dividerPositions="0.25" styleClass="transparent">
 						<items>
-							<JFXListView fx:id="casesList" prefHeight="200.0"
-								prefWidth="200.0" styleClass="transparent" />
+							<JFXListView fx:id="casesList" prefHeight="200.0" prefWidth="200.0" styleClass="transparent" />
 							<BorderPane fx:id="casePane" />
 						</items>
 					</SplitPane>
 				</Tab>
 				<Tab fx:id="resumeTab" closable="false" text="Resume" />
+				<Tab fx:id="outputTab" closable="false" text="Output" />
 			</tabs>
 		</TabPane>
 	</center>

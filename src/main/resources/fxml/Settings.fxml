@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -9,81 +8,36 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity"
-	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-	xmlns="http://javafx.com/javafx"
-	xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
 		<GridPane hgap="5.0" BorderPane.alignment="CENTER">
 			<columnConstraints>
-				<ColumnConstraints halignment="RIGHT"
-					hgrow="ALWAYS" minWidth="10.0" />
-				<ColumnConstraints halignment="LEFT" hgrow="NEVER"
-					minWidth="10.0" />
-				<ColumnConstraints halignment="RIGHT"
-					hgrow="NEVER" minWidth="10.0" />
+				<ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="10.0" />
+				<ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
 			</columnConstraints>
 			<rowConstraints>
-				<RowConstraints minHeight="10.0" prefHeight="20.0"
-					vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="20.0"
-					vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="20.0"
-					vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="20.0"
-					vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="20.0"
-					vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="20.0"
-					vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
 				<Label text="Operating system:" GridPane.rowIndex="3" />
-				<Label fx:id="osLabel" text="-" GridPane.columnIndex="1"
-					GridPane.rowIndex="3" />
-				<Label text="T-Node:" GridPane.rowIndex="4" />
-				<JFXToggleButton fx:id="tNodeToggleButton"
-					contentDisplay="GRAPHIC_ONLY" focusTraversable="false"
-					onAction="#onTNodeToggleButtonAction" size="8.0" text="T-Node"
-					GridPane.columnIndex="1" GridPane.rowIndex="4">
-					<tooltip>
-						<Tooltip text="Install/uninstall T-Node" />
-					</tooltip>
-				</JFXToggleButton>
-				<Label layoutX="10.0" layoutY="52.0" text="S-Node:"
-					GridPane.rowIndex="5" />
-				<JFXToggleButton fx:id="sNodeToggleButton"
-					contentDisplay="GRAPHIC_ONLY" focusTraversable="false"
-					layoutX="112.0" layoutY="31.0"
-					onAction="#onSNodeToggleButtonAction" size="8.0" text="S-Node"
-					GridPane.columnIndex="1" GridPane.rowIndex="5">
+				<Label fx:id="osLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label layoutX="10.0" layoutY="52.0" text="S-Node:" GridPane.rowIndex="4" />
+				<JFXToggleButton fx:id="sNodeToggleButton" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="112.0" layoutY="31.0" onAction="#onSNodeToggleButtonAction" size="8.0" text="S-Node" GridPane.columnIndex="1" GridPane.rowIndex="4">
 					<tooltip>
 						<Tooltip text="Install/uninstall S-Node" />
 					</tooltip>
 				</JFXToggleButton>
 				<Label text="Teuton version:" GridPane.rowIndex="1" />
-				<Label fx:id="teutonVersionLabel" text="-"
-					GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<JFXButton fx:id="upgradeButton"
-					contentDisplay="GRAPHIC_ONLY" focusTraversable="false"
-					onAction="#onUpgradeButtonAction" text="Upgrade"
-					GridPane.columnIndex="2" GridPane.rowIndex="1">
-					<tooltip>
-						<Tooltip text="Upgrade Teuton" />
-					</tooltip>
-					<graphic>
-						<FontIcon iconLiteral="fas-download" iconSize="18" />
-					</graphic>
-				</JFXButton>
+				<Label fx:id="teutonVersionLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label layoutX="25.0" layoutY="52.0" text="App version:" />
-				<Label fx:id="appVersionLabel" layoutX="148.0" layoutY="52.0"
-					text="-" GridPane.columnIndex="1" />
-				<Label layoutX="43.0" layoutY="52.0" text="Username:"
-					GridPane.rowIndex="2" />
-				<Label fx:id="usernameLabel" layoutX="148.0" layoutY="52.0"
-					text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label fx:id="appVersionLabel" layoutX="148.0" layoutY="52.0" text="-" GridPane.columnIndex="1" />
+				<Label layoutX="43.0" layoutY="52.0" text="Username:" GridPane.rowIndex="2" />
+				<Label fx:id="usernameLabel" layoutX="148.0" layoutY="52.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 			</children>
 		</GridPane>
 	</center>

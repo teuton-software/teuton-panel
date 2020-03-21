@@ -20,7 +20,7 @@
 						<Label styleClass="title-label" text="Select mode" />
 						<VBox spacing="15.0" VBox.vgrow="NEVER">
 							<children>
-								<JFXButton alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#onClassroomModeButtonAction" styleClass="modeButton" text="Classroom">
+								<JFXButton fx:id="classroomButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" onAction="#onClassroomModeButtonAction" styleClass="modeButton" text="Classroom">
 									<graphic>
 										<HBox alignment="CENTER" minHeight="30.0" minWidth="30.0">
 											<children>
@@ -29,7 +29,7 @@
 										</HBox>
 									</graphic>
 								</JFXButton>
-								<JFXButton alignment="BASELINE_LEFT" layoutX="15.0" layoutY="15.0" maxWidth="1.7976931348623157E308" onAction="#onContestModeButtonAction" styleClass="modeButton" text="Contest">
+								<JFXButton fx:id="contestButton" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="15.0" maxWidth="1.7976931348623157E308" onAction="#onContestModeButtonAction" styleClass="modeButton" text="Contest">
 									<graphic>
 										<HBox alignment="CENTER" minHeight="30.0" minWidth="30.0">
 											<children>
@@ -38,7 +38,7 @@
 										</HBox>
 									</graphic>
 								</JFXButton>
-								<JFXButton alignment="BASELINE_LEFT" layoutX="15.0" layoutY="52.0" maxWidth="1.7976931348623157E308" onAction="#onStandaloneModeButtonAction" styleClass="modeButton" text="Standalone">
+								<JFXButton fx:id="standaloneButton" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="52.0" maxWidth="1.7976931348623157E308" onAction="#onStandaloneModeButtonAction" styleClass="modeButton" text="Standalone">
 									<graphic>
 										<HBox alignment="CENTER" minHeight="30.0" minWidth="30.0">
 											<children>

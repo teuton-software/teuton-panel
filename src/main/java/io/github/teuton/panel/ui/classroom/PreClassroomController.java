@@ -9,7 +9,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import io.github.teuton.panel.ui.app.TeutonPanelApp;
 import io.github.teuton.panel.ui.mode.ModeController;
-import io.github.teuton.panel.ui.settings.Settings;
+import io.github.teuton.panel.ui.model.Settings;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
 import javafx.beans.property.ObjectProperty;
@@ -69,13 +69,12 @@ public class PreClassroomController extends Controller<AnchorPane> {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		settings = new SimpleObjectProperty<>();
-		selectedFile = new SimpleObjectProperty<>();
+		selectedFile = new SimpleObjectProperty<>(new File("."));
 		folder = new SimpleStringProperty();
 
 		folder.bindBidirectional(folderText.textProperty());
 
-		openButton.disableProperty().bind(
-				teacherButton.selectedProperty().and(folder.isNotEmpty()).or(studentButton.selectedProperty()).not());
+		openButton.disableProperty().bind(teacherButton.selectedProperty().and(folder.isNotEmpty()).or(studentButton.selectedProperty()).not());
 
 		folderPane.visibleProperty().bind(teacherButton.selectedProperty());
 
@@ -95,14 +94,14 @@ public class PreClassroomController extends Controller<AnchorPane> {
 	private void onOpenAction(ActionEvent e) {
 		if (teacherButton.isSelected()) {
 			
-			if (!settings.get().isTNode()) {
-				Dialogs.error("You are not a T-Node!", "Sorry, you have to configure this node as a T-Node to continue.\nTake a look to settings panel.");
-				return;
-			}
-			
 			if (!new File(folder.get()).exists()) {
 				Dialogs.error("Challenge folder doesn't exist!", "Folder '" + folder.get() + "' can't be found.");
 				return;				
+			}
+			
+			if (!new File(folder.get(), "start.rb").exists()) {
+				Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + folder.get() + "' doesn't contain 'start.rb' file.");
+				return;
 			}
 			
 			setSelectedFile(new File(folder.get()));
@@ -122,7 +121,7 @@ public class PreClassroomController extends Controller<AnchorPane> {
 	private void onChooseFolderAction(ActionEvent e) {
 		DirectoryChooser dialog = new DirectoryChooser();
 		dialog.setTitle("Choose challenge folder");
-		dialog.setInitialDirectory(new File(".")); // new File(System.getProperty("user.home")));
+		dialog.setInitialDirectory(folder.get() == null ? new File(".") : new File(folder.get()));
 		File file = dialog.showDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
 			folder.set(file.getAbsolutePath());

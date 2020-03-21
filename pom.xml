@@ -7,8 +7,8 @@
 	<groupId>io.github.teuton-software</groupId>
 	<artifactId>teuton-panel</artifactId>
 
-	<description>Graphical front-end for TEUTON software</description>
-	<version>0.1.1-SNAPSHOT</version>
+	<description>Graphical front-end for TEUTON</description>
+	<version>0.2.1-SNAPSHOT</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
@@ -35,14 +35,36 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<exec.mainClass>io.github.teuton.panel.Main</exec.mainClass>
+		<!-- JapaPackager properites -->
+		<organizationEmail>teuton.software@protonmail.com</organizationEmail>
+		<bundleJre>true</bundleJre>
+		<generateInstaller>false</generateInstaller>
+		<administratorRequired>true</administratorRequired>
+		<createZipball>true</createZipball>
 	</properties>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/teuton-panel.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/teuton-panel.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.4-SNAPSHOT</version>
+				<version>0.9.4</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>
@@ -50,13 +72,6 @@
 						<goals>
 							<goal>package</goal>
 						</goals>
-						<configuration>
-							<bundleJre>true</bundleJre>
-							<generateInstaller>false</generateInstaller>
-							<administratorRequired>true</administratorRequired>
-							<organizationEmail>teuton.software@protonmail.com</organizationEmail>
-							<createZipball>true</createZipball>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

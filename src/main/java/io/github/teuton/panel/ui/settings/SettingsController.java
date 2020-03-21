@@ -7,9 +7,10 @@ import org.apache.commons.lang3.SystemUtils;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 
+import io.github.teuton.Teuton;
+import io.github.teuton.panel.ui.model.Settings;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
 import javafx.beans.binding.Bindings;
@@ -35,10 +36,7 @@ public class SettingsController extends Controller<BorderPane> {
 	private Label usernameLabel, osLabel, appVersionLabel, teutonVersionLabel;
 
 	@FXML
-	private JFXToggleButton tNodeToggleButton, sNodeToggleButton;
-
-	@FXML
-	private JFXButton upgradeButton;
+	private JFXToggleButton sNodeToggleButton;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -46,7 +44,7 @@ public class SettingsController extends Controller<BorderPane> {
 		// set initial app settings
 		Settings settings = new Settings();
 		settings.setOs(String.format("%s (%s)", SystemUtils.OS_NAME, SystemUtils.OS_VERSION));
-		settings.setTeutonVersion(TNode.getTeutonVersion());
+		settings.setTeutonVersion(Teuton.getVersion());
 		settings.setTNode(settings.getTeutonVersion() != null);
 		settings.setSNode(SNode.isInstalled());
 		settings.setAppVersion(ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.version"));
@@ -68,34 +66,16 @@ public class SettingsController extends Controller<BorderPane> {
 		popOver.setFadeOutDuration(Duration.millis(1));
 
 		// bind view to model
-		tNodeToggleButton.selectedProperty().bindBidirectional(settings.tNodeProperty());
 		sNodeToggleButton.selectedProperty().bindBidirectional(settings.sNodeProperty());
 		osLabel.textProperty().bind(settings.osProperty());
 		appVersionLabel.textProperty().bind(settings.appVersionProperty());
 		usernameLabel.textProperty().bind(settings.usernameProperty());
-		teutonVersionLabel.textProperty().bind(Bindings.when(settings.teutonVersionProperty().isNotEmpty())
-				.then(settings.teutonVersionProperty()).otherwise("Not installed"));
-		upgradeButton.disableProperty().bind(settings.tNodeProperty().not());
+		teutonVersionLabel.textProperty().bind(
+				Bindings
+					.when(settings.teutonVersionProperty().isNotEmpty())
+					.then(settings.teutonVersionProperty()).otherwise("Not installed")
+			);
 
-	}
-
-	@FXML
-	private void onTNodeToggleButtonAction(ActionEvent e) {
-		System.out.println("onTNodeToggleButtonAction: " + tNodeToggleButton.isSelected());
-		if (tNodeToggleButton.isSelected()) {
-
-			if (Dialogs.confirm("Install T-Node", "Do you want to install T-Node?") && TNode.install())
-				settings.get().setTeutonVersion(TNode.getTeutonVersion());
-			else
-				tNodeToggleButton.setSelected(false);
-
-		} else {
-
-			if (Dialogs.confirm("Uninstall T-Node", "Do you want to uninstall T-Node?") && TNode.uninstall())
-				settings.get().setTeutonVersion(null);
-			else
-				tNodeToggleButton.setSelected(true);
-		}
 	}
 
 	@FXML
@@ -111,13 +91,6 @@ public class SettingsController extends Controller<BorderPane> {
 			if (!(Dialogs.confirm("Uninstall S-Node", "Do you want to uninstall S-Node?") && SNode.uninstall()))
 				sNodeToggleButton.setSelected(true);
 
-		}
-	}
-
-	@FXML
-	private void onUpgradeButtonAction(ActionEvent e) {
-		if (Dialogs.confirm("Upgrade T-Node", "Do you want to upgrade Teuton?") && TNode.update()) {
-			settings.get().setTeutonVersion(TNode.getTeutonVersion());
 		}
 	}
 

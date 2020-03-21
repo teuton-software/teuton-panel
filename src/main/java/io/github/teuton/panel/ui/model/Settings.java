@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.settings;
+package io.github.teuton.panel.ui.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

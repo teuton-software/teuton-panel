@@ -12,27 +12,31 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSpinner;
 
-import io.github.teuton.panel.cli.Command;
-import io.github.teuton.panel.cli.CommandTask;
+import io.github.teuton.Teuton;
+import io.github.teuton.panel.cli.CommandFactory;
 import io.github.teuton.panel.cli.ExecutionResult;
 import io.github.teuton.panel.ui.components.CaseComponent;
 import io.github.teuton.panel.ui.components.MarkdownComponent;
 import io.github.teuton.panel.ui.components.WarningComponent;
 import io.github.teuton.panel.ui.mode.ModeController;
 import io.github.teuton.panel.ui.model.Case;
-import io.github.teuton.panel.ui.settings.CommandFactory;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
 import io.github.teuton.panel.utils.MarkdownUtils;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -45,9 +49,11 @@ public class ClassroomController extends Controller<BorderPane> {
 	// model
 	// ===================================
 
+	private BooleanProperty running;
 	private ListProperty<Case> cases;
-	private ObjectProperty<File> selectedFile;
+	private ObjectProperty<File> challenge;
 	private StringProperty description;
+	private ObjectProperty<File> results;
 
 	// ===================================
 	// view
@@ -58,7 +64,10 @@ public class ClassroomController extends Controller<BorderPane> {
 	private WarningComponent warningComponent;
 
 	@FXML
-	private JFXButton runButton, pauseButton, backButton;
+	private JFXSpinner runningSpinner;
+	
+	@FXML
+	private JFXButton runButton, backButton;
 
 	@FXML
 	private JFXListView<Case> casesList;
@@ -88,14 +97,15 @@ public class ClassroomController extends Controller<BorderPane> {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		// initialize model
-
-		description = new SimpleStringProperty();
-
+		
+		running = new SimpleBooleanProperty(false);
 		cases = new SimpleListProperty<>(FXCollections.observableArrayList());
+		challenge = new SimpleObjectProperty<>();
+		description = new SimpleStringProperty();
+		results = new SimpleObjectProperty<>();
 
-		selectedFile = new SimpleObjectProperty<>();
-
-		// initialize view components
+		
+		// initialize view
 		
 		warningComponent = new WarningComponent();
 		warningComponent.messageProperty().bind(Bindings.when(cases.emptyProperty()).then("Press 'Play' button to run the test").otherwise("Select a case from the list on the left"));
@@ -110,15 +120,24 @@ public class ClassroomController extends Controller<BorderPane> {
 		casesList.itemsProperty().bind(cases);
 		casesList.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onCaseSelectionChanged(ov, nv));
 
-		testNameLabel.textProperty().bind(selectedFile.asString());
+		testNameLabel.textProperty().bind(challenge.asString());
+		
+		runningSpinner.visibleProperty().bind(running);
+		runningSpinner.managedProperty().bind(runningSpinner.visibleProperty());
 
+		runButton.visibleProperty().bind(running.not());
+		runButton.managedProperty().bind(runButton.visibleProperty());
+		
 		// listeners
 		
 		onCaseSelectionChanged(null, null);
 
-		getRoot().sceneProperty().addListener((o, ov, nv) -> {
-			loadResults(new File(selectedFile.get(), "var"));
-			teutonReadme();
+		challenge.addListener((o, ov, nv) -> {
+			if (nv != null) {
+				results.set(new File(nv, "var/" + nv.getName()));
+				loadResults();
+				teutonReadme();
+			}
 		});
 
 	}
@@ -147,7 +166,7 @@ public class ClassroomController extends Controller<BorderPane> {
 	}
 
 	private void teutonReadme() {
-		File workingDirectory = selectedFile.get();
+		File workingDirectory = challenge.get();
 
 		File readmeFile = new File(workingDirectory, "assets/README.md");
 
@@ -172,29 +191,28 @@ public class ClassroomController extends Controller<BorderPane> {
 	}
 
 	private void teutonPlay() {
-		File workingDirectory = selectedFile.get();
 
-		Command cmd = CommandFactory.getCommand("teuton.play");
-
-		CommandTask task = new CommandTask("Playing teuton background task", cmd);
-		task.setWorkingDirectory(workingDirectory);
-		task.getData().put("file", ".");
-		task.setOnSucceeded(v -> {
-
-			File outputDirectory = new File(workingDirectory, "var");
-			loadResults(outputDirectory);
-
+		Task<String> task = new Task<String>() {
+			protected String call() throws Exception {
+				return Teuton.play(getChallenge());
+			}
+		};
+		task.stateProperty().addListener((o, ov, nv) -> {
+			running.set(nv.equals(State.RUNNING));
 		});
-		task.setOnFailed(v -> {
-			Dialogs.exception(v.getSource().getException().getMessage(), "", v.getSource().getException());
+		task.setOnSucceeded(e -> {
+			loadResults();			
 		});
+		task.setOnFailed(e -> {
+			Dialogs.error("Error playing challenge", e.getSource().getException().getMessage());
+		});
+		new Thread(task).start();
 
-		Dialogs.runCommand(task);
 	}
 
-	private void loadResults(File varDirectory) {
+	private void loadResults() {
 		cases.clear();
-		FileUtils.listFiles(varDirectory, new WildcardFileFilter("case-*.json"), null).stream().forEach(f -> {
+		FileUtils.listFiles(results.get(), new WildcardFileFilter("case-*.json"), null).stream().forEach(f -> {
 			try {
 				cases.add(Case.load(f));
 			} catch (FileNotFoundException e) {
@@ -202,11 +220,6 @@ public class ClassroomController extends Controller<BorderPane> {
 			}
 		});
 		casesList.getSelectionModel().selectFirst();
-	}
-
-	@FXML
-	private void onPauseAction(ActionEvent e) {
-		System.out.println("pause");
 	}
 
 	@FXML
@@ -218,16 +231,16 @@ public class ClassroomController extends Controller<BorderPane> {
 	// properties
 	// ===================================
 
-	public final ObjectProperty<File> selectedFileProperty() {
-		return this.selectedFile;
+	public final ObjectProperty<File> challengeProperty() {
+		return this.challenge;
 	}
 
-	public final File getSelectedFile() {
-		return this.selectedFileProperty().get();
+	public final File getChallenge() {
+		return this.challengeProperty().get();
 	}
 
-	public final void setSelectedFile(final File selectedFile) {
-		this.selectedFileProperty().set(selectedFile);
+	public final void setChallenge(final File challenge) {
+		this.challengeProperty().set(challenge);
 	}
 
 	public final StringProperty descriptionProperty() {

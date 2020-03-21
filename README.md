@@ -32,10 +32,11 @@ git clone https://github.com/teuton-software/teuton-panel.git
 cd teuton-panel
 ```
 
-2. Download gems:
+2. Download and copy `rubygems` to resources:
 
 ```bash
 mvn gem:initialize
+mvn validate
 ```
 
 3. Compile and package the project:

@@ -1,13 +1,9 @@
-package io.github.teuton.panel.ui.settings;
+package io.github.teuton.panel.cli;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.SystemUtils;
-
-import io.github.teuton.panel.cli.Command;
-import io.github.teuton.panel.cli.OS;
-import io.github.teuton.panel.cli.Shell;
 
 public class CommandFactory {
 

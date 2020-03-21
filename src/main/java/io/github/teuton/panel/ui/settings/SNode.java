@@ -1,5 +1,6 @@
 package io.github.teuton.panel.ui.settings;
 
+import io.github.teuton.panel.cli.CommandFactory;
 import io.github.teuton.panel.cli.CommandTask;
 import io.github.teuton.panel.ui.utils.Dialogs;
 

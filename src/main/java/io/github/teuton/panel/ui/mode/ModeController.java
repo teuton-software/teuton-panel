@@ -6,14 +6,12 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
-import io.github.teuton.panel.cli.CommandTask;
 import io.github.teuton.panel.ui.classroom.PreClassroomController;
-import io.github.teuton.panel.ui.settings.CommandFactory;
-import io.github.teuton.panel.ui.settings.Settings;
+import io.github.teuton.panel.ui.model.Settings;
 import io.github.teuton.panel.ui.settings.SettingsController;
 import io.github.teuton.panel.ui.utils.Controller;
-import io.github.teuton.panel.ui.utils.Dialogs;
 import io.github.teuton.panel.utils.DesktopUtils;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -56,6 +54,12 @@ public class ModeController extends Controller<AnchorPane> {
 		settings = new SimpleObjectProperty<Settings>();
 		settings.bind(settingsController.settingsProperty());
 
+		// TODO remove these lines
+		contestButton.setDisable(true);
+		standaloneButton.setDisable(true);
+		
+		Platform.runLater(() -> classroomButton.requestFocus()); 
+		
 	}
 
 	// ===================================
@@ -81,19 +85,6 @@ public class ModeController extends Controller<AnchorPane> {
 	@FXML
 	private void onContestModeButtonAction(ActionEvent event) {
 		System.out.println("contest");
-
-		CommandTask task = new CommandTask("Do nothing", CommandFactory.getCommand("do.nothing"));
-		task.setOnSucceeded(e -> {
-			Dialogs.info("Do Nothing", "Sucess");
-		});
-		task.setOnFailed(e -> {
-			Dialogs.exception("Do Nothing", "Failed", e.getSource().getException());
-		});
-		task.setOnCancelled(e -> {
-			Dialogs.error("Do Nothing", "Cancelled");
-		});
-		Dialogs.runCommand(task);
-
 	}
 
 	@FXML

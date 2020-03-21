@@ -114,6 +114,7 @@ public class Shell {
 		try {
 
 			final StopWatch chrono = new StopWatch();
+			chrono.start();
 
 			result.setExecutionTime(LocalDateTime.now());
 
