@@ -5,7 +5,9 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.jfoenix.controls.JFXListCell;
 
-import io.github.teuton.panel.ui.model.Case;
+import io.github.teuton.panel.ui.model.cases.Case;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class CaseListCell extends JFXListCell<Case> {
@@ -17,6 +19,19 @@ public class CaseListCell extends JFXListCell<Case> {
 		icon = new FontIcon();
 		icon.setIconSize(24);
 		icon.setIconCode(FontAwesomeSolid.USER_CIRCLE);
+        addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+        	MultipleSelectionModel<Case> selectionModel = this.getListView().getSelectionModel();
+        	this.getListView().requestFocus();
+            if (!this.isEmpty()) {
+                int index = this.getIndex();
+                if (selectionModel.getSelectedIndices().contains(index)) {
+                    selectionModel.clearSelection(index);
+                } else {
+                    selectionModel.select(index);
+                }
+                event.consume();
+            }
+        });
 	}
 
 	@Override

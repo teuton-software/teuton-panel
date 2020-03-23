@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root fx:id="root" alignment="CENTER" fillWidth="false" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BarChart fx:id="chart" legendVisible="false">
+        <xAxis>
+          <CategoryAxis label="Grades" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Cases" side="LEFT" />
+        </yAxis>
+      </BarChart>
+   </children>
+</fx:root>

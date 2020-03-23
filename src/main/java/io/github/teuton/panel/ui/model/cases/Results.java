@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.model;
+package io.github.teuton.panel.ui.model.cases;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +17,7 @@ public class Results {
 	@SerializedName("case_id")
 	private IntegerProperty caseId = new SimpleIntegerProperty();
 
-	@SerializedName("start_time_")
+	@SerializedName(value = "start_time_")
 	private StringProperty startTime = new SimpleStringProperty();
 
 	@SerializedName("finish_time")

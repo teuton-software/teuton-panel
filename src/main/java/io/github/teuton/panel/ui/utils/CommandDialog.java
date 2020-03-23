@@ -20,7 +20,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
-public class CommandDialog extends Dialog<Void>  implements Initializable {
+public class CommandDialog extends Dialog<Void> implements Initializable {
 
 	private CommandTask task;
 		

@@ -8,7 +8,7 @@
 	<artifactId>teuton-panel</artifactId>
 
 	<description>Graphical front-end for TEUTON</description>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.2-SNAPSHOT</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
@@ -120,10 +120,10 @@
 			<version>11.3.4</version>
 		</dependency>
 		<dependency>
-			<!-- available icons list: https://fontawesome.com/icons?d=gallery&m=free -->
+			<!-- available icons list: http://kordamp.org/ikonli/cheat-sheet-fontawesome5.html -->
 			<groupId>org.kordamp.ikonli</groupId>
 			<artifactId>ikonli-fontawesome5-pack</artifactId>
-			<version>11.3.4</version>
+			<version>11.3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.controlsfx</groupId>

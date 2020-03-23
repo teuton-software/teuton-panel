@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.model;
+package io.github.teuton.panel.ui.model.cases;
 
 import com.google.gson.annotations.SerializedName;
 

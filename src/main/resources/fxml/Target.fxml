@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Accordion?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<fx:root xmlns:fx="http://javafx.com/fxml/1" type="Accordion"
-	fx:id="root">
-
-
+<fx:root fx:id="root" animated="false" stylesheets="@../css/styles.css" type="TitledPane" wrapText="true" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<content>
+      <BorderPane fx:id="contentPane">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </BorderPane>
+	</content>
+	<graphic>
+		<HBox alignment="CENTER_LEFT" spacing="5.0">
+			<children>
+				<HBox alignment="BASELINE_CENTER" minWidth="25.0">
+					<children>
+						<FontIcon fx:id="rightIcon" iconColor="GREEN" iconLiteral="fas-check-square" iconSize="20" />
+						<FontIcon fx:id="failIcon" iconColor="RED" iconLiteral="fas-times-circle" iconSize="20" />
+					</children>
+				</HBox>
+				<Label fx:id="groupLabel" text="&lt;Group name&gt;" />
+			</children>
+		</HBox>
+	</graphic>
 </fx:root>
-

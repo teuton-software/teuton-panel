@@ -44,7 +44,7 @@ public class SettingsController extends Controller<BorderPane> {
 		// set initial app settings
 		Settings settings = new Settings();
 		settings.setOs(String.format("%s (%s)", SystemUtils.OS_NAME, SystemUtils.OS_VERSION));
-		settings.setTeutonVersion(Teuton.getVersion());
+		settings.setTeutonVersion(Teuton.version());
 		settings.setTNode(settings.getTeutonVersion() != null);
 		settings.setSNode(SNode.isInstalled());
 		settings.setAppVersion(ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.version"));

@@ -72,12 +72,12 @@ public class ConfigComponent extends BorderPane implements Initializable {
 			}
 			
 			RowConstraints constraint = new RowConstraints();
-			constraint.setMinHeight(10);
+			constraint.setMinHeight(20);
 			constraint.setPrefHeight(20);
 			constraint.setVgrow(Priority.NEVER);
 			
-			propertiesPane.addRow(i, nameLabel, valueNode);
 			propertiesPane.getRowConstraints().add(i, constraint);
+			propertiesPane.addRow(i, nameLabel, valueNode);
 			
 			i++;
 		}

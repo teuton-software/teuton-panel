@@ -1,5 +1,6 @@
 /bin/
 /target/
+/samples/
 /src/main/resources/rubygems
 *.json
 *.log

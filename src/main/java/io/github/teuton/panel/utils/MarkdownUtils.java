@@ -34,15 +34,14 @@ public class MarkdownUtils {
 	static {
 		
 		MutableDataSet options = new MutableDataSet();
-		options.setFrom(ParserEmulationProfile.KRAMDOWN);
+		options.setFrom(ParserEmulationProfile.GITHUB);
 		options.set(Parser.EXTENSIONS, Arrays.asList(
 				AbbreviationExtension.create(), 
 				DefinitionExtension.create(), 
 				FootnoteExtension.create(),
 				TablesExtension.create(), 
 				TypographicExtension.create(), 
-				StrikethroughExtension.create(),
-				YamlFrontMatterExtension.create()
+				StrikethroughExtension.create()
 				)
 			);
 		

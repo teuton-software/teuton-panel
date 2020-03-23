@@ -1,27 +1,21 @@
-package io.github.teuton.panel.ui.model;
+package io.github.teuton.panel.ui.model.cases;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-
-import org.hildan.fxgson.FxGson;
-
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 public class Case {
 
 	@SerializedName("config")
-	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(
-			FXCollections.observableHashMap());
+	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(FXCollections.observableHashMap());
 
 	@SerializedName("test")
 	private ObjectProperty<Test> test = new SimpleObjectProperty<>(new Test());
@@ -29,11 +23,11 @@ public class Case {
 	@SerializedName("results")
 	private ObjectProperty<Results> results = new SimpleObjectProperty<>(new Results());
 
-	public static Case load(File file) throws FileNotFoundException {
-		Reader json = new FileReader(file);
-		Gson gson = FxGson.create();
-		return gson.fromJson(json, Case.class);
-	}
+	@SerializedName("logs")
+	private ListProperty<String> logs = new SimpleListProperty<String>(FXCollections.observableArrayList());
+
+	@SerializedName("hall_of_fame")
+	private MapProperty<String, String> hallOfFame = new SimpleMapProperty<String, String>(FXCollections.observableHashMap());
 
 	public final MapProperty<String, Object> configProperty() {
 		return this.config;
@@ -69,6 +63,30 @@ public class Case {
 
 	public final void setResults(final Results results) {
 		this.resultsProperty().set(results);
+	}
+
+	public final ListProperty<String> logsProperty() {
+		return this.logs;
+	}
+
+	public final ObservableList<String> getLogs() {
+		return this.logsProperty().get();
+	}
+
+	public final void setLogs(final ObservableList<String> logs) {
+		this.logsProperty().set(logs);
+	}
+
+	public final MapProperty<String, String> hallOfFameProperty() {
+		return this.hallOfFame;
+	}
+
+	public final ObservableMap<String, String> getHallOfFame() {
+		return this.hallOfFameProperty().get();
+	}
+
+	public final void setHallOfFame(final ObservableMap<String, String> hallOfFame) {
+		this.hallOfFameProperty().set(hallOfFame);
 	}
 
 }

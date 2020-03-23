@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import io.github.teuton.panel.ui.model.Case;
+import io.github.teuton.panel.ui.model.cases.Case;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -24,14 +24,14 @@ public class CaseComponent extends TabPane implements Initializable {
 	// view
 
 	private ConfigComponent configComponent;
-	private TargetComponent targetsComponent;
+	private GroupComponent groupComponent;
 	private ResultsComponent resultsComponent;
 
 	@FXML
 	private Accordion testsPane;
 
 	@FXML
-	private Tab configTab, targetsTab, resultsTab;
+	private Tab configTab, groupsTab, resultsTab, logsTab;
 
 	public CaseComponent() {
 		try {
@@ -51,11 +51,11 @@ public class CaseComponent extends TabPane implements Initializable {
 		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
 
 		configComponent = new ConfigComponent();
-		targetsComponent = new TargetComponent();
+		groupComponent = new GroupComponent();
 		resultsComponent = new ResultsComponent();
 
 		configTab.setContent(configComponent);
-		targetsTab.setContent(targetsComponent);
+		groupsTab.setContent(groupComponent);
 		resultsTab.setContent(resultsComponent);
 
 	}
@@ -63,12 +63,12 @@ public class CaseComponent extends TabPane implements Initializable {
 	private void onCaseChanged(ObservableValue<? extends Case> o, Case ov, Case nv) {
 		if (ov != null) {
 			configComponent.configProperty().unbind();
-			targetsComponent.testProperty().unbind();
+			groupComponent.testProperty().unbind();
 			resultsComponent.resultsProperty().unbind();
 		}
 		if (nv != null) {
 			configComponent.configProperty().bind(nv.configProperty());
-			targetsComponent.testProperty().bind(nv.testProperty());
+			groupComponent.testProperty().bind(nv.testProperty());
 			resultsComponent.resultsProperty().bind(nv.resultsProperty());
 		}
 	}

@@ -2,6 +2,8 @@ package io.github.teuton;
 
 import java.io.File;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +16,7 @@ public class Teuton {
 	private static final Pattern VERSION_PATTERN = Pattern.compile("^teuton *\\(version *(.*)\\)$");
 
 	@SuppressWarnings("unchecked")
-	public static String ruby(String rubyfile, File currentDirectory, String ... args) {
+	private static String ruby(String rubyfile, File currentDirectory, String ... args) {
 		StringWriter writer = new StringWriter();
 		ScriptingContainer container = new ScriptingContainer(LocalContextScope.SINGLETHREAD);
 		container.setCurrentDirectory(currentDirectory.getAbsolutePath());
@@ -25,15 +27,15 @@ public class Teuton {
 		return writer.toString();
 	}
 
-	public static String execute(File currentDirectory, String ... args) {
+	private static String execute(File currentDirectory, String ... args) {
 		return ruby("rubygems/bin/teuton", currentDirectory, args);
 	}
 
-	public static String execute(String ... args) {
+	private static String execute(String ... args) {
 		return execute(new File("."), args);
 	}
 	
-	public static String getVersion() {
+	public static String version() {
 		String output = execute("version");
 		Matcher m = VERSION_PATTERN.matcher(output.trim());
 		if (m.matches()) {
@@ -41,9 +43,18 @@ public class Teuton {
 		}
 		return null;
 	}
-	
+
 	public static String play(File challengeDirectory) {
-		return Teuton.execute(challengeDirectory, "play", "--export=json", ".");		
+		return play(challengeDirectory, null);
+	}
+	
+	public static String play(File challengeDirectory, File configFile) {
+		List<String> args = new ArrayList<>();
+		args.add("play");
+		args.add("--export=json");
+		if (configFile != null) args.add("--cpath=" + configFile.getAbsolutePath());
+		args.add(".");
+		return Teuton.execute(challengeDirectory, args.toArray(new String[args.size()]));		
 	}
 
 	public static String readme(File challengeDirectory) {
