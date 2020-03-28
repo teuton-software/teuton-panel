@@ -63,7 +63,7 @@
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.5-SNAPSHOT</version>
+				<version>0.9.4</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>
