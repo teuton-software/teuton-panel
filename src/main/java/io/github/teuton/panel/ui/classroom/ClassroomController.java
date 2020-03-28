@@ -23,7 +23,6 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -152,24 +151,22 @@ public class ClassroomController extends Controller<AnchorPane> {
 				return;
 			}
 			
+			// set selected challenge (it's propagated to teacher controller) 
 			setSelectedFile(new File(challengeFolderPath.get()));
 			
+			// stores opened challenge info
 			ChallengeInfo info = new ChallengeInfo();
 			info.setChallengeFolder(challengeFolderPath.get());
 			info.setConfigFile(configFilePath.get());
 			info.setTitle(getSelectedFile().getName());
 			Config.getConfig().getRecentChallenges().add(info);
-
+			
+			// change view to teacher mode 
 			setShown(TeacherController.class);
 			
 		} else {
 			
 			Dialogs.error("Not available", "Sorry, Teuton Panel is not yet available to students.");
-			
-//			if (!settings.get().isSNode()) {
-//				Dialogs.error("You are not a S-Node!", "Sorry, you have to configure this node as a S-Node to continue.\nTake a look to settings panel.");
-//				return;
-//			}
 			
 		}
 	}

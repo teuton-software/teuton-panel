@@ -2,7 +2,6 @@ package io.github.teuton.panel.ui.model.resume;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.github.teuton.panel.ui.model.cases.Case;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.SimpleListProperty;

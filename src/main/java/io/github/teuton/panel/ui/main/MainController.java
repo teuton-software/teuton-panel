@@ -19,8 +19,8 @@ public class MainController extends ParentController {
 
 	private ModeController modeController;
 	private StandaloneController standaloneController;
-	private TeacherController classroomController;
-	private ClassroomController preClassroomController;
+	private TeacherController teacherController;
+	private ClassroomController classroomController;
 	
 	// ===================================
 	// view
@@ -40,21 +40,22 @@ public class MainController extends ParentController {
 		// create mode selector controller
 		modeController = new ModeController();
 
-		// create pre-classroom controller
-		preClassroomController = new ClassroomController();
-		preClassroomController.settingsProperty().bind(modeController.settingsProperty());
-
 		// create classroom mode controller
-		classroomController = new TeacherController();
-		classroomController.challengeProperty().bind(preClassroomController.selectedFileProperty());
+		classroomController = new ClassroomController();
+		classroomController.settingsProperty().bind(modeController.settingsProperty());
+
+		// create teacher controller
+		teacherController = new TeacherController();
+		teacherController.challengeProperty().bind(classroomController.selectedFileProperty());
+		classroomController.loadingProperty().bind(teacherController.loadingProperty());
 		
 		// create standalone mode controller
 		standaloneController = new StandaloneController();
 
 		// register controllers
 		registerController(modeController);
-		registerController(preClassroomController);
 		registerController(classroomController);
+		registerController(teacherController);
 		registerController(standaloneController);
 
 		// init properties

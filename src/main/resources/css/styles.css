@@ -8,6 +8,15 @@
 	-fx-stroke: #635c67; /* darkgray */
 }
 
+.white-spinner .arc { 
+	-fx-stroke: white;
+}
+
+.dark-spinner .arc { 
+	-fx-stroke: #635c67; /* darkgray */
+}
+
+
 .title {
 	-fx-font-size: 18pt;	
 	-fx-font-weight: bold;

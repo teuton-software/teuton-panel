@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" alignment="CENTER"
-	stylesheets="@../css/styles.css"
-	xmlns="http://javafx.com/javafx"
-	xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: rgba(0,0,0,0.5);">
-	<children>
-		<ImageView pickOnBounds="true" preserveRatio="true">
-			<image>
-				<Image url="@../images/loading-200x200.gif" />
-			</image>
-		</ImageView>
-	</children>
-</VBox>
+<BorderPane fx:id="loadingPane" style="-fx-background-color: transparent" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXSpinner styleClass="dark-spinner" />
+            <Label fx:id="loadingLabel" style="-fx-font-weight: bold;" text="Loading markdown..." />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

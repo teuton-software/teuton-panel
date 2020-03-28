@@ -53,7 +53,7 @@
                         <TableColumn fx:id="gradeColumn" prefWidth="-1.0" text="Grade" />
                         <TableColumn fx:id="skipColumn" prefWidth="-1.0" text="Skip" />
                         <TableColumn fx:id="moodleIdColumn" prefWidth="-1.0" text="Moodle ID" />
-                        <TableColumn fx:id="moodleFedbackColumn" prefWidth="-1.0" text="Moodle feedback" />
+                        <TableColumn fx:id="moodleFeedbackColumn" prefWidth="-1.0" text="Moodle feedback" />
                         <TableColumn fx:id="connStatusColumn" prefWidth="-1.0" text="Conn.status" />
                     </columns>
                      <columnResizePolicy>

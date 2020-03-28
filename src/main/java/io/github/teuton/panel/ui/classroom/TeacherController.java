@@ -1,6 +1,5 @@
 package io.github.teuton.panel.ui.classroom;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +12,6 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXSpinner;
 
 import io.github.teuton.Teuton;
 import io.github.teuton.panel.ui.components.CasesComponent;
@@ -26,6 +24,7 @@ import io.github.teuton.panel.ui.model.cases.Case;
 import io.github.teuton.panel.ui.model.resume.Resume;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
+import io.github.teuton.panel.utils.DesktopUtils;
 import io.github.teuton.panel.utils.JSONUtils;
 import io.github.teuton.panel.utils.MarkdownUtils;
 import javafx.beans.Observable;
@@ -74,7 +73,7 @@ public class TeacherController extends Controller<BorderPane> {
 
 	@FXML
 	private VBox runningPane;
-	
+
 	@FXML
 	private JFXButton runButton, backButton;
 
@@ -83,7 +82,7 @@ public class TeacherController extends Controller<BorderPane> {
 
 	@FXML
 	private TabPane tabPane;
-	
+
 	@FXML
 	private Tab descriptionTab, casesTab, resumeTab, hallOfFameTab, outputTab;
 
@@ -101,50 +100,50 @@ public class TeacherController extends Controller<BorderPane> {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		// model
-		
+
 		running = new SimpleBooleanProperty(false);
 		challenge = new SimpleObjectProperty<>();
 		description = new SimpleStringProperty();
 		resume = new SimpleObjectProperty<>();
 		cases = new SimpleListProperty<>(FXCollections.observableArrayList());
 		output = new SimpleStringProperty();
-		
+
 		// components
-		
+
 		hallOfFameComponent = new HallOfFameComponent();
 		hallOfFameTab.setContent(hallOfFameComponent);
-		
+
 		outputComponent = new OutputComponent();
 		outputTab.setContent(outputComponent);
-		
+
 		casesComponent = new CasesComponent();
 		casesTab.setContent(casesComponent);
-		
+
 		descriptionComponent = new MarkdownComponent();
 		descriptionTab.setContent(descriptionComponent);
-		
+
 		resumeComponent = new ResumeComponent();
 		resumeTab.setContent(resumeComponent);
 
 		// bindings
-		
+
 		outputComponent.outputProperty().bind(output);
 		casesComponent.casesProperty().bind(cases);
 		descriptionComponent.markdownProperty().bind(description);
 		resumeComponent.resumeProperty().bind(resume);
 
 		testNameLabel.textProperty().bind(challenge.asString());
-		
+
 		runningPane.visibleProperty().bind(running);
 		runningPane.managedProperty().bind(runningPane.visibleProperty());
 
 		runButton.visibleProperty().bind(running.not());
 		runButton.managedProperty().bind(runButton.visibleProperty());
-		
+
 		// listeners
-		
+
 		challenge.addListener((o, ov, nv) -> onChallengeChanged(o, ov, nv));
 		resume.addListener((o, ov, nv) -> onResumeChanged(o, ov, nv));
 	}
@@ -158,11 +157,11 @@ public class TeacherController extends Controller<BorderPane> {
 			hallOfFameComponent.hallOfFameProperty().unbind();
 		}
 		if (nv != null) {
-			hallOfFameComponent.hallOfFameProperty().bind(nv.hallOfFameProperty());			
+			hallOfFameComponent.hallOfFameProperty().bind(nv.hallOfFameProperty());
 		}
 	}
 
-	private  void onChallengeChanged(Observable o, File ov, File nv) {
+	private void onChallengeChanged(Observable o, File ov, File nv) {
 		if (nv != null) {
 			loadResults();
 			loadReadme();
@@ -181,35 +180,46 @@ public class TeacherController extends Controller<BorderPane> {
 
 	@FXML
 	private void onOpenFolderAction(ActionEvent e) {
-		try {
-			Desktop.getDesktop().open(getChallenge());
-		} catch (IOException e1) {
-			Dialogs.exception("Error opening system explorer", e1.getMessage(), e1);
-		}
+		DesktopUtils.open(getChallenge());
 	}
-	
+
 	private void loadReadme() {
-		String markdown = "";
-		File challengeDirectory = challenge.get();
-		File readmeFile = new File(challengeDirectory, "assets/README.md");
-		if (readmeFile.exists()) {
-			try {
-				markdown = FileUtils.readFileToString(readmeFile, Charset.forName("UTF8"));
-			} catch (IOException e) {
-				Dialogs.exception("Description couldn't be loaded from README.md", e.getMessage(), e);
+		Task<String> task = new Task<String>() {
+			protected String call() throws Exception {
+				String markdown = "";
+				File challengeDirectory = getChallenge();
+				File readmeFile = new File(challengeDirectory, "assets/README.md");
+				if (readmeFile.exists()) {
+					try {
+						markdown = FileUtils.readFileToString(readmeFile, Charset.forName("UTF8"));
+					} catch (IOException e) {
+						throw new Exception("Description couldn't be loaded from README.md", e);
+					}
+				} else {
+					markdown = Teuton.readme(challengeDirectory);
+				}
+				String html = "";
+				try {
+					html = MarkdownUtils.render(markdown);
+				} catch (IOException e) {
+					throw new Exception("Error rendering " + readmeFile.getName() + " description file", e);
+				}
+				return html;
 			}
-		} else {
-			markdown = Teuton.readme(challengeDirectory);
-		}
-		try {
-			description.set(MarkdownUtils.render(markdown));
-		} catch (IOException e) {
-			Dialogs.exception("Error rendering " + readmeFile.getName() + " description file", e.getMessage(), e);
-		}
+		};
+		task.stateProperty().addListener((o, ov, nv) -> {
+			descriptionComponent.setLoading(nv.equals(State.RUNNING));
+		});
+		task.setOnSucceeded(e -> {
+			description.set(e.getSource().getValue().toString());
+		});
+		task.setOnFailed(e -> {
+			Dialogs.exception("Error loading README", e.getSource().getException().getMessage(), e.getSource().getException());
+		});
+		new Thread(task).start();
 	}
 
 	private void play() {
-
 		Task<String> task = new Task<String>() {
 			protected String call() throws Exception {
 				return Teuton.play(getChallenge());
@@ -227,11 +237,10 @@ public class TeacherController extends Controller<BorderPane> {
 			Dialogs.error("Error playing challenge", e.getSource().getException().getMessage());
 		});
 		new Thread(task).start();
-
 	}
 
 	private void loadResults() {
-		File resultsFolder = new File(getChallenge(), "var/" + getChallenge().getName());		
+		File resultsFolder = new File(getChallenge(), "var/" + getChallenge().getName());
 		loadResume(resultsFolder);
 		loadCases(resultsFolder);
 	}

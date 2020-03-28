@@ -2,14 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-
-<fx:root type="BorderPane" xmlns:fx="http://javafx.com/fxml/1"
-	xmlns="http://javafx.com/javafx/11.0.1">
+<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
-		<WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0"
-			BorderPane.alignment="CENTER" />
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+      		<WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+            <fx:include fx:id="loadingPane" source="Loading.fxml" />
+         </children>
+      </StackPane>
 	</center>
 	<opaqueInsets>
 		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
