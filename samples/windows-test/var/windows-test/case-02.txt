@@ -1,0 +1,33 @@
+CONFIGURATION
++-------------+----------------+
+| tt_members  | Student-name-2 |
+| tt_sequence | false          |
+| tt_skip     | false          |
+| tt_testname | windows-test   |
+| username    | fran           |
++-------------+----------------+
+
+
+GROUPS
+- Windows filesystem management
+    01 (1.0/1.0)
+        Description : Create folder 'hola' in your home
+        Command     : dir /a:d %USERPROFILE%
+        Duration    : 0.199 (local)
+        Alterations : find(hola) & count
+        Expected    : Greater than 0 (String)
+        Result      : 1 (Integer)
+
+RESULTS
++--------------+---------------------------+
+| case_id      | 2                         |
+| start_time_  | 2020-03-28 22:17:51 +0000 |
+| finish_time  | 2020-03-28 22:17:52 +0000 |
+| duration     | 0.209                     |
+| unique_fault | 0                         |
+| max_weight   | 1.0                       |
+| good_weight  | 1.0                       |
+| fail_weight  | 0.0                       |
+| fail_counter | 0                         |
+| grade        | 100                       |
++--------------+---------------------------+
