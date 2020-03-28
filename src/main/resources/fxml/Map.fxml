@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<fx:root fx:id="root" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<center>
+		<GridPane fx:id="propertiesPane" hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+			<columnConstraints>
+				<ColumnConstraints halignment="LEFT" hgrow="NEVER" />
+				<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+			</columnConstraints>
+		</GridPane>
+	</center>
+</fx:root>

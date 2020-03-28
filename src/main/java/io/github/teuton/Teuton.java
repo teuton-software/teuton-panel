@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.PathType;
 import org.jruby.embed.ScriptingContainer;
@@ -45,20 +46,25 @@ public class Teuton {
 	}
 
 	public static String play(File challengeDirectory) {
-		return play(challengeDirectory, null);
+		return play(challengeDirectory, null, null);
 	}
 	
-	public static String play(File challengeDirectory, File configFile) {
+	public static String play(File challengeDirectory, File configFile, Integer[] cases) {
 		List<String> args = new ArrayList<>();
 		args.add("play");
 		args.add("--export=json");
 		if (configFile != null) args.add("--cpath=" + configFile.getAbsolutePath());
+		if (cases != null && cases.length > 0) args.add("--case=" + StringUtils.join(cases, ","));
 		args.add(".");
-		return Teuton.execute(challengeDirectory, args.toArray(new String[args.size()]));		
+		return execute(challengeDirectory, args.toArray(new String[args.size()]));		
 	}
 
 	public static String readme(File challengeDirectory) {
-		return Teuton.execute(challengeDirectory, "readme", ".");		
+		return execute(challengeDirectory, "readme", ".");
+	}
+
+	public static void main(String[] args) {
+		System.out.println(execute("help", "play"));
 	}
 	
 }

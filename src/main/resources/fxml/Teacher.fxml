@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane fx:id="root" styleClass="background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+		<BorderPane BorderPane.alignment="CENTER">
+			<right>
+				<HBox alignment="CENTER_RIGHT" prefWidth="160.0" BorderPane.alignment="CENTER">
+					<children>
+						<JFXButton fx:id="openFolderButton" contentDisplay="GRAPHIC_ONLY" layoutX="73.0" layoutY="10.0" onAction="#onOpenFolderAction" prefHeight="32.0" prefWidth="38.0" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Open challenge folder" />
+							</tooltip>
+							<graphic>
+								<FontIcon iconColor="#635c67" iconLiteral="fas-folder-open" iconSize="24" />
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="refreshButton" contentDisplay="GRAPHIC_ONLY" layoutX="73.0" layoutY="10.0" onAction="#onRefreshAction" prefHeight="32.0" prefWidth="38.0" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Refresh results" />
+							</tooltip>
+							<graphic>
+								<FontIcon iconColor="#635c67" iconLiteral="fas-redo-alt" iconSize="24" />
+							</graphic>
+						</JFXButton>
+                  <VBox fx:id="runningPane" alignment="CENTER" prefHeight="32.0" prefWidth="38.0">
+                     <children>
+      						<JFXSpinner fx:id="runningSpinner" prefHeight="24.0" prefWidth="24.0" startingAngle="0.0" />
+                     </children>
+                  </VBox>
+						<JFXButton fx:id="runButton" contentDisplay="GRAPHIC_ONLY" onAction="#onRunAction" prefHeight="32.0" prefWidth="38.0" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Execute test" />
+							</tooltip>
+							<graphic>
+								<FontIcon iconColor="#635c67" iconLiteral="fas-play" iconSize="24" />
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</right>
+			<left>
+				<HBox prefWidth="160.0" BorderPane.alignment="CENTER">
+					<children>
+						<JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" prefHeight="32.0" prefWidth="38.0" ripplerFill="#92a897">
+							<tooltip>
+								<Tooltip text="Back" />
+							</tooltip>
+							<graphic>
+								<FontIcon iconColor="#635c67" iconLiteral="fas-arrow-left" iconSize="24" />
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</left>
+			<padding>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+			</padding>
+			<center>
+				<Label fx:id="testNameLabel" text="&lt;Test title&gt;" BorderPane.alignment="CENTER" />
+			</center>
+		</BorderPane>
+	</top>
+	<center>
+		<TabPane fx:id="tabPane">
+			<tabs>
+				<Tab fx:id="descriptionTab" closable="false" text="Description">
+					<graphic>
+						<FontIcon iconColor="black" iconLiteral="far-file-alt" iconSize="16" />
+					</graphic>
+				</Tab>
+				<Tab fx:id="casesTab" closable="false" text="Cases">
+					<graphic>
+						<FontIcon iconColor="black" iconLiteral="fas-layer-group" iconSize="16" />
+					</graphic>
+				</Tab>
+				<Tab fx:id="resumeTab" closable="false" text="Resume">
+					<graphic>
+						<FontIcon iconColor="black" iconLiteral="far-list-alt" iconSize="16" />
+					</graphic>
+				</Tab>
+				<Tab fx:id="configTab" closable="false" text="Config">
+					<graphic>
+						<FontIcon iconColor="black" iconLiteral="far-edit" iconSize="16" />
+					</graphic>
+				</Tab>
+				<Tab fx:id="hallOfFameTab" closable="false" text="Hall of fame">
+					<graphic>
+						<FontIcon iconColor="black" iconLiteral="far-chart-bar" iconSize="16" />
+					</graphic>
+				</Tab>
+				<Tab fx:id="outputTab" closable="false" text="Output">
+					<graphic>
+						<FontIcon iconColor="black" iconLiteral="fas-terminal" iconSize="16" />
+					</graphic>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</center>
+</BorderPane>

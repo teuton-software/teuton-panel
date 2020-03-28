@@ -1,5 +1,7 @@
 package io.github.teuton.panel.ui.app;
 
+import java.util.ResourceBundle;
+
 import io.github.teuton.panel.ui.main.MainController;
 import io.github.teuton.panel.ui.utils.Application;
 import javafx.scene.Scene;
@@ -8,7 +10,7 @@ import javafx.stage.Stage;
 
 public class TeutonPanelApp extends Application {
 	
-	public static final String TITLE = "Teuton Panel";
+	public static final String TITLE = "Teuton Panel v" + ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.version");
 
 	private MainController mainController;
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<fx:root fx:id="root" dividerPositions="0.25" prefWidth="600.0" styleClass="transparent" stylesheets="@../css/styles.css" type="SplitPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<items>
+		<JFXListView fx:id="casesList" maxWidth="250.0" minWidth="200.0" styleClass="transparent" />
+		<BorderPane fx:id="casePane" styleClass="background" />
+	</items>
+</fx:root>

@@ -5,7 +5,7 @@
 }
 
 .jfx-spinner .arc { 
-	-fx-stroke: #635c67;
+	-fx-stroke: #635c67; /* darkgray */
 }
 
 .title {
@@ -14,14 +14,33 @@
 	-fx-text-fill: #635c67; /* darkgray */
 }
 
+.title-label {
+	-fx-font-size: 18pt;	
+	-fx-font-weight: bold;
+	-fx-text-fill: #635c67; /* darkgray */
+}
+
+.separator *.line { 
+	-fx-border-style: solid;
+	-fx-border-width: 1px;
+	-fx-border-color: #635c67; /* darkgray */
+	-fx-border-radius: 2px;
+}
+
 .background {
-	/*-fx-background-image: url("../images/background-pattern.png");*/
+}
+
+.pattern-background {
+	-fx-background-image: url("../images/background-pattern.png");
 }
 
 .split-pane {
 	-fx-padding: 0 0 0 0;
 }
 .split-pane:horizontal > .split-pane-divider {
+	-fx-padding: 0px 1px 0px 0px;
+}
+.split-pane:vertical > .split-pane-divider {
 	-fx-padding: 0px 1px 0px 0px;
 }
 
@@ -51,68 +70,51 @@
 .tab:selected {
 	-fx-background-color: rgba(255,255,255,0.5);
 	-fx-border-width: 4px 0px 0px 0px; 	
-	-fx-border-color: #00c21b;	
+	-fx-border-color: #00c21b; /* green */
 }
 
 #loadingPane {
 	-fx-background-color: rgba(0, 0, 0, 0.8);
 }
 
-#settingsIcon {
-	-glyph-name: "GEAR";
-	-glyph-size: 24px;
-	-fx-fill: #00c21b; /* green */
-}
-
-.modeButton .modeIcon {
-	-glyph-size: 24px;
-	-fx-size: 24px;
-	-fx-fill: white;
-}
-#classroomModeIcon {
-	-glyph-name: "HOME";
-}
-#contestModeIcon {
-	-glyph-name: "TROPHY";
-}
-#standaloneModeIcon {
-	-glyph-name: "GAMEPAD";
-}
-
-.modeButton {
+.mode-button {
      -jfx-button-type: RAISED;
      -fx-background-color: #00c21b; /* green */
      -fx-text-fill: white;
 	 -fx-font-size: 12pt;
+	 -fx-font-weight: bold;
      -fx-effect: dropshadow(three-pass-box, derive(cadetblue, -20%), 10, 0, 4, 4); 
 }
-.modeButton:hover {
+.mode-button:hover {
      -fx-background-color: rgb(0, 150, 0);
 }
+.mode-button .mode-icon {
+	-glyph-size: 24px;
+	-fx-size: 24px;
+	-fx-fill: white;
+}
 
-.toggleButton {
+.classroom .toggle-button {
      -jfx-button-type: RAISED;
      -fx-background-color: rgb(0, 150, 0);
-     -fx-text-fill: lightgray;
 	 -fx-font-size: 10pt;
      -fx-effect: dropshadow(three-pass-box, derive(cadetblue, -20%), 10, 0, 4, 4); 
 }
-.toggleButton:hover {
+.classroom .toggle-button:hover {
      -fx-background-color: rgb(0, 150, 0);
 }
-.toggleButton:selected {
-     -fx-text-fill: white;
+.classroom .toggle-button:selected {
      -fx-background-color: #00c21b; /* green */
      -fx-effect: null; 
 }
 
 .output-text {
-	-fx-text-fill: #00c21b; /* green */
+	-fx-text-fill: lightgreen;
 	-fx-font-family: consolas;
 	-fx-font-size: 10pt;
 }
 .output-text .content {
-	-fx-background-color: black
+	-fx-background-color: black;
 }
 
 .transparent {
@@ -128,14 +130,6 @@
 	-fx-background-color: rgba(146, 168, 151, 0.5);
 }
 
-.title-label {
-	-fx-font-size: 18pt;	
-	-fx-font-weight: bold;
-	-fx-text-fill: #635c67; /* darkgray */
-}
-
-.title {
-	-fx-font-size: 11pt;	
-	-fx-font-weight: bold;
-	-fx-text-fill: #635c67; /* darkgray */
+.scroll-pane {
+	-fx-background-color: transparent;
 }

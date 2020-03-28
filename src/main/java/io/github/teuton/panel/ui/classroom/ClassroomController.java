@@ -1,98 +1,67 @@
 package io.github.teuton.panel.ui.classroom;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ResourceBundle;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
-
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.JFXTextField;
 
-import io.github.teuton.Teuton;
-import io.github.teuton.panel.ui.components.CaseComponent;
-import io.github.teuton.panel.ui.components.HallOfFameComponent;
-import io.github.teuton.panel.ui.components.MarkdownComponent;
-import io.github.teuton.panel.ui.components.OutputComponent;
-import io.github.teuton.panel.ui.components.WarningComponent;
+import io.github.teuton.panel.ui.app.TeutonPanelApp;
 import io.github.teuton.panel.ui.mode.ModeController;
-import io.github.teuton.panel.ui.model.cases.Case;
-import io.github.teuton.panel.ui.model.resume.Resume;
+import io.github.teuton.panel.ui.model.Settings;
+import io.github.teuton.panel.ui.utils.ChallengeInfo;
+import io.github.teuton.panel.ui.utils.Config;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
-import io.github.teuton.panel.utils.JSONUtils;
-import io.github.teuton.panel.utils.MarkdownUtils;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ListProperty;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
+import javafx.geometry.Bounds;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
+import javafx.util.Duration;
 
-public class ClassroomController extends Controller<BorderPane> {
+public class ClassroomController extends Controller<AnchorPane> {
 
 	// ===================================
 	// model
 	// ===================================
 
-	private BooleanProperty running;
-	private ListProperty<Case> cases;
-	private ObjectProperty<File> challenge;
-	private StringProperty description;
-	private ObjectProperty<File> results;
-	private ObjectProperty<Resume> resume;
-	private StringProperty output;
+	private ObjectProperty<Settings> settings;
+	private ObjectProperty<File> selectedFile;
+	private StringProperty challengeFolderPath;
+	private StringProperty configFilePath;
+	private StringProperty resultsFilePath;
 
 	// ===================================
 	// view
 	// ===================================
 
-	private MarkdownComponent descriptionComponent;
-	private CaseComponent caseComponent;
-	private HallOfFameComponent hallOfFameComponent;
-	private OutputComponent outputComponent;
-	private WarningComponent warningComponent;
+	@FXML
+	private JFXButton openButton, backButton, chooseFolderButton;
 
 	@FXML
-	private JFXSpinner runningSpinner;
-	
-	@FXML
-	private JFXButton runButton, backButton;
+	private ToggleButton teacherButton, studentButton;
 
 	@FXML
-	private JFXListView<Case> casesList;
+	private JFXTextField challengeFolderText, configFileText, resultsFileText;
 
 	@FXML
-	private Label testNameLabel;
+	private ToggleGroup selectedProfile;
 
 	@FXML
-	private BorderPane casePane;
-
-	@FXML
-	private TabPane tabPane;
-	
-	@FXML
-	private Tab descriptionTab, casesTab, resumeTab, hallOfFameTab, outputTab;
+	private HBox challengeFolderPane, configFilePane, resultsFilePane;
 
 	// ===================================
 	// constructor
@@ -108,158 +77,122 @@ public class ClassroomController extends Controller<BorderPane> {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		// initialize model
-		
-		running = new SimpleBooleanProperty(false);
-		cases = new SimpleListProperty<>(FXCollections.observableArrayList());
-		challenge = new SimpleObjectProperty<>();
-		description = new SimpleStringProperty();
-		results = new SimpleObjectProperty<>();
-		resume = new SimpleObjectProperty<>();
-		output = new SimpleStringProperty();
-		
-		// initialize view
-		
-		hallOfFameComponent = new HallOfFameComponent();
-		hallOfFameTab.setContent(hallOfFameComponent);
-		
-		outputComponent = new OutputComponent();
-		outputComponent.outputProperty().bind(output);
-		outputTab.setContent(outputComponent);
-		
-		warningComponent = new WarningComponent();
-		warningComponent.messageProperty().bind(Bindings.when(cases.emptyProperty()).then("Press 'Play' button to run the test").otherwise("Select a case from the list on the left"));
 
-		caseComponent = new CaseComponent();
+		// properties
 		
-		descriptionComponent = new MarkdownComponent();
-		descriptionComponent.markdownProperty().bind(description);			
-		descriptionTab.setContent(descriptionComponent);
+		settings = new SimpleObjectProperty<>();
+		selectedFile = new SimpleObjectProperty<>();
+		challengeFolderPath = new SimpleStringProperty();
+		configFilePath = new SimpleStringProperty();
+		resultsFilePath = new SimpleStringProperty();
 
-		casesList.setCellFactory(v -> new CaseListCell());
-		casesList.itemsProperty().bind(cases);
-		casesList.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onCaseSelectionChanged(ov, nv));
-
-		testNameLabel.textProperty().bind(challenge.asString());
+		// bindings
 		
-		runningSpinner.visibleProperty().bind(running);
-		runningSpinner.managedProperty().bind(runningSpinner.visibleProperty());
-
-		runButton.visibleProperty().bind(running.not());
-		runButton.managedProperty().bind(runButton.visibleProperty());
+		ToggleGroup toggleGroup = new ToggleGroup();
+		toggleGroup.getToggles().addAll(teacherButton, studentButton);
 		
+		challengeFolderPath.bindBidirectional(challengeFolderText.textProperty());
+		configFilePath.bindBidirectional(configFileText.textProperty());
+		resultsFilePath.bindBidirectional(resultsFileText.textProperty());
+
+		openButton.disableProperty().bind(teacherButton.selectedProperty().and(challengeFolderPath.isNotEmpty()).or(studentButton.selectedProperty()).not());
+
+		challengeFolderPane.disableProperty().bind(teacherButton.selectedProperty().not());
+		configFilePane.disableProperty().bind(teacherButton.selectedProperty().not());
+		resultsFilePane.disableProperty().bind(studentButton.selectedProperty().not());
+
 		// listeners
+
+		toggleGroup.selectedToggleProperty().addListener((o, ov, nv) -> onToggleButtonSelected(o, ov, nv));
 		
-		challenge.addListener((o, ov, nv) -> onChallengaChanged(o, ov, nv));
-		resume.addListener((o, ov, nv) -> onResumeChanged(o, ov, nv));
+		getRoot().sceneProperty().addListener((o, ov, nv) -> {
+			if (nv != null) {
+				selectedProfile.selectToggle(null);
+				challengeFolderPath.set(null);
+			}
+		});
+		
 	}
 
 	// ===================================
 	// event listeners
 	// ===================================
+	
 
-	private void onResumeChanged(ObservableValue<? extends Resume> o, Resume ov, Resume nv) {
-		if (ov != null) {
-			hallOfFameComponent.hallOfFameProperty().unbind();
-		}
+	private void onToggleButtonSelected(ObservableValue<? extends Toggle> o, Toggle ov, Toggle nv) {
+		
+		double x = 0;
 		if (nv != null) {
-			hallOfFameComponent.hallOfFameProperty().bind(nv.hallOfFameProperty());			
+			if (nv == teacherButton) 
+				x = -120;
+			else
+				x = 120;
 		}
+		
+		TranslateTransition t = new TranslateTransition();
+		t.setDuration(Duration.seconds(0.25));
+		t.setInterpolator(Interpolator.EASE_BOTH);
+		t.setNode(openButton);
+		t.setToX(x);
+		t.play();
+
 	}
 
-	private  void onChallengaChanged(Observable o, File ov, File nv) {
-		onCaseSelectionChanged(null, null);		
-		if (nv != null) {
-			results.set(new File(nv, "var/" + nv.getName()));
-			loadResults();
-			loadReadme();
-		}
-	}
+	@FXML
+	private void onOpenAction(ActionEvent e) {
+		if (teacherButton.isSelected()) {
+			
+			if (!new File(challengeFolderPath.get()).exists()) {
+				Dialogs.error("Challenge folder doesn't exist!", "Folder '" + challengeFolderPath.get() + "' can't be found.");
+				return;
+			}
+			
+			if (!new File(challengeFolderPath.get(), "start.rb").exists()) {
+				Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + challengeFolderPath.get() + "' doesn't contain 'start.rb' file.");
+				return;
+			}
+			
+			setSelectedFile(new File(challengeFolderPath.get()));
+			
+			ChallengeInfo info = new ChallengeInfo();
+			info.setChallengeFolder(challengeFolderPath.get());
+			info.setConfigFile(configFilePath.get());
+			info.setTitle(getSelectedFile().getName());
+			Config.getConfig().getRecentChallenges().add(info);
 
-	private void onCaseSelectionChanged(Case ov, Case nv) {
-		if (nv == null) {
-			casePane.setCenter(warningComponent);
-			caseComponent.caseProperty().unbind();
+			setShown(TeacherController.class);
+			
 		} else {
-			casePane.setCenter(caseComponent);
-			caseComponent.caseProperty().bind(casesList.getSelectionModel().selectedItemProperty());
+			
+			Dialogs.error("Not available", "Sorry, Teuton Panel is not yet available to students.");
+			
+//			if (!settings.get().isSNode()) {
+//				Dialogs.error("You are not a S-Node!", "Sorry, you have to configure this node as a S-Node to continue.\nTake a look to settings panel.");
+//				return;
+//			}
+			
 		}
 	}
 
 	@FXML
-	private void onRunAction(ActionEvent e) {
-		play();
-	}
-
-	private void loadReadme() {
-		String markdown = "";
-		File challengeDirectory = challenge.get();
-		File readmeFile = new File(challengeDirectory, "assets/README.md");
-		if (readmeFile.exists()) {
-			try {
-				markdown = FileUtils.readFileToString(readmeFile, Charset.forName("UTF8"));
-			} catch (IOException e) {
-				Dialogs.exception("Description couldn't be loaded from README.md", e.getMessage(), e);
-			}
-		} else {
-			markdown = Teuton.readme(challengeDirectory);
-		}
-		try {
-			description.set(MarkdownUtils.render(markdown));
-		} catch (IOException e) {
-			Dialogs.exception("Error rendering " + readmeFile.getName() + " description file", e.getMessage(), e);
+	private void onChooseChallengeFolderAction(ActionEvent e) {
+		DirectoryChooser dialog = new DirectoryChooser();
+		dialog.setTitle("Choose challenge folder");
+		dialog.setInitialDirectory(challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
+		File file = dialog.showDialog(TeutonPanelApp.getPrimaryStage());
+		if (file != null) {
+			challengeFolderPath.set(file.getAbsolutePath());
 		}
 	}
-
-	private void play() {
-
-		Task<String> task = new Task<String>() {
-			protected String call() throws Exception {
-				return Teuton.play(getChallenge());
-			}
-		};
-		task.stateProperty().addListener((o, ov, nv) -> {
-			running.set(nv.equals(State.RUNNING));
-		});
-		task.setOnSucceeded(e -> {
-			loadResults();
-			output.set(task.getValue());
-			tabPane.getSelectionModel().select(outputTab);
-		});
-		task.setOnFailed(e -> {
-			Dialogs.error("Error playing challenge", e.getSource().getException().getMessage());
-		});
-		new Thread(task).start();
-
+	
+	@FXML
+	private void onChooseConfigFileAction(ActionEvent e) {
 	}
 
-	private void loadResults() {
-		loadResume();
-		loadCases();
+	@FXML
+	private void onChooseResultsFileAction(ActionEvent e) {
 	}
-
-	private void loadResume() {
-		File resumeFile = new File(results.get(), "resume.json");
-		try {
-			resume.set(JSONUtils.loadFromJson(resumeFile, Resume.class));
-		} catch (JsonSyntaxException | JsonIOException | IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void loadCases() {
-		cases.clear();
-		FileUtils.listFiles(results.get(), new WildcardFileFilter("case-*.json"), null).stream().forEach(f -> {
-			try {
-				cases.add(JSONUtils.loadFromJson(f, Case.class));
-			} catch (JsonSyntaxException | JsonIOException | IOException e) {
-				e.printStackTrace();
-			}
-		});
-		casesList.getSelectionModel().selectFirst();
-	}
-
+	
 	@FXML
 	private void onBackAction(ActionEvent e) {
 		setShown(ModeController.class);
@@ -269,28 +202,28 @@ public class ClassroomController extends Controller<BorderPane> {
 	// properties
 	// ===================================
 
-	public final ObjectProperty<File> challengeProperty() {
-		return this.challenge;
+	public final ObjectProperty<File> selectedFileProperty() {
+		return this.selectedFile;
 	}
 
-	public final File getChallenge() {
-		return this.challengeProperty().get();
+	public final File getSelectedFile() {
+		return this.selectedFileProperty().get();
 	}
 
-	public final void setChallenge(final File challenge) {
-		this.challengeProperty().set(challenge);
+	public final void setSelectedFile(final File selectedFile) {
+		this.selectedFileProperty().set(selectedFile);
 	}
 
-	public final StringProperty descriptionProperty() {
-		return this.description;
+	public final ObjectProperty<Settings> settingsProperty() {
+		return this.settings;
 	}
 
-	public final String getDescription() {
-		return this.descriptionProperty().get();
+	public final Settings getSettings() {
+		return this.settingsProperty().get();
 	}
 
-	public final void setDescription(final String description) {
-		this.descriptionProperty().set(description);
+	public final void setSettings(final Settings settings) {
+		this.settingsProperty().set(settings);
 	}
 
 }

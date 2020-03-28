@@ -15,19 +15,22 @@ import javafx.collections.ObservableMap;
 public class Case {
 
 	@SerializedName("config")
-	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(FXCollections.observableHashMap());
+	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(
+			FXCollections.observableHashMap());
 
 	@SerializedName("test")
 	private ObjectProperty<Test> test = new SimpleObjectProperty<>(new Test());
 
 	@SerializedName("results")
-	private ObjectProperty<Results> results = new SimpleObjectProperty<>(new Results());
+	private MapProperty<String, Object> results = new SimpleMapProperty<String, Object>(
+			FXCollections.observableHashMap());
 
 	@SerializedName("logs")
 	private ListProperty<String> logs = new SimpleListProperty<String>(FXCollections.observableArrayList());
 
 	@SerializedName("hall_of_fame")
-	private MapProperty<String, String> hallOfFame = new SimpleMapProperty<String, String>(FXCollections.observableHashMap());
+	private MapProperty<String, String> hallOfFame = new SimpleMapProperty<String, String>(
+			FXCollections.observableHashMap());
 
 	public final MapProperty<String, Object> configProperty() {
 		return this.config;
@@ -53,18 +56,6 @@ public class Case {
 		this.testProperty().set(test);
 	}
 
-	public final ObjectProperty<Results> resultsProperty() {
-		return this.results;
-	}
-
-	public final Results getResults() {
-		return this.resultsProperty().get();
-	}
-
-	public final void setResults(final Results results) {
-		this.resultsProperty().set(results);
-	}
-
 	public final ListProperty<String> logsProperty() {
 		return this.logs;
 	}
@@ -87,6 +78,18 @@ public class Case {
 
 	public final void setHallOfFame(final ObservableMap<String, String> hallOfFame) {
 		this.hallOfFameProperty().set(hallOfFame);
+	}
+
+	public final MapProperty<String, Object> resultsProperty() {
+		return this.results;
+	}
+
+	public final ObservableMap<String, Object> getResults() {
+		return this.resultsProperty().get();
+	}
+
+	public final void setResults(final ObservableMap<String, Object> results) {
+		this.resultsProperty().set(results);
 	}
 
 }

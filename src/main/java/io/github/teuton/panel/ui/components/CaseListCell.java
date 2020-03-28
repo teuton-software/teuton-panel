@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.classroom;
+package io.github.teuton.panel.ui.components;
 
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -45,7 +45,7 @@ public class CaseListCell extends JFXListCell<Case> {
 			
 		} else {
 			
-			int grade = c.getResults().getGrade();
+			double grade = Double.parseDouble(c.getResults().get("grade").toString());
 			Color gradeColor;
 			if (grade < 50) {
 				gradeColor = Color.RED.interpolate(Color.YELLOW, grade / 50.0);
@@ -54,7 +54,7 @@ public class CaseListCell extends JFXListCell<Case> {
 			}
 			icon.setIconColor(gradeColor);
 
-			setText("Case " + c.getResults().getCaseId());
+			setText("Case " + ((Double)c.getResults().get("case_id")).intValue());
 			setGraphic(icon);
 
 		}

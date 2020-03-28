@@ -1,12 +1,11 @@
 package io.github.teuton.panel.ui.mode;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
-import io.github.teuton.panel.ui.classroom.PreClassroomController;
+import io.github.teuton.panel.ui.classroom.ClassroomController;
 import io.github.teuton.panel.ui.model.Settings;
 import io.github.teuton.panel.ui.settings.SettingsController;
 import io.github.teuton.panel.ui.utils.Controller;
@@ -31,7 +30,6 @@ public class ModeController extends Controller<AnchorPane> {
 	// ===================================
 
 	private ObjectProperty<Settings> settings;
-	private ObjectProperty<File> selectedFile;
 
 	// ===================================
 	// view
@@ -46,8 +44,6 @@ public class ModeController extends Controller<AnchorPane> {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		selectedFile = new SimpleObjectProperty<>();
 
 		settingsController = new SettingsController();
 
@@ -73,13 +69,18 @@ public class ModeController extends Controller<AnchorPane> {
 
 	@FXML
 	private void onTeutonLinkAction(ActionEvent e) {
-		DesktopUtils.browse(ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.project.link"));
+		DesktopUtils.browse(ResourceBundle.getBundle("teuton-panel").getString("teuton.url"));
 	}
 
 	@FXML
+	private void onTeutonPanelLinkAction(ActionEvent e) {
+		DesktopUtils.browse(ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.url"));
+	}
+	
+	@FXML
 	private void onClassroomModeButtonAction(ActionEvent event) {
 		System.out.println("classroom");
-		setShown(PreClassroomController.class);
+		setShown(ClassroomController.class);
 	}
 
 	@FXML
@@ -95,18 +96,6 @@ public class ModeController extends Controller<AnchorPane> {
 	// ===================================
 	// properties
 	// ===================================
-
-	public final ObjectProperty<File> selectedFileProperty() {
-		return this.selectedFile;
-	}
-
-	public final File getSelectedFile() {
-		return this.selectedFileProperty().get();
-	}
-
-	public final void setSelectedFile(final File selectedFile) {
-		this.selectedFileProperty().set(selectedFile);
-	}
 
 	public final ObjectProperty<Settings> settingsProperty() {
 		return this.settings;

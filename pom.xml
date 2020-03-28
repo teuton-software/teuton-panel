@@ -8,7 +8,7 @@
 	<artifactId>teuton-panel</artifactId>
 
 	<description>Graphical front-end for TEUTON</description>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
@@ -38,9 +38,8 @@
 		<!-- JapaPackager properites -->
 		<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 		<bundleJre>true</bundleJre>
-		<generateInstaller>false</generateInstaller>
+		<generateInstaller>true</generateInstaller>
 		<administratorRequired>true</administratorRequired>
-		<createZipball>true</createZipball>
 	</properties>
 
 	<build>
@@ -64,7 +63,7 @@
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.4</version>
+				<version>0.9.5-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>

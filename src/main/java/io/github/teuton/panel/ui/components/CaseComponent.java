@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -23,9 +24,9 @@ public class CaseComponent extends TabPane implements Initializable {
 
 	// view
 
-	private ConfigComponent configComponent;
+	private MapComponent configComponent;
 	private GroupComponent groupComponent;
-	private ResultsComponent resultsComponent;
+	private MapComponent resultsComponent;
 
 	@FXML
 	private Accordion testsPane;
@@ -50,9 +51,13 @@ public class CaseComponent extends TabPane implements Initializable {
 		_case = new SimpleObjectProperty<>();
 		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
 
-		configComponent = new ConfigComponent();
+		configComponent = new MapComponent();
+		configComponent.setPadding(new Insets(5));
+		
 		groupComponent = new GroupComponent();
-		resultsComponent = new ResultsComponent();
+		
+		resultsComponent = new MapComponent();
+		resultsComponent.setPadding(new Insets(5));
 
 		configTab.setContent(configComponent);
 		groupsTab.setContent(groupComponent);
@@ -62,14 +67,14 @@ public class CaseComponent extends TabPane implements Initializable {
 
 	private void onCaseChanged(ObservableValue<? extends Case> o, Case ov, Case nv) {
 		if (ov != null) {
-			configComponent.configProperty().unbind();
+			configComponent.mapProperty().unbind();
 			groupComponent.testProperty().unbind();
-			resultsComponent.resultsProperty().unbind();
+			resultsComponent.mapProperty().unbind();
 		}
 		if (nv != null) {
-			configComponent.configProperty().bind(nv.configProperty());
+			configComponent.mapProperty().bind(nv.configProperty());
 			groupComponent.testProperty().bind(nv.testProperty());
-			resultsComponent.resultsProperty().bind(nv.resultsProperty());
+			resultsComponent.mapProperty().bind(nv.resultsProperty());
 		}
 	}
 

@@ -2,7 +2,10 @@ package io.github.teuton.panel.ui.components;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+import org.apache.commons.lang3.StringUtils;
 
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.SimpleMapProperty;
@@ -20,11 +23,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
-public class ConfigComponent extends BorderPane implements Initializable {
+public class MapComponent extends BorderPane implements Initializable {
+	
+	private static final ResourceBundle TITLES = ResourceBundle.getBundle("titles");
 
 	// model
 
-	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(
+	private MapProperty<String, Object> map = new SimpleMapProperty<String, Object>(
 			FXCollections.observableHashMap());
 
 	// view
@@ -32,9 +37,9 @@ public class ConfigComponent extends BorderPane implements Initializable {
 	@FXML
 	private GridPane propertiesPane;
 
-	public ConfigComponent() {
+	public MapComponent() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Config.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Map.fxml"));
 			loader.setController(this);
 			loader.setRoot(this);
 			loader.load();
@@ -46,18 +51,24 @@ public class ConfigComponent extends BorderPane implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		config.addListener((o, ov, nv) -> onConfigChanged(o, ov, nv));
+		map.addListener((o, ov, nv) -> onMapChanged(o, ov, nv));
 
 	}
 
-	private void onConfigChanged(ObservableValue<? extends ObservableMap<String, Object>> o, ObservableMap<String, Object> ov, ObservableMap<String, Object> nv) {
+	private void onMapChanged(ObservableValue<? extends ObservableMap<String, Object>> o, ObservableMap<String, Object> ov, ObservableMap<String, Object> nv) {
 
 		propertiesPane.getChildren().clear();
 		
 		int i = 0;
 		for (String name : nv.keySet()) {
 			
-			Label nameLabel = new Label(name + ":");
+			String title = name;
+			try {
+				title = TITLES.getString(name);
+			} catch (MissingResourceException e) {
+				title = StringUtils.capitalize(name.replaceAll("_", " "));
+			}
+			Label nameLabel = new Label(title + ":");
 
 			Node valueNode;
 			if (nv.get(name) instanceof Boolean) {
@@ -84,16 +95,16 @@ public class ConfigComponent extends BorderPane implements Initializable {
 
 	}
 
-	public final MapProperty<String, Object> configProperty() {
-		return this.config;
+	public final MapProperty<String, Object> mapProperty() {
+		return this.map;
 	}
 
-	public final ObservableMap<String, Object> getConfig() {
-		return this.configProperty().get();
+	public final ObservableMap<String, Object> getMap() {
+		return this.mapProperty().get();
 	}
 
-	public final void setConfig(final ObservableMap<String, Object> config) {
-		this.configProperty().set(config);
+	public final void setMap(final ObservableMap<String, Object> config) {
+		this.mapProperty().set(config);
 	}
 
 }

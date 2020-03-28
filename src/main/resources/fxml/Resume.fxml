@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<fx:root fx:id="root" prefHeight="480.0" prefWidth="640.0" stylesheets="@../css/styles.css" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" BorderPane.alignment="CENTER">
+        <items>
+            <SplitPane dividerPositions="0.6">
+              <items>
+                  <BorderPane fx:id="topLeftPane">
+                     <top>
+                        <Label styleClass="cases-label" text="Config" BorderPane.alignment="TOP_LEFT" />
+                     </top>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <center>
+                        <ScrollPane fx:id="configPane" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <BorderPane fx:id="topRightPane">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <top>
+                        <Label styleClass="cases-label" text="Results" BorderPane.alignment="TOP_LEFT" />
+                     </top>
+                     <center>
+                        <ScrollPane fx:id="resultsPane" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+              </items>
+            </SplitPane>
+            <BorderPane fx:id="bottonPane">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <top>
+                  <Label styleClass="cases-label" text="Cases" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <center>
+                  <TableView fx:id="casesTable" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="idColumn" text="Id" />
+                      <TableColumn fx:id="membersColumn" prefWidth="-1.0" text="Members" />
+                        <TableColumn fx:id="gradeColumn" prefWidth="-1.0" text="Grade" />
+                        <TableColumn fx:id="skipColumn" prefWidth="-1.0" text="Skip" />
+                        <TableColumn fx:id="moodleIdColumn" prefWidth="-1.0" text="Moodle ID" />
+                        <TableColumn fx:id="moodleFedbackColumn" prefWidth="-1.0" text="Moodle feedback" />
+                        <TableColumn fx:id="connStatusColumn" prefWidth="-1.0" text="Conn.status" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </center>
+            </BorderPane>
+        </items>
+      </SplitPane>
+   </center>
+</fx:root>
