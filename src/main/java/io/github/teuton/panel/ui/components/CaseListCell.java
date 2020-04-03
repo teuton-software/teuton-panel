@@ -54,7 +54,7 @@ public class CaseListCell extends JFXListCell<Case> {
 			}
 			icon.setIconColor(gradeColor);
 
-			setText("Case " + ((Double)c.getResults().get("case_id")).intValue());
+			setText("Case " + c.getResults().get("case_id"));
 			setGraphic(icon);
 
 		}

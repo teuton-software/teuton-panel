@@ -12,7 +12,7 @@
           <CategoryAxis label="Grades" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis label="Cases" side="LEFT" />
+          <NumberAxis fx:id="yAxis" label="Cases" minorTickCount="1" minorTickLength="0.0" side="LEFT" tickUnit="1.0" />
         </yAxis>
       </BarChart>
    </children>

@@ -84,7 +84,7 @@
                         </JFXButton>
                      </children>
                   </HBox>
-                  <JFXComboBox promptText="Recent challenges" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <JFXComboBox fx:id="recentChallengesCombo" promptText="Recent challenges" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                </children>
             </GridPane>
       				<JFXButton fx:id="openButton" defaultButton="true" onAction="#onOpenAction" styleClass="mode-button" text="Open challenge" />

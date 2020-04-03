@@ -13,17 +13,17 @@ GROUPS
     01 (1.0/1.0)
         Description : Create folder 'hola' in your home
         Command     : dir /a:d %USERPROFILE%
-        Duration    : 0.213 (local)
+        Duration    : 0.111 (local)
         Alterations : find(hola) & count
         Expected    : Greater than 0 (String)
         Result      : 1 (Integer)
 
 RESULTS
 +--------------+---------------------------+
-| case_id      | 3                         |
-| start_time_  | 2020-03-28 22:17:51 +0000 |
-| finish_time  | 2020-03-28 22:17:52 +0000 |
-| duration     | 0.217                     |
+| case_id      | 03                        |
+| start_time   | 2020-04-03 15:31:51 +0100 |
+| finish_time  | 2020-04-03 15:31:51 +0100 |
+| duration     | 0.111                     |
 | unique_fault | 0                         |
 | max_weight   | 1.0                       |
 | good_weight  | 1.0                       |

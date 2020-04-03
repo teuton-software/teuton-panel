@@ -13,7 +13,7 @@ public class TeutonPanelApp extends Application {
 	public static final String TITLE = "Teuton Panel v" + ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.version");
 
 	private MainController mainController;
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		super.start(primaryStage);

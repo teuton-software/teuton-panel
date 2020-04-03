@@ -51,12 +51,12 @@ public class CaseComponent extends TabPane implements Initializable {
 		_case = new SimpleObjectProperty<>();
 		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
 
-		configComponent = new MapComponent();
+		configComponent = new MapComponent("case.config.order");
 		configComponent.setPadding(new Insets(5));
 		
 		groupComponent = new GroupComponent();
 		
-		resultsComponent = new MapComponent();
+		resultsComponent = new MapComponent("case.results.order");
 		resultsComponent.setPadding(new Insets(5));
 
 		configTab.setContent(configComponent);

@@ -47,6 +47,8 @@ public class MarkdownComponent extends BorderPane implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		webView.setContextMenuEnabled(false);
+		
 		loading = new SimpleBooleanProperty();
 
 		markdown = new SimpleStringProperty();

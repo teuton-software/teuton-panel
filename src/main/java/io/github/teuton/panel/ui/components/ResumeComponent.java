@@ -73,10 +73,10 @@ public class ResumeComponent extends BorderPane implements Initializable {
 
 		// initialize view
 		
-		configComponent = new MapComponent();
+		configComponent = new MapComponent("resume.config.order");
 		configPane.setContent(configComponent);
 
-		resultsComponent = new MapComponent();
+		resultsComponent = new MapComponent("resume.results.order");
 		resultsPane.setContent(resultsComponent);
 		
 		// bindings

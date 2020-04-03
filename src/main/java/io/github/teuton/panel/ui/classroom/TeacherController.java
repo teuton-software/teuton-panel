@@ -2,12 +2,14 @@ package io.github.teuton.panel.ui.classroom;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -22,11 +24,13 @@ import io.github.teuton.panel.ui.components.ResumeComponent;
 import io.github.teuton.panel.ui.mode.ModeController;
 import io.github.teuton.panel.ui.model.cases.Case;
 import io.github.teuton.panel.ui.model.resume.Resume;
+import io.github.teuton.panel.ui.utils.Challenge;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
 import io.github.teuton.panel.utils.DesktopUtils;
 import io.github.teuton.panel.utils.JSONUtils;
 import io.github.teuton.panel.utils.MarkdownUtils;
+import io.github.teuton.panel.utils.StreamCharacterConsumer;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
@@ -56,7 +60,7 @@ public class TeacherController extends Controller<BorderPane> {
 
 	private BooleanProperty running;
 	private ListProperty<Case> cases;
-	private ObjectProperty<File> challenge;
+	private ObjectProperty<Challenge> challenge;
 	private StringProperty description;
 	private ObjectProperty<Resume> resume;
 	private StringProperty output;
@@ -161,7 +165,7 @@ public class TeacherController extends Controller<BorderPane> {
 		}
 	}
 
-	private void onChallengeChanged(Observable o, File ov, File nv) {
+	private void onChallengeChanged(Observable o, Challenge ov, Challenge nv) {
 		if (nv != null) {
 			loadResults();
 			loadReadme();
@@ -180,20 +184,21 @@ public class TeacherController extends Controller<BorderPane> {
 
 	@FXML
 	private void onOpenFolderAction(ActionEvent e) {
-		DesktopUtils.open(getChallenge());
+		File challengeFolder = new File(getChallenge().getChallengeFolder());
+		DesktopUtils.open(challengeFolder);
 	}
 
 	private void loadReadme() {
 		Task<String> task = new Task<String>() {
 			protected String call() throws Exception {
 				String markdown = "";
-				File challengeDirectory = getChallenge();
+				File challengeDirectory = new File(getChallenge().getChallengeFolder());
 				File readmeFile = new File(challengeDirectory, "assets/README.md");
 				if (readmeFile.exists()) {
 					try {
 						markdown = FileUtils.readFileToString(readmeFile, Charset.forName("UTF8"));
 					} catch (IOException e) {
-						throw new Exception("Description couldn't be loaded from README.md", e);
+						throw new Exception("Description couldn't be loaded from " + readmeFile.getName(), e);
 					}
 				} else {
 					markdown = Teuton.readme(challengeDirectory);
@@ -214,33 +219,51 @@ public class TeacherController extends Controller<BorderPane> {
 			description.set(e.getSource().getValue().toString());
 		});
 		task.setOnFailed(e -> {
-			Dialogs.exception("Error loading README", e.getSource().getException().getMessage(), e.getSource().getException());
+			Dialogs.exception("Error loading challenge description", e.getSource().getException().getMessage(),
+					e.getSource().getException());
 		});
 		new Thread(task).start();
 	}
 
 	private void play() {
-		Task<String> task = new Task<String>() {
-			protected String call() throws Exception {
-				return Teuton.play(getChallenge());
+		Task<Void> task = new Task<>() {
+			protected Void call() throws Exception {
+				File challengeFolder = new File(getChallenge().getChallengeFolder());
+				File configFile = StringUtils.isEmpty(getChallenge().getConfigFile()) ? null : new File(getChallenge().getConfigFile());
+
+				StringBuffer buffer = new StringBuffer();
+				
+				InputStream is = Teuton.play(challengeFolder, configFile, null);
+				StreamCharacterConsumer consumer = new StreamCharacterConsumer(is, c -> {
+					buffer.append(c);
+					updateMessage(buffer.toString());
+				});
+				consumer.start();
+				consumer.join();
+				
+				return null;
 			}
 		};
 		task.stateProperty().addListener((o, ov, nv) -> {
 			running.set(nv.equals(State.RUNNING));
 		});
+		task.setOnScheduled(e -> {
+			output.bind(e.getSource().messageProperty());			
+		});
 		task.setOnSucceeded(e -> {
 			loadResults();
-			output.set(task.getValue());
-			tabPane.getSelectionModel().select(outputTab);
+			output.unbind();
 		});
 		task.setOnFailed(e -> {
 			Dialogs.error("Error playing challenge", e.getSource().getException().getMessage());
+			output.unbind();
 		});
 		new Thread(task).start();
+		tabPane.getSelectionModel().select(outputTab);
 	}
 
 	private void loadResults() {
-		File resultsFolder = new File(getChallenge(), "var/" + getChallenge().getName());
+		File resultsFolder = new File(getChallenge().getChallengeFolder(), "var/" + getChallenge().getTitle());
 		loadResume(resultsFolder);
 		loadCases(resultsFolder);
 	}
@@ -274,18 +297,6 @@ public class TeacherController extends Controller<BorderPane> {
 	// properties
 	// ===================================
 
-	public final ObjectProperty<File> challengeProperty() {
-		return this.challenge;
-	}
-
-	public final File getChallenge() {
-		return this.challengeProperty().get();
-	}
-
-	public final void setChallenge(final File challenge) {
-		this.challengeProperty().set(challenge);
-	}
-
 	public final StringProperty descriptionProperty() {
 		return this.description;
 	}
@@ -296,6 +307,18 @@ public class TeacherController extends Controller<BorderPane> {
 
 	public final void setDescription(final String description) {
 		this.descriptionProperty().set(description);
+	}
+
+	public final ObjectProperty<Challenge> challengeProperty() {
+		return this.challenge;
+	}
+
+	public final Challenge getChallenge() {
+		return this.challengeProperty().get();
+	}
+
+	public final void setChallenge(final Challenge challenge) {
+		this.challengeProperty().set(challenge);
 	}
 
 }

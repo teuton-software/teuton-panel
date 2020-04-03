@@ -207,13 +207,5 @@ public class Shell {
 	public String toString() {
 		return getName() + " (" + getExecutable() + ")";
 	}
-
-	public static void main(String[] args) throws InterruptedException {
-		StopWatch watch = new StopWatch();
-		watch.start();
-		Thread.sleep(1234L);
-		watch.stop();
-		System.out.println(watch.getTime());
-	}
 	
 }

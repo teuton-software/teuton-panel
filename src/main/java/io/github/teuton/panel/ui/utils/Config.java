@@ -1,7 +1,12 @@
 package io.github.teuton.panel.ui.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+
+import org.apache.commons.io.output.TeeOutputStream;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -24,14 +29,26 @@ public class Config {
 	public static final File configDir = new File(System.getProperty("user.home"), ".teuton-panel");
 	public static final File submissionsDir = new File(configDir, "submissions");
 	public static final File configFile = new File(configDir, "config.json");
+	public static final File outputFile = new File(configDir, "output.log");
 
 	private static Config config;
 
+	static {
+		try {
+			System.setOut(new PrintStream(new TeeOutputStream(new FileOutputStream(outputFile), System.out)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+
 	public static Config getConfig() {
+		if (config == null)
+			load();
 		return config;
 	}
 
-	public static void load() {
+	private static void load() {
 		if (!configDir.exists()) {
 			configDir.mkdir();
 		}
@@ -73,6 +90,11 @@ public class Config {
 		}
 		stage.setMaximized(isMaximized());
 	}
+	
+	public void addRecentChallenge(Challenge challenge) {
+		getRecentChallenges().remove(challenge);
+		getRecentChallenges().add(0, challenge);
+	}
 
 	// =================================
 	// config properties
@@ -81,8 +103,7 @@ public class Config {
 	private ObjectProperty<Dimension2D> stageSize = new SimpleObjectProperty<>();
 	private ObjectProperty<Point2D> stageCoords = new SimpleObjectProperty<>();
 	private BooleanProperty maximized = new SimpleBooleanProperty();
-	private ListProperty<ChallengeInfo> recentChallenges = new SimpleListProperty<>(
-			FXCollections.observableArrayList());
+	private ListProperty<Challenge> recentChallenges = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 	public final ObjectProperty<Dimension2D> stageSizeProperty() {
 		return this.stageSize;
@@ -120,15 +141,15 @@ public class Config {
 		this.maximizedProperty().set(maximized);
 	}
 
-	public final ListProperty<ChallengeInfo> recentChallengesProperty() {
+	public final ListProperty<Challenge> recentChallengesProperty() {
 		return this.recentChallenges;
 	}
 
-	public final ObservableList<ChallengeInfo> getRecentChallenges() {
+	public final ObservableList<Challenge> getRecentChallenges() {
 		return this.recentChallengesProperty().get();
 	}
 
-	public final void setRecentChallenges(final ObservableList<ChallengeInfo> recentChallenges) {
+	public final void setRecentChallenges(final ObservableList<Challenge> recentChallenges) {
 		this.recentChallengesProperty().set(recentChallenges);
 	}
 

@@ -2,8 +2,13 @@ package io.github.teuton.panel.ui.components;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +30,9 @@ import javafx.scene.layout.RowConstraints;
 
 public class MapComponent extends BorderPane implements Initializable {
 	
-	private static final ResourceBundle TITLES = ResourceBundle.getBundle("titles");
+	private static final ResourceBundle TITLES = ResourceBundle.getBundle("map-component");
+	
+	private String [] order;  
 
 	// model
 
@@ -37,7 +44,8 @@ public class MapComponent extends BorderPane implements Initializable {
 	@FXML
 	private GridPane propertiesPane;
 
-	public MapComponent() {
+	public MapComponent(String orderProperty) {
+		this.order = TITLES.getString(orderProperty).split(",");
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Map.fxml"));
 			loader.setController(this);
@@ -58,9 +66,16 @@ public class MapComponent extends BorderPane implements Initializable {
 	private void onMapChanged(ObservableValue<? extends ObservableMap<String, Object>> o, ObservableMap<String, Object> ov, ObservableMap<String, Object> nv) {
 
 		propertiesPane.getChildren().clear();
+					
+		List<String> order = Arrays.asList(this.order);
+		List<String> keys = new ArrayList<>(nv.keySet());
+		keys.removeAll(order);
+		List<String> fields = Stream.of(order, keys).flatMap(x -> x.stream()).collect(Collectors.toList());
 		
 		int i = 0;
-		for (String name : nv.keySet()) {
+		for (String name : fields) {
+			
+			if (!nv.containsKey(name)) continue;
 			
 			String title = name;
 			try {

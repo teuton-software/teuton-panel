@@ -46,7 +46,7 @@ public class MainController extends ParentController {
 
 		// create teacher controller
 		teacherController = new TeacherController();
-		teacherController.challengeProperty().bind(classroomController.selectedFileProperty());
+		teacherController.challengeProperty().bind(classroomController.selectedChallengeProperty());
 		classroomController.loadingProperty().bind(teacherController.loadingProperty());
 		
 		// create standalone mode controller

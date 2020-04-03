@@ -1,6 +1,6 @@
 CONFIGURATION
 +---------------+-------------------------------------------------------+
-| tt_title      | Executing [teuton] (version 2.1.7)                    |
+| tt_title      | Executing [teuton] (version 2.1.8)                    |
 | tt_scriptname | .../GitHub/teuton-panel/samples/windows-test/start.rb |
 | tt_configfile | ...tHub/teuton-panel/samples/windows-test/config.yaml |
 | tt_testname   | windows-test                                          |
@@ -8,21 +8,17 @@ CONFIGURATION
 +---------------+-------------------------------------------------------+
 
 CASES
-+---------+----------------+-------+-------+
-| CASE ID | MEMBERS        | GRADE | STATE |
-| case_01 | Student-name-1 |   100 |       |
-| case_02 | Student-name-2 |   100 |       |
-| case_03 | Student-name-3 |   100 |       |
-+---------+----------------+-------+-------+
++------+----------------+-------+-------+
+| CASE | MEMBERS        | GRADE | STATE |
+| 01   | Student-name-1 |   100 |       |
+| 02   | Student-name-2 |   100 |       |
+| 03   | Student-name-3 |   100 |       |
++------+----------------+-------+-------+
 
-CONN ERRORS
-+---------+---------+------+-------+
-| CASE ID | MEMBERS | HOST | ERROR |
-+---------+---------+------+-------+
 
 RESULTS
 +-------------+---------------------------+
-| start_time  | 2020-03-28 22:17:51 +0000 |
-| finish_time | 2020-03-28 22:17:52 +0000 |
-| duration    | 0.246                     |
+| start_time  | 2020-04-03 15:31:51 +0100 |
+| finish_time | 2020-04-03 15:31:51 +0100 |
+| duration    | 0.128                     |
 +-------------+---------------------------+

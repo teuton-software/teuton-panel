@@ -17,12 +17,6 @@ public class Application extends javafx.application.Application {
 	}
 	
 	@Override
-	public void init() throws Exception {
-		Config.load();
-		super.init();
-	}
-	
-	@Override
 	public void stop() throws Exception {
 		Config.getConfig().storeStage(primaryStage);
 		Config.save();

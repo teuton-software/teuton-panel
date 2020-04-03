@@ -11,14 +11,14 @@ import java.util.function.Consumer;
  * Procesa flujos de entrada en segundo plano.
  * @author fvarrui
  */
-public class StreamGobbler extends Thread {
+public class StreamLineConsumer extends Thread {
 	
 	private volatile boolean stop;
 
 	private InputStream inputStream;
 	private Consumer<String> consumer;
 
-	public StreamGobbler(InputStream inputStream, Consumer<String> consumer) {
+	public StreamLineConsumer(InputStream inputStream, Consumer<String> consumer) {
 		super();
 		this.inputStream = inputStream;
 		this.consumer = consumer;

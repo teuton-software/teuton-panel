@@ -3,7 +3,7 @@ package io.github.teuton.panel.ui.utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ChallengeInfo {
+public class Challenge {
 
 	private StringProperty title = new SimpleStringProperty();
 	private StringProperty challengeFolder = new SimpleStringProperty();
@@ -45,4 +45,28 @@ public class ChallengeInfo {
 		this.configFileProperty().set(configFile);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Challenge)) {
+			return false;
+		}
+		Challenge other = (Challenge) obj;
+		if (title == null) {
+			if (other.title != null) {
+				return false;
+			}
+		} else if (!title.equals(other.title)) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return getTitle();
+	}
+	
 }

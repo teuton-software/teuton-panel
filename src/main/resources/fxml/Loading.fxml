@@ -9,7 +9,7 @@
    <center>
       <VBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXSpinner styleClass="dark-spinner" />
+            <JFXSpinner />
             <Label fx:id="loadingLabel" style="-fx-font-weight: bold;" text="Loading markdown..." />
          </children>
       </VBox>

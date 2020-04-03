@@ -20,13 +20,11 @@ public class DesktopUtils {
 	}
 	
 	public static void open(File file) {
-		if (Desktop.getDesktop().isSupported(Desktop.Action.APP_OPEN_FILE)) {
-		    try {
-				Desktop.getDesktop().open(file);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				Dialogs.exception("Error opening file", e1.getMessage(), e1);
-			}
+	    try {
+			Desktop.getDesktop().open(file);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			Dialogs.exception("Error opening file", e1.getMessage(), e1);
 		}
 	}
 

@@ -9,7 +9,7 @@
 	<center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-      		<WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+      		<WebView fx:id="webView" />
             <fx:include fx:id="loadingPane" source="Loading.fxml" />
          </children>
       </StackPane>
