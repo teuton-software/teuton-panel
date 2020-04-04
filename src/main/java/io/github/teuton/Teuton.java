@@ -23,7 +23,7 @@ import io.github.teuton.panel.utils.StreamCharacterConsumer;
 public class Teuton {
 	
 	private static final String TEUTON_PATH = "rubygems/bin/teuton";
-	private static final Pattern VERSION_PATTERN = Pattern.compile("^teuton *\\(version *(.*)\\)$");
+	private static final Pattern VERSION_PATTERN = Pattern.compile(".*\\(version *(.*)\\).*");
 	
 	@SuppressWarnings("unchecked")
 	private static String ruby(Writer writer, String rubyfile, File currentDirectory, String ... args) {
