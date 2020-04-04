@@ -133,3 +133,26 @@
 .scroll-pane {
 	-fx-background-color: transparent;
 }
+
+.grade-label {
+	-fx-font-size: 11pt;
+	-fx-text-fill: green;
+}
+
+.case-cell .case-label {
+	-fx-font-size: 13pt;
+	-fx-font-weight: bold;	
+}
+
+.case-cell .grade-case-label {
+	-fx-font-size: 10pt;
+	-fx-font-weight: bold;	
+}
+
+.case-cell .members-label {
+	-fx-font-size: 7pt;
+}
+
+.list-view {
+    -fx-selection-bar: #AAE3EE;
+}

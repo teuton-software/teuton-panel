@@ -54,11 +54,11 @@ public class Challenge {
 			return false;
 		}
 		Challenge other = (Challenge) obj;
-		if (title == null) {
-			if (other.title != null) {
+		if (getTitle() == null) {
+			if (other.getTitle() != null) {
 				return false;
 			}
-		} else if (!title.equals(other.title)) {
+		} else if (!getTitle().equals(other.getTitle())) {
 			return false;
 		}
 		return true;

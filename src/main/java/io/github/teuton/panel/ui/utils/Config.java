@@ -92,7 +92,7 @@ public class Config {
 	}
 	
 	public void addRecentChallenge(Challenge challenge) {
-		getRecentChallenges().remove(challenge);
+		getRecentChallenges().removeAll(challenge);
 		getRecentChallenges().add(0, challenge);
 	}
 

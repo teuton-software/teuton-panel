@@ -110,6 +110,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 		recentChallengesCombo.itemsProperty().bind(Config.getConfig().recentChallengesProperty());
 
 		// listeners
+		
+		recentChallengesCombo.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onRecentChallengeChanged(o, ov, nv));
 
 		toggleGroup.selectedToggleProperty().addListener((o, ov, nv) -> onToggleButtonSelected(o, ov, nv));
 
@@ -125,6 +127,13 @@ public class ClassroomController extends Controller<AnchorPane> {
 	// ===================================
 	// event listeners
 	// ===================================
+
+	private void onRecentChallengeChanged(ObservableValue<? extends Challenge> o, Challenge ov, Challenge nv) {
+		if (nv != null) {
+			challengeFolderPath.set(nv.getChallengeFolder());
+			configFilePath.set(nv.getConfigFile());
+		}
+	}
 
 	private void onToggleButtonSelected(ObservableValue<? extends Toggle> o, Toggle ov, Toggle nv) {
 

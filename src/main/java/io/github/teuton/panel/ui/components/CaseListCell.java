@@ -1,37 +1,60 @@
 package io.github.teuton.panel.ui.components;
 
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListCell;
 
 import io.github.teuton.panel.ui.model.cases.Case;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.input.MouseEvent;
+import io.github.teuton.panel.ui.utils.ColorUtils;
+import io.github.teuton.panel.ui.utils.FXUtils;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
-public class CaseListCell extends JFXListCell<Case> {
+public class CaseListCell extends JFXListCell<Case> implements Initializable {
 
+	// model
+
+	private Case _case;
+	private BooleanProperty checked = new SimpleBooleanProperty();
+
+	// view
+
+	@FXML
+	private GridPane root;
+
+	@FXML
 	private FontIcon icon;
+	
+	@FXML
+	private Label caseLabel, membersLabel, gradeLabel;
+
+	@FXML
+	private JFXCheckBox selectedCheck;
 
 	public CaseListCell() {
 		super();
-		icon = new FontIcon();
-		icon.setIconSize(24);
-		icon.setIconCode(FontAwesomeSolid.USER_CIRCLE);
-        addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-        	MultipleSelectionModel<Case> selectionModel = this.getListView().getSelectionModel();
-        	this.getListView().requestFocus();
-            if (!this.isEmpty()) {
-                int index = this.getIndex();
-                if (selectionModel.getSelectedIndices().contains(index)) {
-                    selectionModel.clearSelection(index);
-                } else {
-                    selectionModel.select(index);
-                }
-                event.consume();
-            }
-        });
+		FXUtils.loadView("/fxml/CaseListCell.fxml", this);
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+		
+		checked.bindBidirectional(selectedCheck.selectedProperty());
+		
+		listViewProperty().addListener((o, ov, nv) -> prefWidthProperty().bind(nv.widthProperty()));
+
 	}
 
 	@Override
@@ -39,25 +62,38 @@ public class CaseListCell extends JFXListCell<Case> {
 		super.updateItem(c, empty);
 
 		if (empty) {
-			
-			setText(null);
+
 			setGraphic(null);
-			
+			if (_case != null) checked.unbindBidirectional(_case.selectedProperty());
+ 
 		} else {
 			
-			double grade = Double.parseDouble(c.getResults().get("grade").toString());
-			Color gradeColor;
-			if (grade < 50) {
-				gradeColor = Color.RED.interpolate(Color.YELLOW, grade / 50.0);
-			} else {
-				gradeColor = Color.YELLOW.interpolate(Color.FORESTGREEN, (grade - 50.0) / 50.0);
-			}
-			icon.setIconColor(gradeColor);
+			checked.bindBidirectional(c.selectedProperty());
+			_case = c;
+			
+			double grade = (double) c.getResults().get("grade");
 
-			setText("Case " + c.getResults().get("case_id"));
-			setGraphic(icon);
+			icon.setIconColor(ColorUtils.interpolate(grade, 100, Color.RED, Color.YELLOW, Color.GREEN));
+
+			caseLabel.setText("Case " + c.getResults().get("case_id"));
+			membersLabel.setText(c.getConfig().get("tt_members").toString());
+			gradeLabel.setText(String.format("%.0f", grade));
+
+			setGraphic(root);
 
 		}
+	}
+
+	public final BooleanProperty checkedProperty() {
+		return this.checked;
+	}
+
+	public final boolean isChecked() {
+		return this.checkedProperty().get();
+	}
+
+	public final void setChecked(final boolean checked) {
+		this.checkedProperty().set(checked);
 	}
 
 }

@@ -2,24 +2,26 @@ package io.github.teuton.panel.ui.model.cases;
 
 import com.google.gson.annotations.SerializedName;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.MapProperty;
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleMapProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 public class Case {
 
+	private BooleanProperty selected = new SimpleBooleanProperty();
+
 	@SerializedName("config")
 	private MapProperty<String, Object> config = new SimpleMapProperty<String, Object>(
 			FXCollections.observableHashMap());
 
-	@SerializedName("test")
-	private ObjectProperty<Test> test = new SimpleObjectProperty<>(new Test());
+	@SerializedName("groups")
+	private ListProperty<Group> groups = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 	@SerializedName("results")
 	private MapProperty<String, Object> results = new SimpleMapProperty<String, Object>(
@@ -42,18 +44,6 @@ public class Case {
 
 	public final void setConfig(final ObservableMap<String, Object> config) {
 		this.configProperty().set(config);
-	}
-
-	public final ObjectProperty<Test> testProperty() {
-		return this.test;
-	}
-
-	public final Test getTest() {
-		return this.testProperty().get();
-	}
-
-	public final void setTest(final Test test) {
-		this.testProperty().set(test);
 	}
 
 	public final ListProperty<String> logsProperty() {
@@ -90,6 +80,30 @@ public class Case {
 
 	public final void setResults(final ObservableMap<String, Object> results) {
 		this.resultsProperty().set(results);
+	}
+
+	public final ListProperty<Group> groupsProperty() {
+		return this.groups;
+	}
+
+	public final ObservableList<Group> getGroups() {
+		return this.groupsProperty().get();
+	}
+
+	public final void setGroups(final ObservableList<Group> groups) {
+		this.groupsProperty().set(groups);
+	}
+
+	public final BooleanProperty selectedProperty() {
+		return this.selected;
+	}
+
+	public final boolean isSelected() {
+		return this.selectedProperty().get();
+	}
+
+	public final void setSelected(final boolean selected) {
+		this.selectedProperty().set(selected);
 	}
 
 }

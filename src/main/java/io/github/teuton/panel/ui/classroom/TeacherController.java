@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
@@ -226,6 +228,8 @@ public class TeacherController extends Controller<BorderPane> {
 	}
 
 	private void play() {
+		final List<String> selectedCases = cases.stream().filter(c -> c.isSelected()).map(c -> c.getResults().get("case_id").toString()).collect(Collectors.toList());
+		
 		Task<Void> task = new Task<>() {
 			protected Void call() throws Exception {
 				File challengeFolder = new File(getChallenge().getChallengeFolder());
@@ -233,7 +237,7 @@ public class TeacherController extends Controller<BorderPane> {
 
 				StringBuffer buffer = new StringBuffer();
 				
-				InputStream is = Teuton.play(challengeFolder, configFile, null);
+				InputStream is = Teuton.play(challengeFolder, configFile, selectedCases);
 				StreamCharacterConsumer consumer = new StreamCharacterConsumer(is, c -> {
 					buffer.append(c);
 					updateMessage(buffer.toString());

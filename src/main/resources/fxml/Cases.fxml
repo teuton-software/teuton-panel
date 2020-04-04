@@ -4,9 +4,9 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<fx:root fx:id="root" dividerPositions="0.25" prefWidth="600.0" styleClass="transparent" stylesheets="@../css/styles.css" type="SplitPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" dividerPositions="0.25" styleClass="transparent" stylesheets="@../css/styles.css" type="SplitPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<items>
-		<JFXListView fx:id="casesList" maxWidth="250.0" minWidth="200.0" styleClass="transparent" />
+		<JFXListView fx:id="casesList" prefWidth="250" styleClass="transparent" SplitPane.resizableWithParent="false" />
 		<BorderPane fx:id="casePane" styleClass="background" />
 	</items>
 </fx:root>

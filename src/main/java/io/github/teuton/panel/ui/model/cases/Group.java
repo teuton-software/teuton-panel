@@ -3,6 +3,7 @@ package io.github.teuton.panel.ui.model.cases;
 import com.google.gson.annotations.SerializedName;
 
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.MapProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -13,9 +14,10 @@ public class Group {
 
 	@SerializedName("title")
 	private StringProperty title = new SimpleStringProperty();
-	
+
 	@SerializedName("targets")
-	private ListProperty<Target> targets = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ListProperty<MapProperty<String, Object>> targets = new SimpleListProperty<>(
+			FXCollections.observableArrayList());
 
 	public final StringProperty titleProperty() {
 		return this.title;
@@ -29,15 +31,15 @@ public class Group {
 		this.titleProperty().set(title);
 	}
 
-	public final ListProperty<Target> targetsProperty() {
+	public final ListProperty<MapProperty<String, Object>> targetsProperty() {
 		return this.targets;
 	}
 
-	public final ObservableList<Target> getTargets() {
+	public final ObservableList<MapProperty<String, Object>> getTargets() {
 		return this.targetsProperty().get();
 	}
 
-	public final void setTargets(final ObservableList<Target> targets) {
+	public final void setTargets(final ObservableList<MapProperty<String, Object>> targets) {
 		this.targetsProperty().set(targets);
 	}
 

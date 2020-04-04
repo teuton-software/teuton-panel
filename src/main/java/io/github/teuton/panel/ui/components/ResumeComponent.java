@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import io.github.teuton.panel.ui.model.resume.Case;
 import io.github.teuton.panel.ui.model.resume.Resume;
-import io.github.teuton.panel.utils.FXUtils;
+import io.github.teuton.panel.ui.utils.FXUtils;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;

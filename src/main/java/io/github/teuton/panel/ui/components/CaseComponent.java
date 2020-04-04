@@ -12,11 +12,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Accordion;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
 
-public class CaseComponent extends TabPane implements Initializable {
+public class CaseComponent extends BorderPane implements Initializable {
 
 	// model
 
@@ -25,14 +26,20 @@ public class CaseComponent extends TabPane implements Initializable {
 	// view
 
 	private MapComponent configComponent;
-	private GroupComponent groupComponent;
+	private GroupsComponent groupComponent;
 	private MapComponent resultsComponent;
 
 	@FXML
-	private Accordion testsPane;
-
-	@FXML
 	private Tab configTab, groupsTab, resultsTab, logsTab;
+	
+    @FXML
+    private Label caseLabel;
+
+    @FXML
+    private Label membersLabel;
+    
+    @FXML
+    private ScrollPane resultsContentPane, configContentPane;
 
 	public CaseComponent() {
 		try {
@@ -54,28 +61,36 @@ public class CaseComponent extends TabPane implements Initializable {
 		configComponent = new MapComponent("case.config.order");
 		configComponent.setPadding(new Insets(5));
 		
-		groupComponent = new GroupComponent();
+		groupComponent = new GroupsComponent();
 		
 		resultsComponent = new MapComponent("case.results.order");
 		resultsComponent.setPadding(new Insets(5));
 
-		configTab.setContent(configComponent);
+		configContentPane.setContent(configComponent);
 		groupsTab.setContent(groupComponent);
-		resultsTab.setContent(resultsComponent);
+		resultsContentPane.setContent(resultsComponent);
 
 	}
 
 	private void onCaseChanged(ObservableValue<? extends Case> o, Case ov, Case nv) {
+		
+		caseLabel.setText("");
+		membersLabel.setText("");
+		
 		if (ov != null) {
 			configComponent.mapProperty().unbind();
-			groupComponent.testProperty().unbind();
+			groupComponent.groupsProperty().unbind();
 			resultsComponent.mapProperty().unbind();
 		}
+		
 		if (nv != null) {
+			caseLabel.setText("Case " + getCase().getResults().get("case_id"));
+			membersLabel.setText(getCase().getConfig().get("tt_members").toString());
 			configComponent.mapProperty().bind(nv.configProperty());
-			groupComponent.testProperty().bind(nv.testProperty());
+			groupComponent.groupsProperty().bind(nv.groupsProperty());
 			resultsComponent.mapProperty().bind(nv.resultsProperty());
 		}
+		
 	}
 
 	public final ObjectProperty<Case> caseProperty() {

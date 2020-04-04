@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import io.github.teuton.panel.utils.FXUtils;
+import io.github.teuton.panel.ui.utils.FXUtils;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.value.ObservableValue;

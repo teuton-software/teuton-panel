@@ -68,7 +68,7 @@
 				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 			</padding>
 			<center>
-				<Label fx:id="testNameLabel" text="&lt;Test title&gt;" BorderPane.alignment="CENTER" />
+				<Label fx:id="testNameLabel" styleClass="cases-label" text="&lt;Test title&gt;" BorderPane.alignment="CENTER" />
 			</center>
 		</BorderPane>
 	</top>

@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 
-public class OutputComponent extends BorderPane implements Initializable {
+public class ConfigEditorComponent extends BorderPane implements Initializable {
 
 	// model
 
@@ -22,8 +22,8 @@ public class OutputComponent extends BorderPane implements Initializable {
 	@FXML
 	private TextArea outputText;
 
-	public OutputComponent() {
-		FXUtils.load("/fxml/Output.fxml", this);
+	public ConfigEditorComponent() {
+		FXUtils.load("/fxml/ConfigEditor.fxml", this);
 	}
 
 	@Override

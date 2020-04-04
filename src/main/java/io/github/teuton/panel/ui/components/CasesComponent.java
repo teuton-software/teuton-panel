@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXListView;
 
 import io.github.teuton.panel.ui.model.cases.Case;
-import io.github.teuton.panel.utils.FXUtils;
+import io.github.teuton.panel.ui.utils.FXUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;

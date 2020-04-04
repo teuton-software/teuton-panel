@@ -30,7 +30,7 @@ import javafx.scene.layout.RowConstraints;
 
 public class MapComponent extends BorderPane implements Initializable {
 	
-	private static final ResourceBundle TITLES = ResourceBundle.getBundle("map-component");
+	private static final ResourceBundle PROPERTIES = ResourceBundle.getBundle("map-component");
 	
 	private String [] order;  
 
@@ -45,7 +45,7 @@ public class MapComponent extends BorderPane implements Initializable {
 	private GridPane propertiesPane;
 
 	public MapComponent(String orderProperty) {
-		this.order = TITLES.getString(orderProperty).split(",");
+		this.order = PROPERTIES.getString(orderProperty).split(",");
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Map.fxml"));
 			loader.setController(this);
@@ -62,50 +62,83 @@ public class MapComponent extends BorderPane implements Initializable {
 		map.addListener((o, ov, nv) -> onMapChanged(o, ov, nv));
 
 	}
+	
+	private String getTitle(String name) {
+		try {
+			return PROPERTIES.getString(name + ".title");
+		} catch (MissingResourceException e) {
+			return StringUtils.capitalize(name.replaceAll("_", " "));
+		}
+	}
 
+	private String getStyle(String name) {
+		try {
+			return PROPERTIES.getString(name + ".style");
+		} catch (MissingResourceException e) {
+			return "";
+		}
+	}
+	
+	private String getFormat(String name) {
+		try {
+			return PROPERTIES.getString(name + ".format");
+		} catch (MissingResourceException e) {
+			return "%s";
+		}
+	}
+	
 	private void onMapChanged(ObservableValue<? extends ObservableMap<String, Object>> o, ObservableMap<String, Object> ov, ObservableMap<String, Object> nv) {
 
-		propertiesPane.getChildren().clear();
-					
-		List<String> order = Arrays.asList(this.order);
-		List<String> keys = new ArrayList<>(nv.keySet());
-		keys.removeAll(order);
-		List<String> fields = Stream.of(order, keys).flatMap(x -> x.stream()).collect(Collectors.toList());
+		if (ov != null) {
+			propertiesPane.getChildren().clear();
+		}
 		
-		int i = 0;
-		for (String name : fields) {
+		if (nv != null) {
+			List<String> order = Arrays.asList(this.order);
+			List<String> keys = new ArrayList<>(nv.keySet());
+			keys.removeAll(order);
+			List<String> fields = Stream.of(order, keys).flatMap(x -> x.stream()).collect(Collectors.toList());
 			
-			if (!nv.containsKey(name)) continue;
-			
-			String title = name;
-			try {
-				title = TITLES.getString(name);
-			} catch (MissingResourceException e) {
-				title = StringUtils.capitalize(name.replaceAll("_", " "));
+			int i = 0;
+			for (String name : fields) {
+				
+				if (!nv.containsKey(name)) continue;
+				
+				// property name column
+				String title = getTitle(name);
+				Label nameLabel = new Label(title + ":");
+	
+				// property value column
+				String styleClass = getStyle(name);			
+				String format = getFormat(name);
+				Object value = nv.get(name);
+				Node valueNode;
+				if (value instanceof Boolean) {
+					CheckBox valueCheck = new CheckBox();
+					valueCheck.setSelected((Boolean)value);
+					valueCheck.setDisable(true);
+					valueNode = valueCheck;
+				} else {
+					Label valueLabel = new Label();
+					valueLabel.setStyle("-fx-font-weight: bold");
+					valueLabel.setText(String.format(format, value));
+					valueNode = valueLabel;
+				}
+				valueNode.getStyleClass().add(styleClass);
+				
+				// constraint
+				RowConstraints constraint = new RowConstraints();
+				constraint.setMinHeight(20);
+				constraint.setPrefHeight(20);
+				constraint.setVgrow(Priority.NEVER);
+				
+				// add property name, property value and constraints to grid pane
+				propertiesPane.getRowConstraints().add(i, constraint);
+				propertiesPane.addRow(i, nameLabel, valueNode);
+				
+				i++;
 			}
-			Label nameLabel = new Label(title + ":");
-
-			Node valueNode;
-			if (nv.get(name) instanceof Boolean) {
-				CheckBox valueCheck = new CheckBox();
-				valueCheck.setSelected((Boolean)nv.get(name));
-				valueCheck.setDisable(true);
-				valueNode = valueCheck;
-			} else {
-				Label valueLabel = new Label("" + nv.get(name));
-				valueLabel.setStyle("-fx-font-weight: bold");
-				valueNode = valueLabel;
-			}
 			
-			RowConstraints constraint = new RowConstraints();
-			constraint.setMinHeight(20);
-			constraint.setPrefHeight(20);
-			constraint.setVgrow(Priority.NEVER);
-			
-			propertiesPane.getRowConstraints().add(i, constraint);
-			propertiesPane.addRow(i, nameLabel, valueNode);
-			
-			i++;
 		}
 
 	}
@@ -121,5 +154,5 @@ public class MapComponent extends BorderPane implements Initializable {
 	public final void setMap(final ObservableMap<String, Object> config) {
 		this.mapProperty().set(config);
 	}
-
+	
 }

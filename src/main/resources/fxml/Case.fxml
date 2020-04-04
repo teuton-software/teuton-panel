@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<fx:root fx:id="root" styleClass="background" stylesheets="@../css/styles.css" type="TabPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-	<tabs>
-		<Tab fx:id="groupsTab" closable="false" text="Groups" />
-		<Tab fx:id="configTab" closable="false" text="Configuration" />
-		<Tab fx:id="resultsTab" closable="false" text="Results" />
-		<Tab fx:id="logsTab" closable="false" text="Logs" />
-	</tabs>
+<fx:root fx:id="root" stylesheets="@../css/styles.css" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TabPane fx:id="tabPane" styleClass="background">
+      	<tabs>
+      		<Tab fx:id="groupsTab" closable="false" text="Targets" />
+      		<Tab fx:id="configTab" closable="false" text="Configuration">
+      			<content>
+      				<ScrollPane fx:id="configContentPane" />
+      			</content>
+      		</Tab>
+      		<Tab fx:id="resultsTab" closable="false" text="Results">
+      			<content>
+      				<ScrollPane fx:id="resultsContentPane" />
+      			</content>
+			</Tab>      		
+      		<Tab fx:id="logsTab" closable="false" text="Logs" />
+      	</tabs>
+      </TabPane>
+   </center>
+   <top>
+      <HBox alignment="TOP_RIGHT" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="caseLabel" styleClass="cases-label" text="Label" />
+                  <Label fx:id="membersLabel" text="Label" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </top>
 </fx:root>

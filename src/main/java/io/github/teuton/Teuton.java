@@ -40,6 +40,7 @@ public class Teuton {
 
 	@SuppressWarnings("unchecked")
 	private static InputStream ruby(String rubyfile, File currentDirectory, String ... args) throws IOException {
+		System.out.println("ruby: " + rubyfile + " " + StringUtils.join(args, " "));
 		PipedInputStream pis = new PipedInputStream();
 		PipedOutputStream pos = new PipedOutputStream(pis);
 		Writer writer = new OutputStreamWriter(pos);
@@ -73,11 +74,11 @@ public class Teuton {
 		return null;
 	}
 	
-	public static InputStream play(File challengeDirectory, File configFile, Integer[] cases) throws IOException {
+	public static InputStream play(File challengeDirectory, File configFile, List<String> casesId) throws IOException {
 		List<String> args = new ArrayList<>();
 		args.add("play");
 		if (configFile != null) args.add("--cpath=" + configFile.getAbsolutePath());
-		if (cases != null && cases.length > 0) args.add("--case=" + StringUtils.join(cases, ","));
+		if (casesId != null && !casesId.isEmpty()) args.add("--case=" + StringUtils.join(casesId, ","));
 		args.add("--export=json");
 		args.add(".");
 		return ruby(TEUTON_PATH, challengeDirectory, args.toArray(new String[args.size()]));		

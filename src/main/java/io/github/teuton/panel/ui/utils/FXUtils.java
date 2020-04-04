@@ -1,4 +1,4 @@
-package io.github.teuton.panel.utils;
+package io.github.teuton.panel.ui.utils;
 
 import java.io.IOException;
 
@@ -12,6 +12,16 @@ public class FXUtils {
 			FXMLLoader loader = new FXMLLoader(FXUtils.class.getResource(fxml));
 			loader.setController(node);
 			loader.setRoot(node);
+			loader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static void loadView(String fxml, Object controller) {
+		try {
+			FXMLLoader loader = new FXMLLoader(FXUtils.class.getResource(fxml));
+			loader.setController(controller);
 			loader.load();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
