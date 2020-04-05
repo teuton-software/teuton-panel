@@ -4,7 +4,7 @@
 
 It includes [**teuton gem**](https://rubygems.org/gems/teuton) and uses [**jruby**](https://www.jruby.org/) to run it (so there's no need to install *teuton* separately nor Ruby).
 
-- **v0.4.0** includes **teuton 2.1.8** and **jruby 9.2.9.0**
+- [**v0.4.0**](https://github.com/teuton-software/teuton-panel/releases/tag/v0.4.0) includes **teuton 2.1.8** and **jruby 9.2.9.0**
 
 ## For users
 
