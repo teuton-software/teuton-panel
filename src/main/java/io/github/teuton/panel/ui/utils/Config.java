@@ -35,6 +35,7 @@ public class Config {
 
 	static {
 		try {
+			load();
 			System.setOut(new PrintStream(new TeeOutputStream(new FileOutputStream(outputFile), System.out)));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -43,8 +44,6 @@ public class Config {
 	}
 
 	public static Config getConfig() {
-		if (config == null)
-			load();
 		return config;
 	}
 
