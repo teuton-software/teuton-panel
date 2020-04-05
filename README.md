@@ -24,13 +24,13 @@ On the first screen you can choose `teuton` mode.
 
 Classroom mode can be used by teachers and students, each one has its section. Teachers can run tests to students machines and analyze results, and students only can analyze their results.
 
+Teachers could choose a recently opened challenge or choose one with a specific config file (optional). If config file is not specified, it will use `config.yaml` file by default.
+
 ![](docs/images/classroom.png)
 
- :warning: At the moment it is only available for teachers.
+> :warning: At the moment it is only available for teachers.
 
 #### Teacher mode
-
-Teacher could choose a recently opened challenge or choose one.
 
 ##### Header
 
@@ -69,6 +69,8 @@ This tab allows you to edit your challenge configuration.
 ##### Hall of fame
 
 Shows a bar chart with cases results grouped by grade. Only available when there are 3 or more cases.
+
+![](docs/images/hall-of-fame.png)
 
 ##### Output 
 
