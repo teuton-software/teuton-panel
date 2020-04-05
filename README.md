@@ -15,7 +15,11 @@ It includes [**teuton gem**](https://rubygems.org/gems/teuton) and uses [**jruby
 
 Download the right installer for your platform from [releases](https://github.com/teuton-software/teuton-panel/releases), and install the app.
 
-### Choose mode
+### Demo
+
+[![teuton-panel demo](http://img.youtube.com/vi/nHlSKMy5728/0.jpg)](https://youtu.be/nHlSKMy5728 "Teuton Panel v0 3 0 SNAPSHOT 2020 04 03 21 08 31")
+
+### Mode (main screen)
 
 On the first screen you can choose `teuton` mode.
 
