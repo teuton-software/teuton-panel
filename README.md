@@ -1,8 +1,3 @@
-```
-UNDER CONSTRUCTION!!!
-```
-
----
 # Teuton Panel
 
 **teuton-panel** is a graphical front-end for [teuton](https://github.com/dvarrui/teuton).
