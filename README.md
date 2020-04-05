@@ -8,7 +8,7 @@ It includes [**teuton gem**](https://rubygems.org/gems/teuton) and uses [**jruby
 
 ## For users
 
-Download the right installer for your platform from [releases](https://github.com/teuton-software/teuton-panel/releases), and install the app.
+Download the appropriate installer for your platform from [releases](https://github.com/teuton-software/teuton-panel/releases), and install the application.
 
 ### Demo
 
