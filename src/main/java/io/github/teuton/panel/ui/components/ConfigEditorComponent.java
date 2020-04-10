@@ -1,9 +1,12 @@
 package io.github.teuton.panel.ui.components;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import io.github.teuton.panel.ui.utils.FXUtils;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -15,12 +18,13 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 
 	// model
 
-	private StringProperty output = new SimpleStringProperty();
+	private ObjectProperty<File> configFile = new SimpleObjectProperty<>();
+	private StringProperty content = new SimpleStringProperty();
 
 	// view
 
 	@FXML
-	private TextArea outputText;
+	private TextArea contentText;
 
 	public ConfigEditorComponent() {
 		FXUtils.load("/fxml/ConfigEditor.fxml", this);
@@ -28,19 +32,19 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		outputText.textProperty().bind(output);
+		contentText.textProperty().bind(content);
 	}
 
-	public final StringProperty outputProperty() {
-		return this.output;
+	public final ObjectProperty<File> configFileProperty() {
+		return this.configFile;
 	}
 
-	public final String getOutput() {
-		return this.outputProperty().get();
+	public final File getConfigFile() {
+		return this.configFileProperty().get();
 	}
 
-	public final void setOutput(final String output) {
-		this.outputProperty().set(output);
+	public final void setConfigFile(final File configFile) {
+		this.configFileProperty().set(configFile);
 	}
 
 }

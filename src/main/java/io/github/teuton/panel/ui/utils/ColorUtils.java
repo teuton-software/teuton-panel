@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 public class ColorUtils {
 	
 	public static Color interpolate(double value, double max, Color ... colors) {
+		if (value < 0) return colors[0];
 		if (value >= max) return colors[colors.length - 1];
 		int numColors = colors.length;
 		double size = max / (numColors - 1);

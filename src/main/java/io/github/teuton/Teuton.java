@@ -22,11 +22,11 @@ import io.github.teuton.panel.utils.StreamCharacterConsumer;
 
 public class Teuton {
 	
-	private static final String TEUTON_PATH = "rubygems/bin/teuton";
+	private static final String TEUTON_PATH = "ruby/teuton.rb";
 	private static final Pattern VERSION_PATTERN = Pattern.compile(".*\\(version *(.*)\\).*");
 	
 	@SuppressWarnings("unchecked")
-	private static String ruby(Writer writer, String rubyfile, File currentDirectory, String ... args) {
+	private static Writer ruby(Writer writer, String rubyfile, File currentDirectory, String ... args) {
 		System.out.println("ruby: " + rubyfile + " " + StringUtils.join(args, " "));
 		ScriptingContainer container = new ScriptingContainer(LocalContextScope.SINGLETHREAD);
 		container.setCurrentDirectory(currentDirectory.getAbsolutePath());
@@ -35,30 +35,22 @@ public class Teuton {
 		container.setOutput(writer);
 		container.setError(writer);
 		container.runScriptlet(PathType.CLASSPATH, rubyfile);
-		return writer.toString();
+		return writer;
 	}
 
-	@SuppressWarnings("unchecked")
 	private static InputStream ruby(String rubyfile, File currentDirectory, String ... args) throws IOException {
-		System.out.println("ruby: " + rubyfile + " " + StringUtils.join(args, " "));
 		PipedInputStream pis = new PipedInputStream();
 		PipedOutputStream pos = new PipedOutputStream(pis);
 		Writer writer = new OutputStreamWriter(pos);
 		Thread t = new Thread(() -> {
-			ScriptingContainer container = new ScriptingContainer(LocalContextScope.SINGLETHREAD);
-			container.setCurrentDirectory(currentDirectory.getAbsolutePath());
-			container.getEnvironment().put("GEM_PATH", "classpath:/rubygems");
-			container.setArgv(args);
-			container.setOutput(writer);
-			container.setError(writer);
-			container.runScriptlet(PathType.CLASSPATH, rubyfile);
+			ruby(writer, TEUTON_PATH, currentDirectory, args);
 		});
 		t.start();
 		return pis;
 	}
 
 	private static String execute(File currentDirectory, String ... args) {
-		return ruby(new StringWriter(), TEUTON_PATH, currentDirectory, args);
+		return ruby(new StringWriter(), TEUTON_PATH, currentDirectory, args).toString();
 	}
 
 	private static String execute(String ... args) {
