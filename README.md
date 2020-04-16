@@ -112,10 +112,45 @@ mvn package
 
 It generates in `target`:
 
-* A `teuton-panel_x.y.z.deb` package file on GNU/Linux. 
-* A `teuton-panel_x.y.z.rpm` package file on GNU/Linux.
-* A `teuton-panel_x.y.z.exe` installer file on Windows.
-* A `teuton-panel_x.y.z.dmg` installer file on Mac OS X.
+* `teuton-panel` folder with the app.
+* `teuton-panel_x.y.z.deb` package file on GNU/Linux (dpkg-deb required). 
+* `teuton-panel_x.y.z.rpm` package file on GNU/Linux (rpm-build required).
+* `teuton-panel_x.y.z.exe` installer file on Windows (InnoSetup required).
+* `teuton-panel_x.y.z.dmg` installer file on Mac OS X.
+
+### Rubygems
+
+**rubygems** manual installation:
+
+1. Clone `teuton` project and change current directory:
+
+```bash
+git clone [-b devel] https://github.com/teuton-software/teuton
+cd teuton
+```
+> `-b devel` option to clone development branch
+
+2. Install `rake` gem if it's necessary:
+
+```bash
+gem install rake
+```
+
+3. Build `teuton` gem:
+
+```bash
+rake build:gem
+```
+
+4. Install gems to `rubygems` in project's `resources` folder:
+
+```bash
+gem install teuton-x.y.z.gem --install-dir <project-root>/src/main/resources/rubygems --no-user-install --no-document
+```
+
+### Ikonli icons list
+
+- [FontAwesome5 cheat sheet](http://kordamp.org/ikonli/cheat-sheet-fontawesome5.html )
 
 ## Contributors
 
