@@ -23,7 +23,7 @@
 			<url>https://github.com/fvarrui</url>
 		</developer>
 	</developers>
-	
+
 	<licenses>
 		<license>
 			<name>GNU GPL v3</name>
@@ -48,8 +48,21 @@
 		<administratorRequired>true</administratorRequired>
 	</properties>
 
+	<profiles>
+		<profile>
+			<activation>
+				<os>
+					<family>linux</family>
+				</os>
+			</activation>
+			<properties>
+				<vmArgs>-Djdk.gtk.version=2</vmArgs>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
-	
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -66,7 +79,7 @@
 				</excludes>
 			</resource>
 		</resources>
-		
+
 		<plugins>
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
@@ -79,16 +92,11 @@
 						<goals>
 							<goal>package</goal>
 						</goals>
-						<configuration>
-							<vmArgs>
-								<vmArg>-Djdk.gtk.version=2</vmArg>
-							</vmArgs>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 	</build>
 
 	<dependencies>
