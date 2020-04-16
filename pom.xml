@@ -23,6 +23,13 @@
 			<url>https://github.com/fvarrui</url>
 		</developer>
 	</developers>
+	
+	<licenses>
+		<license>
+			<name>GNU GPL v3</name>
+			<url>LICENSE</url>
+		</license>
+	</licenses>
 
 	<scm>
 		<connection>scm:git:git://github.com/teuton-software/teuton-panel.git</connection>
@@ -35,7 +42,6 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<exec.mainClass>io.github.teuton.panel.Main</exec.mainClass>
-		<!-- JapaPackager properites -->
 		<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 		<bundleJre>true</bundleJre>
 		<generateInstaller>true</generateInstaller>
@@ -43,6 +49,7 @@
 	</properties>
 
 	<build>
+	
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -59,11 +66,12 @@
 				</excludes>
 			</resource>
 		</resources>
+		
 		<plugins>
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.4</version>
+				<version>0.9.5-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>
@@ -79,17 +87,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> <groupId>de.saumya.mojo</groupId> <artifactId>gem-maven-plugin</artifactId> 
-				<version>1.1.8</version> <executions> <execution> <id>install-gems</id> <configuration> 
-				<includeRubygemsInResources>true</includeRubygemsInResources> </configuration> 
-				</execution> </executions> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-				<artifactId>maven-resources-plugin</artifactId> <version>3.1.0</version> 
-				<executions> <execution> <phase>validate</phase> <goals> <goal>copy-resources</goal> 
-				</goals> <configuration> <outputDirectory>${basedir}/src/main/resources/rubygems</outputDirectory> 
-				<resources> <resource> <directory>${project.build.directory}/rubygems</directory> 
-				</resource> </resources> <overwrite>true</overwrite> </configuration> </execution> 
-				</executions> </plugin> -->
 		</plugins>
+		
 	</build>
 
 	<dependencies>
@@ -99,7 +98,6 @@
 			<version>11.3.4</version>
 		</dependency>
 		<dependency>
-			<!-- available icons list: http://kordamp.org/ikonli/cheat-sheet-fontawesome5.html -->
 			<groupId>org.kordamp.ikonli</groupId>
 			<artifactId>ikonli-fontawesome5-pack</artifactId>
 			<version>11.3.5</version>
@@ -163,12 +161,6 @@
 			<groupId>org.hildan.fxgson</groupId>
 			<artifactId>fx-gson</artifactId>
 			<version>3.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>rubygems</groupId>
-			<artifactId>teuton</artifactId>
-			<version>2.1.8</version>
-			<type>gem</type>
 		</dependency>
 		<dependency>
 			<groupId>org.jruby</groupId>
