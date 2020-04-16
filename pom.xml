@@ -71,6 +71,11 @@
 						<goals>
 							<goal>package</goal>
 						</goals>
+						<configuration>
+							<vmArgs>
+								<vmArg>-Djdk.gtk.version=2</vmArg>
+							</vmArgs>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
