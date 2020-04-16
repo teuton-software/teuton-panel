@@ -18,8 +18,6 @@ import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.PathType;
 import org.jruby.embed.ScriptingContainer;
 
-import io.github.teuton.panel.utils.StreamCharacterConsumer;
-
 public class Teuton {
 	
 	private static final String TEUTON_PATH = "ruby/teuton.rb";
@@ -69,6 +67,7 @@ public class Teuton {
 	public static InputStream play(File challengeDirectory, File configFile, List<String> casesId) throws IOException {
 		List<String> args = new ArrayList<>();
 		args.add("play");
+		args.add("--no-color");
 		if (configFile != null) args.add("--cpath=" + configFile.getAbsolutePath());
 		if (casesId != null && !casesId.isEmpty()) args.add("--case=" + StringUtils.join(casesId, ","));
 		args.add("--export=json");
@@ -81,11 +80,11 @@ public class Teuton {
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		File challenge = new File("C:\\Users\\fvarrui\\GitHub\\teuton-panel\\samples\\windows-test");
-		InputStream output = play(challenge, null, null);
-		new StreamCharacterConsumer(output, (c) -> {
-			System.out.print(c);
-		}).start();
+//		File challenge = new File("C:\\Users\\fvarrui\\GitHub\\teuton-panel\\samples\\windows-test");
+//		InputStream output = play(challenge, null, null);
+//		new StreamCharacterConsumer(output, (c) -> {
+//			System.out.print(c);
+//		}).start();
 		
 //		System.out.println(version());
 

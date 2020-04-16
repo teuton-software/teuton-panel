@@ -10,24 +10,24 @@ CONFIGURATION
 
 GROUPS
 - Windows filesystem management
-    01 (1.0/1.0)
+    01 (0.0/1.0)
         Description : Create folder 'hola' in your home
         Command     : dir /a:d %USERPROFILE%
-        Duration    : 0.111 (local)
+        Duration    : 0.133 (local)
         Alterations : find(hola) & count
         Expected    : Greater than 0 (String)
-        Result      : 1 (Integer)
+        Result      : 0 (Integer)
 
 RESULTS
 +--------------+---------------------------+
 | case_id      | 03                        |
-| start_time   | 2020-04-05 13:06:17 +0100 |
-| finish_time  | 2020-04-05 13:06:18 +0100 |
-| duration     | 0.116                     |
+| start_time   | 2020-04-12 22:40:34 +0100 |
+| finish_time  | 2020-04-12 22:40:34 +0100 |
+| duration     | 0.144                     |
 | unique_fault | 0                         |
 | max_weight   | 1.0                       |
-| good_weight  | 1.0                       |
-| fail_weight  | 0.0                       |
-| fail_counter | 0                         |
-| grade        | 100                       |
+| good_weight  | 0.0                       |
+| fail_weight  | 1.0                       |
+| fail_counter | 1                         |
+| grade        | 0                         |
 +--------------+---------------------------+
