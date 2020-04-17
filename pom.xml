@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.5-SNAPSHOT</version>
+				<version>0.9.5</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>
@@ -181,15 +181,5 @@
 			<version>2.0</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>rubygems</id>
-			<url>http://rubygems-proxy.torquebox.org/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
 
 </project>
