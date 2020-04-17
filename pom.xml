@@ -52,7 +52,7 @@
 		<profile>
 			<activation>
 				<os>
-					<family>linux</family>
+					<name>linux</name>
 				</os>
 			</activation>
 			<properties>
