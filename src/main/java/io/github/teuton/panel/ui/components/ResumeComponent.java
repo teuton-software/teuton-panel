@@ -3,7 +3,6 @@ package io.github.teuton.panel.ui.components;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import io.github.teuton.panel.ui.model.resume.Case;
 import io.github.teuton.panel.ui.model.resume.Resume;
 import io.github.teuton.panel.ui.utils.FXUtils;
 import javafx.beans.property.ObjectProperty;
@@ -12,9 +11,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.BorderPane;
 
 public class ResumeComponent extends BorderPane implements Initializable {
@@ -25,8 +21,9 @@ public class ResumeComponent extends BorderPane implements Initializable {
 	
 	// components
 	
-	private MapComponent configComponent;
-	private MapComponent resultsComponent;
+	private ListComponent configComponent;
+	private ListComponent resultsComponent;
+	private TableComponent casesComponent;
 
 	// view
 	
@@ -37,32 +34,7 @@ public class ResumeComponent extends BorderPane implements Initializable {
     private ScrollPane resultsPane;
 
     @FXML
-    private BorderPane bottonPane;
-
-    @FXML
-    private TableView<Case> casesTable;
-
-    @FXML
-    private TableColumn<Case, String> idColumn;
-
-    @FXML
-    private TableColumn<Case, String> membersColumn;
-
-    @FXML
-    private TableColumn<Case, Number> gradeColumn;
-
-    @FXML
-    private TableColumn<Case, Boolean> skipColumn;
-
-    @FXML
-    private TableColumn<Case, String> moodleIdColumn;
-
-    @FXML
-    private TableColumn<Case, String> moodleFeedbackColumn;
-
-    @FXML
-    private TableColumn<Case, String> connStatusColumn;
-
+    private BorderPane bottomPane;
 
 	public ResumeComponent() {
 		FXUtils.load("/fxml/Resume.fxml", this);
@@ -73,23 +45,14 @@ public class ResumeComponent extends BorderPane implements Initializable {
 
 		// initialize view
 		
-		configComponent = new MapComponent("resume.config.order");
+		configComponent = new ListComponent("resume.config.order");
 		configPane.setContent(configComponent);
 
-		resultsComponent = new MapComponent("resume.results.order");
+		resultsComponent = new ListComponent("resume.results.order");
 		resultsPane.setContent(resultsComponent);
-		
-		// bindings
-		
-		idColumn.setCellValueFactory(v -> v.getValue().idProperty());
-		membersColumn.setCellValueFactory(v -> v.getValue().membersProperty());
-		gradeColumn.setCellValueFactory(v -> v.getValue().gradeProperty());
-		skipColumn.setCellValueFactory(v -> v.getValue().skipProperty());
-		moodleIdColumn.setCellValueFactory(v -> v.getValue().moodleIdProperty());
-		moodleFeedbackColumn.setCellValueFactory(v -> v.getValue().moodleFeedbackProperty());
-		connStatusColumn.setCellValueFactory(v -> v.getValue().connStatusProperty().asString());
-		
-		skipColumn.setCellFactory(CheckBoxTableCell.forTableColumn(skipColumn));
+
+		casesComponent = new TableComponent("resume.cases.order");
+		bottomPane.setCenter(casesComponent);
 		
 		// listeners
 		
@@ -101,13 +64,13 @@ public class ResumeComponent extends BorderPane implements Initializable {
 	
 	private void onResumeChanged(ObservableValue<? extends Resume> o, Resume ov, Resume nv) {
 		if (nv == null) {
-			configComponent.mapProperty().unbind();
-			resultsComponent.mapProperty().unbind();
-			casesTable.itemsProperty().unbind();
+			configComponent.itemsProperty().unbind();
+			resultsComponent.itemsProperty().unbind();
+			casesComponent.itemsProperty().unbind();
 		} else {
-			configComponent.mapProperty().bind(nv.configProperty());
-			resultsComponent.mapProperty().bind(nv.resultsProperty());
-			casesTable.itemsProperty().bind(nv.casesProperty());
+			configComponent.itemsProperty().bind(nv.configProperty());
+			resultsComponent.itemsProperty().bind(nv.resultsProperty());
+			casesComponent.itemsProperty().bind(nv.casesProperty());
 		}
 	}
 	

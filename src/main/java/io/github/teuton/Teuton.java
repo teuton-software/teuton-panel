@@ -40,6 +40,7 @@ public class Teuton {
 		PipedInputStream pis = new PipedInputStream();
 		PipedOutputStream pos = new PipedOutputStream(pis);
 		Writer writer = new OutputStreamWriter(pos);
+		writer.write(currentDirectory.getAbsolutePath() + "$ " + rubyfile + " " + StringUtils.join(args, " ") + "\n\n");
 		Thread t = new Thread(() -> {
 			ruby(writer, TEUTON_PATH, currentDirectory, args);
 		});
@@ -64,15 +65,15 @@ public class Teuton {
 		return null;
 	}
 	
-	public static InputStream play(File challengeDirectory, File configFile, List<String> casesId) throws IOException {
+	public static InputStream play(File challengeDirectory, File configFile, File workingDirectory, List<String> casesId) throws IOException {
 		List<String> args = new ArrayList<>();
 		args.add("play");
 		args.add("--no-color");
 		if (configFile != null) args.add("--cpath=" + configFile.getAbsolutePath());
 		if (casesId != null && !casesId.isEmpty()) args.add("--case=" + StringUtils.join(casesId, ","));
 		args.add("--export=json");
-		args.add(".");
-		return ruby(TEUTON_PATH, challengeDirectory, args.toArray(new String[args.size()]));		
+		args.add(challengeDirectory.getAbsolutePath());
+		return ruby(TEUTON_PATH, workingDirectory, args.toArray(new String[args.size()]));		
 	}
 
 	public static String readme(File challengeDirectory) {

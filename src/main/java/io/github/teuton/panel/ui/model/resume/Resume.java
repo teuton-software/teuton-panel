@@ -17,7 +17,8 @@ public class Resume {
 			FXCollections.observableHashMap());
 
 	@SerializedName("cases")
-	private ListProperty<Case> cases = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ListProperty<MapProperty<String, Object>> cases = new SimpleListProperty<>(
+			FXCollections.observableArrayList());
 
 	@SerializedName("results")
 	private MapProperty<String, Object> results = new SimpleMapProperty<String, Object>(
@@ -51,18 +52,6 @@ public class Resume {
 		this.hallOfFameProperty().set(hallOfFame);
 	}
 
-	public final ListProperty<Case> casesProperty() {
-		return this.cases;
-	}
-
-	public final ObservableList<Case> getCases() {
-		return this.casesProperty().get();
-	}
-
-	public final void setCases(final ObservableList<Case> cases) {
-		this.casesProperty().set(cases);
-	}
-
 	public final MapProperty<String, Object> resultsProperty() {
 		return this.results;
 	}
@@ -73,6 +62,18 @@ public class Resume {
 
 	public final void setResults(final ObservableMap<String, Object> results) {
 		this.resultsProperty().set(results);
+	}
+
+	public final ListProperty<MapProperty<String, Object>> casesProperty() {
+		return this.cases;
+	}
+
+	public final ObservableList<MapProperty<String, Object>> getCases() {
+		return this.casesProperty().get();
+	}
+
+	public final void setCases(final ObservableList<MapProperty<String, Object>> cases) {
+		this.casesProperty().set(cases);
 	}
 
 }

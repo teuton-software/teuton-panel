@@ -27,6 +27,7 @@ import io.github.teuton.panel.ui.mode.ModeController;
 import io.github.teuton.panel.ui.model.cases.Case;
 import io.github.teuton.panel.ui.model.resume.Resume;
 import io.github.teuton.panel.ui.utils.Challenge;
+import io.github.teuton.panel.ui.utils.Config;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
 import io.github.teuton.panel.utils.DesktopUtils;
@@ -59,6 +60,8 @@ public class TeacherController extends Controller<BorderPane> {
 	// ===================================
 	// model
 	// ===================================
+	
+	private File varFolder = new File(Config.configDir, "var");
 
 	private BooleanProperty running;
 	private ListProperty<Case> cases;
@@ -228,7 +231,11 @@ public class TeacherController extends Controller<BorderPane> {
 	}
 
 	private void play() {
-		final List<String> selectedCases = cases.stream().filter(c -> c.isSelected()).map(c -> c.getResults().get("case_id").toString()).collect(Collectors.toList());
+		final List<String> selectedCases = 
+				cases.stream()
+					.filter(c -> c.isSelected())
+					.map(c -> c.getResults().get("case_id").toString())
+					.collect(Collectors.toList());
 		
 		Task<Void> task = new Task<>() {
 			protected Void call() throws Exception {
@@ -237,7 +244,7 @@ public class TeacherController extends Controller<BorderPane> {
 
 				StringBuffer buffer = new StringBuffer();
 				
-				InputStream is = Teuton.play(challengeFolder, configFile, selectedCases);
+				InputStream is = Teuton.play(challengeFolder, configFile, varFolder.getParentFile(), selectedCases);
 				StreamCharacterConsumer consumer = new StreamCharacterConsumer(is, c -> {
 					buffer.append(c);
 					updateMessage(buffer.toString());
@@ -267,9 +274,11 @@ public class TeacherController extends Controller<BorderPane> {
 	}
 
 	private void loadResults() {
-		File resultsFolder = new File(getChallenge().getChallengeFolder(), "var/" + getChallenge().getTitle());
-		loadResume(resultsFolder);
-		loadCases(resultsFolder);
+		File resultsFolder = new File(varFolder, getChallenge().getTitle());
+		if (resultsFolder.exists()) {
+			loadResume(resultsFolder);
+			loadCases(resultsFolder);
+		}
 	}
 
 	private void loadResume(File resultsFolder) {

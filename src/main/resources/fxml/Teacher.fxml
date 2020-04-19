@@ -41,7 +41,7 @@
                   </VBox>
 						<JFXButton fx:id="runButton" contentDisplay="GRAPHIC_ONLY" onAction="#onRunAction" prefHeight="32.0" prefWidth="38.0" ripplerFill="#92a897">
 							<tooltip>
-								<Tooltip text="Execute test" />
+								<Tooltip text="Play challenge" />
 							</tooltip>
 							<graphic>
 								<FontIcon iconColor="#635c67" iconLiteral="fas-play" iconSize="24" />

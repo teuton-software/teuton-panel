@@ -25,9 +25,9 @@ public class CaseComponent extends BorderPane implements Initializable {
 
 	// view
 
-	private MapComponent configComponent;
+	private ListComponent configComponent;
 	private GroupsComponent groupComponent;
-	private MapComponent resultsComponent;
+	private ListComponent resultsComponent;
 
 	@FXML
 	private Tab configTab, groupsTab, resultsTab, logsTab;
@@ -58,12 +58,12 @@ public class CaseComponent extends BorderPane implements Initializable {
 		_case = new SimpleObjectProperty<>();
 		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
 
-		configComponent = new MapComponent("case.config.order");
+		configComponent = new ListComponent("case.config.order");
 		configComponent.setPadding(new Insets(5));
 		
 		groupComponent = new GroupsComponent();
 		
-		resultsComponent = new MapComponent("case.results.order");
+		resultsComponent = new ListComponent("case.results.order");
 		resultsComponent.setPadding(new Insets(5));
 
 		configContentPane.setContent(configComponent);
@@ -78,17 +78,17 @@ public class CaseComponent extends BorderPane implements Initializable {
 		membersLabel.setText("");
 		
 		if (ov != null) {
-			configComponent.mapProperty().unbind();
+			configComponent.itemsProperty().unbind();
 			groupComponent.groupsProperty().unbind();
-			resultsComponent.mapProperty().unbind();
+			resultsComponent.itemsProperty().unbind();
 		}
 		
 		if (nv != null) {
 			caseLabel.setText("Case " + getCase().getResults().get("case_id"));
 			membersLabel.setText(getCase().getConfig().get("tt_members").toString());
-			configComponent.mapProperty().bind(nv.configProperty());
+			configComponent.itemsProperty().bind(nv.configProperty());
 			groupComponent.groupsProperty().bind(nv.groupsProperty());
-			resultsComponent.mapProperty().bind(nv.resultsProperty());
+			resultsComponent.itemsProperty().bind(nv.resultsProperty());
 		}
 		
 	}

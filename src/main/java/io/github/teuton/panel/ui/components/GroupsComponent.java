@@ -28,7 +28,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 
 	// components
 	
-	private MapComponent targetComponent;
+	private ListComponent targetComponent;
 	
 	// view
 	
@@ -59,7 +59,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		targetComponent = new MapComponent("case.target.order");
+		targetComponent = new ListComponent("case.target.order");
 
 		targetPane.setContent(targetComponent);
 		
@@ -99,7 +99,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 		
 		if (ov != null) {
 			
-			targetComponent.setMap(null);
+			targetComponent.setItems(null);
 			
 		}
 
@@ -108,7 +108,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 			if (nv.getValue() instanceof MapProperty) {
 				
 				MapProperty<String,Object> target = (MapProperty<String,Object>) nv.getValue();
-				targetComponent.setMap(target);
+				targetComponent.setItems(target);
 				
 			}
 			
