@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.5</version>
+				<version>0.9.6-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>
