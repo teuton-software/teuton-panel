@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -21,17 +19,10 @@
 				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
 				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
 				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
 				<Label text="Operating system:" GridPane.rowIndex="3" />
 				<Label fx:id="osLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-				<Label layoutX="10.0" layoutY="52.0" text="S-Node:" GridPane.rowIndex="4" />
-				<JFXToggleButton fx:id="sNodeToggleButton" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" layoutX="112.0" layoutY="31.0" onAction="#onSNodeToggleButtonAction" size="8.0" text="S-Node" GridPane.columnIndex="1" GridPane.rowIndex="4">
-					<tooltip>
-						<Tooltip text="Install/uninstall S-Node" />
-					</tooltip>
-				</JFXToggleButton>
 				<Label text="Teuton version:" GridPane.rowIndex="1" />
 				<Label fx:id="teutonVersionLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label layoutX="25.0" layoutY="52.0" text="App version:" />

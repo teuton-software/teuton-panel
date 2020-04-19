@@ -7,16 +7,12 @@ import org.apache.commons.lang3.SystemUtils;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
-import com.jfoenix.controls.JFXToggleButton;
-
 import io.github.teuton.Teuton;
 import io.github.teuton.panel.ui.model.Settings;
 import io.github.teuton.panel.ui.utils.Controller;
-import io.github.teuton.panel.ui.utils.Dialogs;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -35,9 +31,6 @@ public class SettingsController extends Controller<BorderPane> {
 	@FXML
 	private Label usernameLabel, osLabel, appVersionLabel, teutonVersionLabel;
 
-	@FXML
-	private JFXToggleButton sNodeToggleButton;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -45,8 +38,6 @@ public class SettingsController extends Controller<BorderPane> {
 		Settings settings = new Settings();
 		settings.setOs(String.format("%s (%s)", SystemUtils.OS_NAME, SystemUtils.OS_VERSION));
 		settings.setTeutonVersion(Teuton.version());
-		settings.setTNode(settings.getTeutonVersion() != null);
-		settings.setSNode(SNode.isInstalled());
 		settings.setAppVersion(ResourceBundle.getBundle("teuton-panel").getString("teuton.panel.version"));
 		settings.setUsername(System.getProperty("user.name"));
 
@@ -66,7 +57,6 @@ public class SettingsController extends Controller<BorderPane> {
 		popOver.setFadeOutDuration(Duration.millis(1));
 
 		// bind view to model
-		sNodeToggleButton.selectedProperty().bindBidirectional(settings.sNodeProperty());
 		osLabel.textProperty().bind(settings.osProperty());
 		appVersionLabel.textProperty().bind(settings.appVersionProperty());
 		usernameLabel.textProperty().bind(settings.usernameProperty());
@@ -76,22 +66,6 @@ public class SettingsController extends Controller<BorderPane> {
 					.then(settings.teutonVersionProperty()).otherwise("Not installed")
 			);
 
-	}
-
-	@FXML
-	private void onSNodeToggleButtonAction(ActionEvent e) {
-		System.out.println("s-node action: " + sNodeToggleButton.isSelected());
-		if (sNodeToggleButton.isSelected()) {
-
-			if (!(Dialogs.confirm("Install S-Node", "Do you want to install S-Node?") && SNode.install()))
-				sNodeToggleButton.setSelected(false);
-
-		} else {
-
-			if (!(Dialogs.confirm("Uninstall S-Node", "Do you want to uninstall S-Node?") && SNode.uninstall()))
-				sNodeToggleButton.setSelected(true);
-
-		}
 	}
 
 	public void showPopOver(Node owner) {

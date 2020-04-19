@@ -45,7 +45,7 @@
 		<organizationEmail>teuton.software@protonmail.com</organizationEmail>
 		<bundleJre>true</bundleJre>
 		<generateInstaller>true</generateInstaller>
-		<administratorRequired>true</administratorRequired>
+		<administratorRequired>false</administratorRequired>
 	</properties>
 
 	<profiles>
