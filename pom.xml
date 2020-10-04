@@ -8,7 +8,7 @@
 	<artifactId>teuton-panel</artifactId>
 
 	<description>Graphical front-end for TEUTON</description>
-	<version>0.5.0</version>
+	<version>0.6.0</version>
 	<url>https://github.com/teuton-software/teuton-panel</url>
 
 	<organization>
@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>io.github.fvarrui</groupId>
 				<artifactId>javapackager</artifactId>
-				<version>0.9.7-SNAPSHOT</version>
+				<version>1.2.0</version>
 				<executions>
 					<execution>
 						<id>bundle-jre</id>
