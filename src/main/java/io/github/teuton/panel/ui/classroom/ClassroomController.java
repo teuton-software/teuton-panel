@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -99,7 +101,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 		configFilePath.bindBidirectional(configFileText.textProperty());
 		resultsFilePath.bindBidirectional(resultsFileText.textProperty());
 
-		openButton.disableProperty().bind(teacherButton.selectedProperty().and(challengeFolderPath.isNotEmpty()).or(studentButton.selectedProperty()).not());
+		openButton.disableProperty().bind(teacherButton.selectedProperty().and(challengeFolderPath.isNotEmpty())
+				.or(studentButton.selectedProperty()).not());
 
 		challengeFolderPane.disableProperty().bind(teacherButton.selectedProperty().not());
 		configFilePane.disableProperty().bind(teacherButton.selectedProperty().not());
@@ -110,8 +113,9 @@ public class ClassroomController extends Controller<AnchorPane> {
 		recentChallengesCombo.itemsProperty().bind(Config.getConfig().recentChallengesProperty());
 
 		// listeners
-		
-		recentChallengesCombo.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onRecentChallengeChanged(o, ov, nv));
+
+		recentChallengesCombo.getSelectionModel().selectedItemProperty()
+				.addListener((o, ov, nv) -> onRecentChallengeChanged(o, ov, nv));
 
 		toggleGroup.selectedToggleProperty().addListener((o, ov, nv) -> onToggleButtonSelected(o, ov, nv));
 
@@ -167,11 +171,17 @@ public class ClassroomController extends Controller<AnchorPane> {
 				Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + challengeFolderPath.get() + "' doesn't contain 'start.rb' file.");
 				return;
 			}
+			
+			// sets config file as config.yaml if empty
+			String configFilePath = this.configFilePath.get();
+			if (StringUtils.isBlank(configFilePath)) {
+				configFilePath = challengeFolderPath.get() + "/config.yaml";
+			}
 
 			// creates challenge
 			Challenge challenge = new Challenge();
 			challenge.setChallengeFolder(challengeFolderPath.get());
-			challenge.setConfigFile(configFilePath.get());
+			challenge.setConfigFile(configFilePath);
 			challenge.setTitle(new File(challengeFolderPath.get()).getName());
 
 			// set selected challenge (it's propagated to teacher controller)
@@ -194,7 +204,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 	private void onChooseChallengeFolderAction(ActionEvent e) {
 		DirectoryChooser dialog = new DirectoryChooser();
 		dialog.setTitle("Choose challenge folder");
-		dialog.setInitialDirectory(challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
+		dialog.setInitialDirectory(
+				challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
 		File file = dialog.showDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
 			challengeFolderPath.set(file.getAbsolutePath());
@@ -206,7 +217,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 		FileChooser dialog = new FileChooser();
 		dialog.setTitle("Choose config file");
 		dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Config file", "*.yaml", "*.json"));
-		dialog.setInitialDirectory(challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
+		dialog.setInitialDirectory(
+				challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
 		File file = dialog.showOpenDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
 			configFilePath.set(file.getAbsolutePath());

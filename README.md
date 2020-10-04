@@ -4,7 +4,7 @@
 
 It includes [**teuton gem**](https://rubygems.org/gems/teuton) and uses [**jruby**](https://www.jruby.org/) to run it (so there's no need to install *teuton* separately nor Ruby).
 
-- [**v0.4.0**](https://github.com/teuton-software/teuton-panel/releases/tag/v0.4.0) includes **teuton 2.1.8** and **jruby 9.2.9.0**
+- [**v0.6.0**](https://github.com/teuton-software/teuton-panel/releases/tag/v0.4.0) includes **teuton 2.2.0** and **jruby 9.2.9.0**
 
 ## For users
 
@@ -97,12 +97,7 @@ git clone https://github.com/teuton-software/teuton-panel.git
 cd teuton-panel
 ```
 
-2. Download and copy `rubygems` to resources:
-
-```bash
-mvn gem:initialize
-mvn validate
-```
+2. [Install Rubygems into resources](#Rubygems).
 
 3. Compile and package the project:
 
@@ -110,13 +105,7 @@ mvn validate
 mvn package
 ```
 
-It generates in `target`:
-
-* `teuton-panel` folder with the app.
-* `teuton-panel_x.y.z.deb` package file on GNU/Linux (dpkg-deb required). 
-* `teuton-panel_x.y.z.rpm` package file on GNU/Linux (rpm-build required).
-* `teuton-panel_x.y.z.exe` installer file on Windows (InnoSetup required).
-* `teuton-panel_x.y.z.dmg` installer file on Mac OS X.
+It generates installation artifacts in `target` folder.
 
 ### Rubygems
 
@@ -145,7 +134,7 @@ rake build:gem
 4. Install gems to `rubygems` in project's `resources` folder:
 
 ```bash
-gem install teuton-x.y.z.gem --install-dir <project-root>/src/main/resources/rubygems --no-user-install --no-document
+gem install teuton-x.y.z.gem --install-dir path/to/teuton-panel/src/main/resources/rubygems --no-user-install --no-document
 ```
 
 ### Ikonli icons list

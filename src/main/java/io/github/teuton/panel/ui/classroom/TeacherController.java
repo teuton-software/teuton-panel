@@ -19,6 +19,7 @@ import com.jfoenix.controls.JFXButton;
 
 import io.github.teuton.Teuton;
 import io.github.teuton.panel.ui.components.CasesComponent;
+import io.github.teuton.panel.ui.components.ConfigEditorComponent;
 import io.github.teuton.panel.ui.components.HallOfFameComponent;
 import io.github.teuton.panel.ui.components.MarkdownComponent;
 import io.github.teuton.panel.ui.components.OutputComponent;
@@ -79,6 +80,7 @@ public class TeacherController extends Controller<BorderPane> {
 	private HallOfFameComponent hallOfFameComponent;
 	private OutputComponent outputComponent;
 	private ResumeComponent resumeComponent;
+	private ConfigEditorComponent configEditorComponent;
 
 	@FXML
 	private VBox runningPane;
@@ -93,7 +95,7 @@ public class TeacherController extends Controller<BorderPane> {
 	private TabPane tabPane;
 
 	@FXML
-	private Tab descriptionTab, casesTab, resumeTab, hallOfFameTab, outputTab;
+	private Tab descriptionTab, casesTab, resumeTab, hallOfFameTab, outputTab, configTab;
 
 	// ===================================
 	// constructor
@@ -136,6 +138,9 @@ public class TeacherController extends Controller<BorderPane> {
 		resumeComponent = new ResumeComponent();
 		resumeTab.setContent(resumeComponent);
 
+		configEditorComponent = new ConfigEditorComponent();
+		configTab.setContent(configEditorComponent);
+		
 		// bindings
 
 		outputComponent.outputProperty().bind(output);
@@ -172,6 +177,7 @@ public class TeacherController extends Controller<BorderPane> {
 
 	private void onChallengeChanged(Observable o, Challenge ov, Challenge nv) {
 		if (nv != null) {
+			configEditorComponent.setConfigFile(nv.getConfigFile() != null ? new File(nv.getConfigFile()) : null);
 			loadResults();
 			loadReadme();
 		}

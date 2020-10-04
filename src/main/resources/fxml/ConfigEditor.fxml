@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
 <fx:root fx:id="root" stylesheets="@../css/styles.css" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-		<TextArea fx:id="outputText" editable="false" styleClass="output-text" BorderPane.alignment="CENTER" />
+		<TextArea fx:id="contentText" styleClass="editor-text" BorderPane.alignment="CENTER" />
    </center>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Config file:" />
+                  <Label fx:id="configFileLabel" text="-" />
+               </children>
+            </HBox>
+         </left>
+         <right>
+            <HBox alignment="CENTER_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveAction" text="Save" />
+                  <Button fx:id="reloadButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onReloadAction" text="Reload" />
+                  <Button fx:id="loadFromMoodleButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onLoadFromMoodleAction" text="Load from Moodle" />
+               </children>
+            </HBox>
+         </right>
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
+      </BorderPane>
+   </top>
 </fx:root>
