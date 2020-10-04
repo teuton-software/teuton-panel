@@ -1,4 +1,4 @@
 /bin/
 /target/
-/src/main/resources/rubygems/cache
+/src/main/resources/rubygems
 *.log
