@@ -163,6 +163,6 @@
 }
 
 .editor-text {
-	-fx-font-family: 'Classic Console';
-	-fx-font-size: 16pt;
+	-fx-font-family: consolas;
+	-fx-font-size: 11pt;
 }

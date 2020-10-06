@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -29,7 +31,12 @@
                <children>
                   <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveAction" text="Save" />
                   <Button fx:id="reloadButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onReloadAction" text="Reload" />
-                  <Button fx:id="loadFromMoodleButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onLoadFromMoodleAction" text="Load from Moodle" />
+                  <SplitMenuButton fx:id="loadMenuButton" mnemonicParsing="false" text="Load">
+                    <items>
+                      <MenuItem fx:id="loadConfigFileMenuItem" mnemonicParsing="false" onAction="#onLoadConfigFileAction" text="Load config file" />
+                      <MenuItem fx:id="loadFromMoodleZipItem" mnemonicParsing="false" onAction="#onLoadFromMoodleZipAction" text="Load from Moodle zip" />
+                    </items>
+                  </SplitMenuButton>
                </children>
             </HBox>
          </right>

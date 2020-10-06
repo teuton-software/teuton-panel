@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import io.github.teuton.panel.ui.app.TeutonPanelApp;
 import io.github.teuton.panel.ui.utils.Dialogs;
@@ -23,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -57,7 +59,11 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 	private void onConfigFileChanged(ObservableValue<? extends File> o, File ov, File nv) {
 		if (nv != null) {
 			try {
-				content.set(FileUtils.readFileToString(nv, Charset.forName("UTF-8")));
+				if (nv.exists())
+					content.set(FileUtils.readFileToString(nv, Charset.forName("UTF-8")));
+				else {
+					content.set(IOUtils.resourceToString("/templates/config.yaml", Charset.forName("UTF-8")));
+				}
 			} catch (IOException e) {
 				Dialogs.error("Error reading config file", e.getMessage());
 			}
@@ -73,9 +79,14 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 	private void onReloadAction(ActionEvent e) {
 
 	}
+	
+	@FXML
+	private void onLoadConfigFileAction(ActionEvent e) {
+		
+	}
 
 	@FXML
-	private void onLoadFromMoodleAction(ActionEvent e) {
+	private void onLoadFromMoodleZipAction(ActionEvent e) {
 
 		try {
 
@@ -103,7 +114,7 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 					break; // skipping empty submission
 				File configFile = files[0];
 				String content = FileUtils.readFileToString(configFile, Charset.forName("UTF-8"));
-				buffer.append(content + "\n");
+				buffer.append(content.trim() + "\n");
 			}
 
 			// setting content

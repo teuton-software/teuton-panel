@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -70,6 +69,7 @@ public class TeacherController extends Controller<BorderPane> {
 	private StringProperty description;
 	private ObjectProperty<Resume> resume;
 	private StringProperty output;
+	private StringProperty config;
 
 	// ===================================
 	// view
@@ -120,6 +120,7 @@ public class TeacherController extends Controller<BorderPane> {
 		resume = new SimpleObjectProperty<>();
 		cases = new SimpleListProperty<>(FXCollections.observableArrayList());
 		output = new SimpleStringProperty();
+		config = new SimpleStringProperty();
 
 		// components
 
@@ -155,6 +156,8 @@ public class TeacherController extends Controller<BorderPane> {
 
 		runButton.visibleProperty().bind(running.not());
 		runButton.managedProperty().bind(runButton.visibleProperty());
+		
+		config.bind(configEditorComponent.contentProperty());
 
 		// listeners
 
@@ -246,7 +249,9 @@ public class TeacherController extends Controller<BorderPane> {
 		Task<Void> task = new Task<>() {
 			protected Void call() throws Exception {
 				File challengeFolder = new File(getChallenge().getChallengeFolder());
-				File configFile = StringUtils.isEmpty(getChallenge().getConfigFile()) ? null : new File(getChallenge().getConfigFile());
+				
+				File configFile = File.createTempFile("config_", ".yaml");
+				FileUtils.writeStringToFile(configFile, config.get(), Charset.forName("UTF-8"));
 
 				StringBuffer buffer = new StringBuffer();
 				
