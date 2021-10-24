@@ -59,7 +59,7 @@ public class MainController extends ParentController {
 		registerController(standaloneController);
 
 		// init properties
-		setShown(ModeController.class);
+		show(ModeController.class);
 
 	}
 

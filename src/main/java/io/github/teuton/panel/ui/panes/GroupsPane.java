@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +20,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 
-public class GroupsComponent extends SplitPane implements Initializable {
+public class GroupsPane extends SplitPane implements Initializable {
 
 	// model
 
@@ -28,7 +28,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 
 	// components
 	
-	private ListComponent targetComponent;
+	private ListPane targetComponent;
 	
 	// view
 	
@@ -44,7 +44,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 	@FXML
 	private TreeTableColumn<Object, String> scoreColumn;
 
-	public GroupsComponent() {
+	public GroupsPane() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Groups.fxml"));
 			loader.setController(this);
@@ -59,7 +59,7 @@ public class GroupsComponent extends SplitPane implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		targetComponent = new ListComponent("case.target.order");
+		targetComponent = new ListPane("case.target.order");
 
 		targetPane.setContent(targetComponent);
 		
@@ -116,18 +116,19 @@ public class GroupsComponent extends SplitPane implements Initializable {
 		
 	}
 
-	private void onGroupsChanged(ObservableValue<? extends ObservableList<Group>> o, ObservableList<Group> ov,
-			ObservableList<Group> nv) {
+	private void onGroupsChanged(ObservableValue<? extends ObservableList<Group>> o, ObservableList<Group> ov, ObservableList<Group> nv) {
 
 		if (ov != null) {
 			targetsTreeTable.setRoot(null);
 		}
+		
 		if (nv != null) {
 
 			TreeItem<Object> root = new TreeItem<>();
 
 			for (Group group : nv) {
 				TreeItem<Object> groupItem = new TreeItem<Object>(group);
+				groupItem.setExpanded(true);
 
 				for (MapProperty<String, Object> target : group.getTargets()) {
 					TreeItem<Object> targetItem = new TreeItem<Object>(target);

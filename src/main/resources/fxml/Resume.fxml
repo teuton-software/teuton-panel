@@ -6,9 +6,9 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<fx:root fx:id="root" prefHeight="480.0" prefWidth="640.0" stylesheets="@../css/styles.css" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" prefHeight="480.0" prefWidth="640.0" stylesheets="@../css/styles.css" type="BorderPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.3" orientation="VERTICAL" BorderPane.alignment="CENTER">
         <items>
             <SplitPane dividerPositions="0.6">
               <items>

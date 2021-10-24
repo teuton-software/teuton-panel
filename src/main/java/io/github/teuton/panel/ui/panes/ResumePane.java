@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 
-public class ResumeComponent extends BorderPane implements Initializable {
+public class ResumePane extends BorderPane implements Initializable {
 
 	// model
 
@@ -21,9 +21,9 @@ public class ResumeComponent extends BorderPane implements Initializable {
 	
 	// components
 	
-	private ListComponent configComponent;
-	private ListComponent resultsComponent;
-	private TableComponent casesComponent;
+	private ListPane configComponent;
+	private ListPane resultsComponent;
+	private TablePane casesComponent;
 
 	// view
 	
@@ -36,7 +36,7 @@ public class ResumeComponent extends BorderPane implements Initializable {
     @FXML
     private BorderPane bottomPane;
 
-	public ResumeComponent() {
+	public ResumePane() {
 		FXUtils.load("/fxml/Resume.fxml", this);
 	}
 
@@ -45,13 +45,13 @@ public class ResumeComponent extends BorderPane implements Initializable {
 
 		// initialize view
 		
-		configComponent = new ListComponent("resume.config.order");
+		configComponent = new ListPane("resume.config.order");
 		configPane.setContent(configComponent);
 
-		resultsComponent = new ListComponent("resume.results.order");
+		resultsComponent = new ListPane("resume.results.order");
 		resultsPane.setContent(resultsComponent);
 
-		casesComponent = new TableComponent("resume.cases.order");
+		casesComponent = new TablePane("resume.cases.order");
 		bottomPane.setCenter(casesComponent);
 		
 		// listeners

@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 
-public class CasesComponent extends SplitPane implements Initializable {
+public class CasesPane extends SplitPane implements Initializable {
 
 	// ===================================
 	// model
@@ -29,8 +29,8 @@ public class CasesComponent extends SplitPane implements Initializable {
 	// view
 	// ===================================
 
-	private CaseComponent caseComponent;
-	private WarningComponent warningComponent;
+	private CasePane caseComponent;
+	private WarningPane warningComponent;
 
 	@FXML
 	private JFXListView<Case> casesList;
@@ -42,7 +42,7 @@ public class CasesComponent extends SplitPane implements Initializable {
 	// constructor
 	// ===================================
 
-	public CasesComponent() {
+	public CasesPane() {
 		FXUtils.load("/fxml/Cases.fxml", this);
 	}
 
@@ -59,10 +59,10 @@ public class CasesComponent extends SplitPane implements Initializable {
 
 		// view
 
-		warningComponent = new WarningComponent();
+		warningComponent = new WarningPane();
 		casePane.setCenter(warningComponent);
 
-		caseComponent = new CaseComponent();
+		caseComponent = new CasePane();
 
 		casesList.setCellFactory(v -> new CaseListCell());
 		

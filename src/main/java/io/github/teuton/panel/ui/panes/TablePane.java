@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.BorderPane;
 
-public class TableComponent extends BorderPane implements Initializable {
+public class TablePane extends BorderPane implements Initializable {
 
 	private static final ResourceBundle CONFIG = ResourceBundle.getBundle("config");
 
@@ -44,7 +44,7 @@ public class TableComponent extends BorderPane implements Initializable {
 	@FXML
 	private TableView<MapProperty<String, Object>> tableView;
 
-	public TableComponent(String orderProperty) {
+	public TablePane(String orderProperty) {
 		this.order = CONFIG.getString(orderProperty).split(",");
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Table.fxml"));

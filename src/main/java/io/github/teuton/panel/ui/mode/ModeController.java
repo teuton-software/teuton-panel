@@ -80,7 +80,7 @@ public class ModeController extends Controller<AnchorPane> {
 	@FXML
 	private void onClassroomModeButtonAction(ActionEvent event) {
 		System.out.println("classroom");
-		setShown(ClassroomController.class);
+		show(ClassroomController.class);
 	}
 
 	@FXML

@@ -1,9 +1,9 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
@@ -24,13 +24,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import net.lingala.zip4j.ZipFile;
 
-public class ConfigEditorComponent extends BorderPane implements Initializable {
+public class ConfigEditorPane extends BorderPane implements Initializable {
 
 	// model
 
@@ -45,7 +44,7 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 	@FXML
 	private TextArea contentText;
 
-	public ConfigEditorComponent() {
+	public ConfigEditorPane() {
 		FXUtils.load("/fxml/ConfigEditor.fxml", this);
 	}
 
@@ -60,9 +59,9 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 		if (nv != null) {
 			try {
 				if (nv.exists())
-					content.set(FileUtils.readFileToString(nv, Charset.forName("UTF-8")));
+					content.set(FileUtils.readFileToString(nv, StandardCharsets.UTF_8));
 				else {
-					content.set(IOUtils.resourceToString("/templates/config.yaml", Charset.forName("UTF-8")));
+					content.set(IOUtils.resourceToString("/templates/config.yaml", StandardCharsets.UTF_8));
 				}
 			} catch (IOException e) {
 				Dialogs.error("Error reading config file", e.getMessage());
@@ -99,7 +98,7 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 				return;
 
 			// destination
-			File destination = Files.createTempDirectory("submissions_").toFile();
+			File destination = Files.createTempDirectory("teutonpanel_submissions_").toFile();
 
 			// unzip file in temp folder
 			ZipFile zipFile = new ZipFile(file);
@@ -113,15 +112,17 @@ public class ConfigEditorComponent extends BorderPane implements Initializable {
 				if (files.length == 0)
 					break; // skipping empty submission
 				File configFile = files[0];
-				String content = FileUtils.readFileToString(configFile, Charset.forName("UTF-8"));
-				buffer.append(content.trim() + "\n");
+				if (configFile.isFile()) {
+					String content = FileUtils.readFileToString(configFile, StandardCharsets.UTF_8);
+					buffer.append(content.trim() + "\n");
+				}
 			}
 
 			// setting content
 			setContent(getContent().trim() + (getContent().charAt(getContent().length() - 1) == '\n' ? "" : "\n") + buffer);
 
 		} catch (IOException e1) {
-			Dialogs.exception("Error", "Error loading config files fomr Moodle submissions zip file.", e1);
+			Dialogs.exception("Error", "Error loading config files from Moodle submissions zip file.", e1);
 		}
 
 	}

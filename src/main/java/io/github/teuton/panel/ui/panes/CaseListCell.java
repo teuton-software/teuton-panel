@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.net.URL;
 import java.util.ResourceBundle;

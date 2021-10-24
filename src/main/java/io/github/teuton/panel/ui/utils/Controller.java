@@ -55,7 +55,7 @@ public abstract class Controller<R extends Parent> implements Initializable {
 		return this.shownProperty().get();
 	}
 
-	public final void setShown(final Class<? extends Controller<?>> shown) {
+	public void show(final Class<? extends Controller<?>> shown) {
 		this.shownProperty().set(shown);
 	}
 

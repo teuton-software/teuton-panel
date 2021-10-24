@@ -8,14 +8,14 @@
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<fx:root fx:id="root" dividerPositions="0.75" stylesheets="@../css/styles.css" type="SplitPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" dividerPositions="0.6" stylesheets="@../css/styles.css" type="SplitPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <items>
       <BorderPane stylesheets="@../css/styles.css">
          <center>
             <TreeTableView fx:id="targetsTreeTable" BorderPane.alignment="CENTER">
               <columns>
-                <TreeTableColumn fx:id="descriptionColumn" text="Targets" prefWidth="${targetsTreeTable.width * 0.7}" />
-                <TreeTableColumn fx:id="scoreColumn" text="Score" prefWidth="${targetsTreeTable.width * 0.3}" />
+                <TreeTableColumn fx:id="descriptionColumn" prefWidth="${targetsTreeTable.width * 0.7}" text="Targets" />
+                <TreeTableColumn fx:id="scoreColumn" prefWidth="${targetsTreeTable.width * 0.3}" text="Score" />
               </columns>
                <columnResizePolicy>
                   <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

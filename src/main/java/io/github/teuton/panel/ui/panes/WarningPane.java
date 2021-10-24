@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class WarningComponent extends VBox implements Initializable {
+public class WarningPane extends VBox implements Initializable {
 
 	// model
 
@@ -23,7 +23,7 @@ public class WarningComponent extends VBox implements Initializable {
 	@FXML
 	private Label messageLabel;
 
-	public WarningComponent() {
+	public WarningPane() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Warning.fxml"));
 			loader.setController(this);

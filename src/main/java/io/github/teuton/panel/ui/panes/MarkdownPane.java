@@ -1,21 +1,20 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import io.github.teuton.panel.ui.utils.FXUtils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 
-public class MarkdownComponent extends BorderPane implements Initializable {
+public class MarkdownPane extends BorderPane implements Initializable {
 
 	// model
 
@@ -33,15 +32,8 @@ public class MarkdownComponent extends BorderPane implements Initializable {
 	@FXML
 	private Label loadingLabel;
 
-	public MarkdownComponent() {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Markdown.fxml"));
-			loader.setController(this);
-			loader.setRoot(this);
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+	public MarkdownPane() {
+		FXUtils.load("/fxml/Markdown.fxml", this);
 	}
 
 	@Override

@@ -7,6 +7,17 @@ import javafx.scene.Node;
 
 public class FXUtils {
 	
+	public static void load(String fxml, Controller<?> controller, Node view) {
+		try {
+			FXMLLoader loader = new FXMLLoader(FXUtils.class.getResource(fxml));
+			loader.setController(controller);
+			loader.setRoot(view);
+			loader.load();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static void load(String fxml, Node node) {
 		try {
 			FXMLLoader loader = new FXMLLoader(FXUtils.class.getResource(fxml));

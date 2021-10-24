@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,7 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 
-public class CaseComponent extends BorderPane implements Initializable {
+public class CasePane extends BorderPane implements Initializable {
 
 	// model
 
@@ -25,9 +25,9 @@ public class CaseComponent extends BorderPane implements Initializable {
 
 	// view
 
-	private ListComponent configComponent;
-	private GroupsComponent groupComponent;
-	private ListComponent resultsComponent;
+	private ListPane configComponent;
+	private GroupsPane groupComponent;
+	private ListPane resultsComponent;
 
 	@FXML
 	private Tab configTab, groupsTab, resultsTab, logsTab;
@@ -41,7 +41,7 @@ public class CaseComponent extends BorderPane implements Initializable {
     @FXML
     private ScrollPane resultsContentPane, configContentPane;
 
-	public CaseComponent() {
+	public CasePane() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Case.fxml"));
 			loader.setController(this);
@@ -58,12 +58,12 @@ public class CaseComponent extends BorderPane implements Initializable {
 		_case = new SimpleObjectProperty<>();
 		_case.addListener((o, ov, nv) -> onCaseChanged(o, ov, nv));
 
-		configComponent = new ListComponent("case.config.order");
+		configComponent = new ListPane("case.config.order");
 		configComponent.setPadding(new Insets(5));
 		
-		groupComponent = new GroupsComponent();
+		groupComponent = new GroupsPane();
 		
-		resultsComponent = new ListComponent("case.results.order");
+		resultsComponent = new ListPane("case.results.order");
 		resultsComponent.setPadding(new Insets(5));
 
 		configContentPane.setContent(configComponent);

@@ -1,7 +1,9 @@
+/*
 @font-face {
 	font-family: 'Classic Console';
     src: url('../fonts/clacon.ttf');
 }
+*/
 
 * {
 	-teuton-lightgray: #92a897;
@@ -20,7 +22,7 @@
 }
 
 .title-label {
-	-fx-font-size: 18pt;	
+	-fx-font-size: 22pt;	
 	-fx-font-weight: bold;
 	-fx-text-fill: -teuton-darkgray;
 }
@@ -115,8 +117,9 @@
 
 .output-text {
 	-fx-text-fill: lightgreen;
-	-fx-font-family: 'Classic Console';
-	-fx-font-size: 16pt;
+/*	-fx-font-family: 'Classic Console'; */
+	-fx-font-family: consolas;
+	-fx-font-size: 10pt;
 }
 .output-text .content {
 	-fx-background-color: black;
@@ -164,5 +167,5 @@
 
 .editor-text {
 	-fx-font-family: consolas;
-	-fx-font-size: 11pt;
+	-fx-font-size: 10pt;
 }

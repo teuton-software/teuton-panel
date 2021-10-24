@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 
-public class OutputComponent extends BorderPane implements Initializable {
+public class OutputPane extends BorderPane implements Initializable {
 
 	// model
 
@@ -22,13 +22,16 @@ public class OutputComponent extends BorderPane implements Initializable {
 	@FXML
 	private TextArea outputText;
 
-	public OutputComponent() {
+	public OutputPane() {
 		FXUtils.load("/fxml/Output.fxml", this);
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		outputText.textProperty().bind(output);
+		output.addListener((o, ov, nv) -> {
+			outputText.setText(nv);
+			outputText.appendText("");
+		});
 	}
 
 	public final StringProperty outputProperty() {

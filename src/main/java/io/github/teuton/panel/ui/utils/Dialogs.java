@@ -50,6 +50,10 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
+	public static void exception(String header, Throwable ex) {
+		exception(header, ex.getMessage(), ex);
+	}
+
 	public static boolean runCommand(CommandTask task) {
 		CommandDialog dialog = new CommandDialog(task);
 		dialog.initOwner(Application.getPrimaryStage());

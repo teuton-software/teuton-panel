@@ -17,8 +17,6 @@ import io.github.teuton.panel.ui.utils.Challenge;
 import io.github.teuton.panel.ui.utils.Config;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,14 +24,10 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
 
 public class ClassroomController extends Controller<AnchorPane> {
 
@@ -55,16 +49,10 @@ public class ClassroomController extends Controller<AnchorPane> {
 	private JFXButton openButton, backButton, chooseFolderButton;
 
 	@FXML
-	private ToggleButton teacherButton, studentButton;
+	private JFXTextField challengeFolderText, configFileText;
 
 	@FXML
-	private JFXTextField challengeFolderText, configFileText, resultsFileText;
-
-	@FXML
-	private ToggleGroup selectedProfile;
-
-	@FXML
-	private HBox challengeFolderPane, configFilePane, resultsFilePane;
+	private HBox challengeFolderPane, configFilePane;
 
 	@FXML
 	private JFXComboBox<Challenge> recentChallengesCombo;
@@ -94,21 +82,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 
 		// bindings
 
-		ToggleGroup toggleGroup = new ToggleGroup();
-		toggleGroup.getToggles().addAll(teacherButton, studentButton);
-
 		challengeFolderPath.bindBidirectional(challengeFolderText.textProperty());
 		configFilePath.bindBidirectional(configFileText.textProperty());
-		resultsFilePath.bindBidirectional(resultsFileText.textProperty());
-
-		openButton.disableProperty().bind(teacherButton.selectedProperty().and(challengeFolderPath.isNotEmpty())
-				.or(studentButton.selectedProperty()).not());
-
-		challengeFolderPane.disableProperty().bind(teacherButton.selectedProperty().not());
-		configFilePane.disableProperty().bind(teacherButton.selectedProperty().not());
-		recentChallengesCombo.disableProperty().bind(teacherButton.selectedProperty().not());
-
-		resultsFilePane.disableProperty().bind(studentButton.selectedProperty().not());
 
 		recentChallengesCombo.itemsProperty().bind(Config.getConfig().recentChallengesProperty());
 
@@ -117,11 +92,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 		recentChallengesCombo.getSelectionModel().selectedItemProperty()
 				.addListener((o, ov, nv) -> onRecentChallengeChanged(o, ov, nv));
 
-		toggleGroup.selectedToggleProperty().addListener((o, ov, nv) -> onToggleButtonSelected(o, ov, nv));
-
 		getRoot().sceneProperty().addListener((o, ov, nv) -> {
 			if (nv != null) {
-				selectedProfile.selectToggle(null);
 				challengeFolderPath.set(null);
 			}
 		});
@@ -139,73 +111,47 @@ public class ClassroomController extends Controller<AnchorPane> {
 		}
 	}
 
-	private void onToggleButtonSelected(ObservableValue<? extends Toggle> o, Toggle ov, Toggle nv) {
-
-		double x = 0;
-		if (nv != null) {
-			if (nv == teacherButton)
-				x = -120;
-			else
-				x = 120;
-		}
-
-		TranslateTransition t = new TranslateTransition();
-		t.setDuration(Duration.seconds(0.25));
-		t.setInterpolator(Interpolator.EASE_BOTH);
-		t.setNode(openButton);
-		t.setToX(x);
-		t.play();
-
-	}
-
 	@FXML
 	private void onOpenAction(ActionEvent e) {
-		if (teacherButton.isSelected()) {
 
-			if (!new File(challengeFolderPath.get()).exists()) {
-				Dialogs.error("Challenge folder doesn't exist!", "Folder '" + challengeFolderPath.get() + "' can't be found.");
-				return;
-			}
-
-			if (!new File(challengeFolderPath.get(), "start.rb").exists()) {
-				Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + challengeFolderPath.get() + "' doesn't contain 'start.rb' file.");
-				return;
-			}
-			
-			// sets config file as config.yaml if empty
-			String configFilePath = this.configFilePath.get();
-			if (StringUtils.isBlank(configFilePath)) {
-				configFilePath = challengeFolderPath.get() + "/config.yaml";
-			}
-
-			// creates challenge
-			Challenge challenge = new Challenge();
-			challenge.setChallengeFolder(challengeFolderPath.get());
-			challenge.setConfigFile(configFilePath);
-			challenge.setTitle(new File(challengeFolderPath.get()).getName());
-
-			// set selected challenge (it's propagated to teacher controller)
-			setSelectedChallenge(challenge);
-
-			// stores opened challenge info
-			Config.getConfig().addRecentChallenge(challenge);
-
-			// change view to teacher mode
-			setShown(TeacherController.class);
-
-		} else {
-
-			Dialogs.error("Not available", "Sorry, Teuton Panel is not yet available to students.");
-
+		if (challengeFolderPath.get() == null || !new File(challengeFolderPath.get()).exists()) {
+			Dialogs.error("Challenge folder doesn't exist!", "Folder '" + challengeFolderPath.get() + "' can't be found.");
+			return;
 		}
+
+		if (challengeFolderPath.get() == null || !new File(challengeFolderPath.get(), "start.rb").exists()) {
+			Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + challengeFolderPath.get() + "' doesn't contain 'start.rb' file.");
+			return;
+		}
+
+		// sets config file as config.yaml if empty
+		String configFilePath = this.configFilePath.get();
+		if (StringUtils.isBlank(configFilePath)) {
+			configFilePath = challengeFolderPath.get() + "/config.yaml";
+		}
+
+		// creates challenge
+		Challenge challenge = new Challenge();
+		challenge.setChallengeFolder(challengeFolderPath.get());
+		challenge.setConfigFile(configFilePath);
+		challenge.setTitle(new File(challengeFolderPath.get()).getName());
+
+		// set selected challenge (it's propagated to teacher controller)
+		setSelectedChallenge(challenge);
+
+		// stores opened challenge info
+		Config.getConfig().addRecentChallenge(challenge);
+
+		// change view to teacher mode
+		show(TeacherController.class);
+
 	}
 
 	@FXML
 	private void onChooseChallengeFolderAction(ActionEvent e) {
 		DirectoryChooser dialog = new DirectoryChooser();
 		dialog.setTitle("Choose challenge folder");
-		dialog.setInitialDirectory(
-				challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
+		dialog.setInitialDirectory(challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
 		File file = dialog.showDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
 			challengeFolderPath.set(file.getAbsolutePath());
@@ -214,11 +160,13 @@ public class ClassroomController extends Controller<AnchorPane> {
 
 	@FXML
 	private void onChooseConfigFileAction(ActionEvent e) {
+		
+		File initialDirectory = challengeFolderPath.get() == null || !(new File(challengeFolderPath.get()).exists())? new File(".") : new File(challengeFolderPath.get());
+		
 		FileChooser dialog = new FileChooser();
 		dialog.setTitle("Choose config file");
 		dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Config file", "*.yaml", "*.json"));
-		dialog.setInitialDirectory(
-				challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
+		dialog.setInitialDirectory(initialDirectory);
 		File file = dialog.showOpenDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
 			configFilePath.set(file.getAbsolutePath());
@@ -226,19 +174,8 @@ public class ClassroomController extends Controller<AnchorPane> {
 	}
 
 	@FXML
-	private void onChooseResultsFileAction(ActionEvent e) {
-		FileChooser dialog = new FileChooser();
-		dialog.setTitle("Choose results file");
-		dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("Config file", "*.json"));
-		File file = dialog.showOpenDialog(TeutonPanelApp.getPrimaryStage());
-		if (file != null) {
-			resultsFilePath.set(file.getAbsolutePath());
-		}
-	}
-
-	@FXML
 	private void onBackAction(ActionEvent e) {
-		setShown(ModeController.class);
+		show(ModeController.class);
 	}
 
 	// ===================================

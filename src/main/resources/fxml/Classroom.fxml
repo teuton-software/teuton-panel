@@ -15,100 +15,97 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="root" prefHeight="480.0" prefWidth="640.0" styleClass="pattern-background" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" prefHeight="480.0" prefWidth="800.0"
+	styleClass="pattern-background" stylesheets="@../css/styles.css"
+	xmlns="http://javafx.com/javafx"
+	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<VBox alignment="CENTER" fillWidth="false" spacing="20.0" styleClass="classroom" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<VBox alignment="CENTER" fillWidth="false" spacing="20.0"
+			styleClass="classroom" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
 			<children>
 				<Label styleClass="title-label" text="Classroom">
 					<graphic>
-						<FontIcon iconColor="#635c67" iconLiteral="fas-graduation-cap" iconSize="24" />
+						<FontIcon iconColor="#635c67"
+							iconLiteral="fas-graduation-cap" iconSize="24" />
 					</graphic>
 				</Label>
-            <GridPane hgap="5.0" vgap="5.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="220.0" prefWidth="220.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="220.0" prefWidth="220.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="50.0" valignment="TOP" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-						<ToggleButton fx:id="teacherButton" mnemonicParsing="false" styleClass="mode-button" text="Teacher">
-							<tooltip>
-								<Tooltip text="I'm a teacher" />
-							</tooltip>
-                     <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="fas-chalkboard-teacher" iconSize="18" />
-                     </graphic>
-						</ToggleButton>
-						<ToggleButton fx:id="studentButton" mnemonicParsing="false" styleClass="mode-button" text="Student" GridPane.columnIndex="2">
-							<tooltip>
-								<Tooltip text="I'm a student" />
-							</tooltip>
-                     <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="fas-users" iconSize="18" />
-                     </graphic>
-						</ToggleButton>
-      				<HBox fx:id="challengeFolderPane" alignment="BASELINE_CENTER" fillHeight="false" GridPane.halignment="LEFT" GridPane.rowIndex="2">
-      					<children>
-      						<JFXTextField fx:id="challengeFolderText" alignment="BASELINE_LEFT" prefColumnCount="20" promptText="Challenge folder" />
-            						<JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#onChooseChallengeFolderAction" ripplerFill="#92a897">
-            							<graphic>
-            								<FontIcon iconColor="#635c67" iconLiteral="far-folder-open" iconSize="24" />
-            							</graphic>
-            						</JFXButton>
-      					</children>
-      				</HBox>
-                  <Separator orientation="VERTICAL" GridPane.columnIndex="1" GridPane.rowSpan="4" />
-                  <HBox fx:id="configFilePane" alignment="BASELINE_CENTER" fillHeight="false" layoutX="10.0" layoutY="65.0" GridPane.halignment="LEFT" GridPane.rowIndex="3">
-                     <children>
-                        <JFXTextField fx:id="configFileText" alignment="BASELINE_LEFT" prefColumnCount="20" promptText="Configuration file" />
-                        <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#onChooseConfigFileAction" ripplerFill="#92a897">
-                           <graphic>
-                              <FontIcon iconColor="#635c67" iconLiteral="far-folder-open" iconSize="24" />
-                           </graphic>
-                        </JFXButton>
-                     </children>
-                  </HBox>
-                  <HBox fx:id="resultsFilePane" alignment="BASELINE_CENTER" fillHeight="false" layoutX="10.0" layoutY="102.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <children>
-                        <JFXTextField fx:id="resultsFileText" alignment="BASELINE_LEFT" prefColumnCount="20" promptText="Configuration file" text="Results file" />
-                        <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#onChooseResultsFileAction" ripplerFill="#92a897">
-                           <graphic>
-                              <FontIcon iconColor="#635c67" iconLiteral="far-folder-open" iconSize="24" />
-                           </graphic>
-                        </JFXButton>
-                     </children>
-                  </HBox>
-                  <JFXComboBox fx:id="recentChallengesCombo" promptText="Recent challenges" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-               </children>
-            </GridPane>
-      				<JFXButton fx:id="openButton" defaultButton="true" onAction="#onOpenAction" styleClass="mode-button" text="Open challenge" />
+				<GridPane hgap="5.0" vgap="5.0">
+					<columnConstraints>
+						<ColumnConstraints halignment="CENTER"
+							hgrow="NEVER"/>
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="10.0" prefHeight="50.0"
+							valignment="TOP" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							valignment="CENTER" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							valignment="CENTER" vgrow="NEVER" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							valignment="CENTER" vgrow="SOMETIMES" />
+					</rowConstraints>
+					<children>
+						<HBox fx:id="challengeFolderPane" alignment="BASELINE_CENTER"
+							fillHeight="false" GridPane.halignment="LEFT"
+							GridPane.rowIndex="2">
+							<children>
+								<JFXTextField fx:id="challengeFolderText"
+									alignment="BASELINE_LEFT" prefColumnCount="50"
+									promptText="Challenge folder" />
+								<JFXButton buttonType="RAISED"
+									contentDisplay="GRAPHIC_ONLY"
+									onAction="#onChooseChallengeFolderAction" ripplerFill="#92a897">
+									<graphic>
+										<FontIcon iconColor="#635c67"
+											iconLiteral="far-folder-open" iconSize="24" />
+									</graphic>
+								</JFXButton>
+							</children>
+						</HBox>
+						<HBox fx:id="configFilePane" alignment="BASELINE_CENTER"
+							fillHeight="false" layoutX="10.0" layoutY="65.0"
+							GridPane.halignment="LEFT" GridPane.rowIndex="3">
+							<children>
+								<JFXTextField fx:id="configFileText"
+									alignment="BASELINE_LEFT" prefColumnCount="50"
+									promptText="Configuration file" />
+								<JFXButton buttonType="RAISED"
+									contentDisplay="GRAPHIC_ONLY"
+									onAction="#onChooseConfigFileAction" ripplerFill="#92a897">
+									<graphic>
+										<FontIcon iconColor="#635c67"
+											iconLiteral="far-folder-open" iconSize="24" />
+									</graphic>
+								</JFXButton>
+							</children>
+						</HBox>
+						<JFXComboBox fx:id="recentChallengesCombo"
+							promptText="Recent challenges" GridPane.halignment="LEFT"
+							GridPane.rowIndex="1" GridPane.valignment="TOP" />
+					</children>
+				</GridPane>
+				<JFXButton fx:id="openButton" defaultButton="true"
+					onAction="#onOpenAction" styleClass="mode-button"
+					text="Open challenge" />
 			</children>
 		</VBox>
-		<HBox alignment="TOP_RIGHT" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+		<HBox alignment="TOP_RIGHT" AnchorPane.leftAnchor="5.0"
+			AnchorPane.topAnchor="5.0">
 			<children>
-				<JFXButton fx:id="backButton" contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction" ripplerFill="#92a897">
+				<JFXButton fx:id="backButton"
+					contentDisplay="GRAPHIC_ONLY" onAction="#onBackAction"
+					ripplerFill="#92a897">
 					<tooltip>
 						<Tooltip text="Back" />
 					</tooltip>
 					<graphic>
-						<FontIcon iconColor="#635c67" iconLiteral="fas-arrow-left" iconSize="24" />
+						<FontIcon iconColor="#635c67"
+							iconLiteral="fas-arrow-left" iconSize="24" />
 					</graphic>
 				</JFXButton>
 			</children>
 		</HBox>
 	</children>
-	<fx:define>
-		<javafx.scene.control.ToggleGroup fx:id="selectedProfile">
-			<toggles>
-				<fx:reference source="teacherButton" />
-				<fx:reference source="studentButton" />
-			</toggles>
-		</javafx.scene.control.ToggleGroup>
-	</fx:define>
 </AnchorPane>

@@ -2,9 +2,7 @@ package io.github.teuton.panel.ui.classroom;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -16,24 +14,23 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.jfoenix.controls.JFXButton;
 
-import io.github.teuton.Teuton;
-import io.github.teuton.panel.ui.components.CasesComponent;
-import io.github.teuton.panel.ui.components.ConfigEditorComponent;
-import io.github.teuton.panel.ui.components.HallOfFameComponent;
-import io.github.teuton.panel.ui.components.MarkdownComponent;
-import io.github.teuton.panel.ui.components.OutputComponent;
-import io.github.teuton.panel.ui.components.ResumeComponent;
 import io.github.teuton.panel.ui.mode.ModeController;
 import io.github.teuton.panel.ui.model.cases.Case;
 import io.github.teuton.panel.ui.model.resume.Resume;
+import io.github.teuton.panel.ui.panes.CasesPane;
+import io.github.teuton.panel.ui.panes.ConfigEditorPane;
+import io.github.teuton.panel.ui.panes.HallOfFamePane;
+import io.github.teuton.panel.ui.panes.MarkdownPane;
+import io.github.teuton.panel.ui.panes.OutputPane;
+import io.github.teuton.panel.ui.panes.ResumePane;
+import io.github.teuton.panel.ui.tasks.PlayTask;
+import io.github.teuton.panel.ui.tasks.ReadmeTask;
 import io.github.teuton.panel.ui.utils.Challenge;
 import io.github.teuton.panel.ui.utils.Config;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.ui.utils.Dialogs;
 import io.github.teuton.panel.utils.DesktopUtils;
 import io.github.teuton.panel.utils.JSONUtils;
-import io.github.teuton.panel.utils.MarkdownUtils;
-import io.github.teuton.panel.utils.StreamCharacterConsumer;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
@@ -45,7 +42,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,12 +71,12 @@ public class TeacherController extends Controller<BorderPane> {
 	// view
 	// ===================================
 
-	private MarkdownComponent descriptionComponent;
-	private CasesComponent casesComponent;
-	private HallOfFameComponent hallOfFameComponent;
-	private OutputComponent outputComponent;
-	private ResumeComponent resumeComponent;
-	private ConfigEditorComponent configEditorComponent;
+	private MarkdownPane descriptionComponent;
+	private CasesPane casesComponent;
+	private HallOfFamePane hallOfFameComponent;
+	private OutputPane outputComponent;
+	private ResumePane resumeComponent;
+	private ConfigEditorPane configEditorComponent;
 
 	@FXML
 	private VBox runningPane;
@@ -124,22 +120,22 @@ public class TeacherController extends Controller<BorderPane> {
 
 		// components
 
-		hallOfFameComponent = new HallOfFameComponent();
+		hallOfFameComponent = new HallOfFamePane();
 		hallOfFameTab.setContent(hallOfFameComponent);
 
-		outputComponent = new OutputComponent();
+		outputComponent = new OutputPane();
 		outputTab.setContent(outputComponent);
 
-		casesComponent = new CasesComponent();
+		casesComponent = new CasesPane();
 		casesTab.setContent(casesComponent);
 
-		descriptionComponent = new MarkdownComponent();
+		descriptionComponent = new MarkdownPane();
 		descriptionTab.setContent(descriptionComponent);
 
-		resumeComponent = new ResumeComponent();
+		resumeComponent = new ResumePane();
 		resumeTab.setContent(resumeComponent);
 
-		configEditorComponent = new ConfigEditorComponent();
+		configEditorComponent = new ConfigEditorPane();
 		configTab.setContent(configEditorComponent);
 		
 		// bindings
@@ -185,7 +181,7 @@ public class TeacherController extends Controller<BorderPane> {
 			loadReadme();
 		}
 	}
-
+	
 	@FXML
 	private void onRunAction(ActionEvent e) {
 		play();
@@ -201,31 +197,25 @@ public class TeacherController extends Controller<BorderPane> {
 		File challengeFolder = new File(getChallenge().getChallengeFolder());
 		DesktopUtils.open(challengeFolder);
 	}
+	
+	@FXML
+	private void onBackAction(ActionEvent e) {
+		if (Dialogs.confirm("Leaving the challenge", "Do you really want to do it?")) {
+			show(ModeController.class);
+		}
+	}
 
+	// ===================================
+	// logic
+	// ===================================
+	
 	private void loadReadme() {
-		Task<String> task = new Task<String>() {
-			protected String call() throws Exception {
-				String markdown = "";
-				File challengeDirectory = new File(getChallenge().getChallengeFolder());
-				File readmeFile = new File(challengeDirectory, "assets/README.md");
-				if (readmeFile.exists()) {
-					try {
-						markdown = FileUtils.readFileToString(readmeFile, Charset.forName("UTF8"));
-					} catch (IOException e) {
-						throw new Exception("Description couldn't be loaded from " + readmeFile.getName(), e);
-					}
-				} else {
-					markdown = Teuton.readme(challengeDirectory);
-				}
-				String html = "";
-				try {
-					html = MarkdownUtils.render(markdown);
-				} catch (IOException e) {
-					throw new Exception("Error rendering " + readmeFile.getName() + " description file", e);
-				}
-				return html;
-			}
-		};
+		
+		System.out.println("loading readme...........");
+		
+		File challengeDirectory = new File(getChallenge().getChallengeFolder());
+		
+		ReadmeTask task = new ReadmeTask(challengeDirectory);
 		task.stateProperty().addListener((o, ov, nv) -> {
 			descriptionComponent.setLoading(nv.equals(State.RUNNING));
 		});
@@ -233,55 +223,43 @@ public class TeacherController extends Controller<BorderPane> {
 			description.set(e.getSource().getValue().toString());
 		});
 		task.setOnFailed(e -> {
-			Dialogs.exception("Error loading challenge description", e.getSource().getException().getMessage(),
-					e.getSource().getException());
+			Dialogs.exception(
+				"Error loading challenge description", 
+				e.getSource().getException()
+			);
 		});
-		new Thread(task).start();
+		task.start();
 	}
 
 	private void play() {
-		final List<String> selectedCases = 
+		List<String> selectedCases = 
 				cases.stream()
 					.filter(c -> c.isSelected())
 					.map(c -> c.getResults().get("case_id").toString())
 					.collect(Collectors.toList());
 		
-		Task<Void> task = new Task<>() {
-			protected Void call() throws Exception {
-				File challengeFolder = new File(getChallenge().getChallengeFolder());
-				
-				File configFile = File.createTempFile("config_", ".yaml");
-				FileUtils.writeStringToFile(configFile, config.get(), Charset.forName("UTF-8"));
-
-				StringBuffer buffer = new StringBuffer();
-				
-				InputStream is = Teuton.play(challengeFolder, configFile, varFolder.getParentFile(), selectedCases);
-				StreamCharacterConsumer consumer = new StreamCharacterConsumer(is, c -> {
-					buffer.append(c);
-					updateMessage(buffer.toString());
-				});
-				consumer.start();
-				consumer.join();
-				
-				return null;
-			}
-		};
+		PlayTask task = new PlayTask(
+				new File(getChallenge().getChallengeFolder()),
+				config.get(),
+				varFolder.getParentFile(),
+				selectedCases
+			);
 		task.stateProperty().addListener((o, ov, nv) -> {
 			running.set(nv.equals(State.RUNNING));
 		});
 		task.setOnScheduled(e -> {
 			output.bind(e.getSource().messageProperty());			
+			tabPane.getSelectionModel().select(outputTab);
 		});
 		task.setOnSucceeded(e -> {
 			loadResults();
 			output.unbind();
 		});
 		task.setOnFailed(e -> {
-			Dialogs.error("Error playing challenge", e.getSource().getException().getMessage());
+			Dialogs.exception("Error playing challenge", e.getSource().getException());
 			output.unbind();
 		});
-		new Thread(task).start();
-		tabPane.getSelectionModel().select(outputTab);
+		task.start();
 	}
 
 	private void loadResults() {
@@ -310,11 +288,6 @@ public class TeacherController extends Controller<BorderPane> {
 				e.printStackTrace();
 			}
 		});
-	}
-
-	@FXML
-	private void onBackAction(ActionEvent e) {
-		setShown(ModeController.class);
 	}
 
 	// ===================================

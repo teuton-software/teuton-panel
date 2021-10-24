@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 
-public class HallOfFameComponent extends VBox implements Initializable {
+public class HallOfFamePane extends VBox implements Initializable {
 
 	// model
 
@@ -33,7 +33,7 @@ public class HallOfFameComponent extends VBox implements Initializable {
 	@FXML
 	private NumberAxis yAxis;
 
-	public HallOfFameComponent() {
+	public HallOfFamePane() {
 		FXUtils.load("/fxml/HallOfFame.fxml", this);
 	}
 

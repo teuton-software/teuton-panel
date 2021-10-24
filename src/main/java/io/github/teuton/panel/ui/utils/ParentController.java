@@ -31,7 +31,7 @@ public abstract class ParentController extends Controller<StackPane> {
 		return controllers.get(c);
 	}
 	
-	private void show(Class<? extends Controller<?>> c) {
+	public void show(Class<? extends Controller<?>> c) {
 		show(getController(c).getRoot());
 	}
 	

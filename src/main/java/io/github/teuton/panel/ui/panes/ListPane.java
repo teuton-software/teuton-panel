@@ -1,4 +1,4 @@
-package io.github.teuton.panel.ui.components;
+package io.github.teuton.panel.ui.panes;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
-public class ListComponent extends BorderPane implements Initializable {
+public class ListPane extends BorderPane implements Initializable {
 
 	private static final ResourceBundle CONFIG = ResourceBundle.getBundle("config");
 
@@ -43,7 +43,7 @@ public class ListComponent extends BorderPane implements Initializable {
 	@FXML
 	private GridPane propertiesPane;
 
-	public ListComponent(String orderProperty) {
+	public ListPane(String orderProperty) {
 		this.order = CONFIG.getString(orderProperty).split(",");
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/List.fxml"));

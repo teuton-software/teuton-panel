@@ -2,7 +2,7 @@ package io.github.teuton.panel.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
@@ -15,6 +15,7 @@ import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.typographic.TypographicExtension;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.parser.ParserEmulationProfile;
@@ -35,12 +36,13 @@ public class MarkdownUtils {
 		MutableDataSet options = new MutableDataSet();
 		options.setFrom(ParserEmulationProfile.GITHUB);
 		options.set(Parser.EXTENSIONS, Arrays.asList(
-				AbbreviationExtension.create(), 
-				DefinitionExtension.create(), 
-				FootnoteExtension.create(),
-				TablesExtension.create(), 
-				TypographicExtension.create(), 
-				StrikethroughExtension.create()
+					AbbreviationExtension.create(), 
+					DefinitionExtension.create(), 
+					FootnoteExtension.create(),
+					TablesExtension.create(), 
+					TypographicExtension.create(), 
+					StrikethroughExtension.create(),
+					YamlFrontMatterExtension.create()
 				)
 			);
 		
@@ -60,8 +62,8 @@ public class MarkdownUtils {
 		String html = VelocityUtils.render(
 				"/templates/html.vtl", 
 				Pair.of("body", body),
-				Pair.of("javascript", IOUtils.resourceToString("/markdown/js/markdown.min.js", Charset.forName("UTF-8"))),
-				Pair.of("css", IOUtils.resourceToString("/markdown/css/markdown.min.css", Charset.forName("UTF-8")))
+				Pair.of("javascript", IOUtils.resourceToString("/markdown/js/markdown.min.js", StandardCharsets.UTF_8)),
+				Pair.of("css", IOUtils.resourceToString("/markdown/css/markdown.min.css", StandardCharsets.UTF_8))
 			);
 		return html;
 	}
@@ -75,7 +77,7 @@ public class MarkdownUtils {
 		try {
 			File temp = File.createTempFile("teuton-panel-", ".html");
 			String html = render(markdown);
-			FileUtils.write(temp, html, Charset.forName("UTF-8"));
+			FileUtils.write(temp, html, StandardCharsets.UTF_8);
 			return temp.toURI().toString();
 		} catch (IOException e) {
 			e.printStackTrace();

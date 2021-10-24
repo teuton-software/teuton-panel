@@ -29,7 +29,7 @@ public class SettingsController extends Controller<BorderPane> {
 	private PopOver popOver;
 
 	@FXML
-	private Label usernameLabel, osLabel, appVersionLabel, teutonVersionLabel;
+	private Label osLabel, appVersionLabel, teutonVersionLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -59,7 +59,6 @@ public class SettingsController extends Controller<BorderPane> {
 		// bind view to model
 		osLabel.textProperty().bind(settings.osProperty());
 		appVersionLabel.textProperty().bind(settings.appVersionProperty());
-		usernameLabel.textProperty().bind(settings.usernameProperty());
 		teutonVersionLabel.textProperty().bind(
 				Bindings
 					.when(settings.teutonVersionProperty().isNotEmpty())
