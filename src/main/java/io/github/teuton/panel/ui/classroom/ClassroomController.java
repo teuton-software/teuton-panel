@@ -36,10 +36,9 @@ public class ClassroomController extends Controller<AnchorPane> {
 	// ===================================
 
 	private ObjectProperty<Settings> settings;
-	private ObjectProperty<Challenge> selectedChallenge;
-	private StringProperty challengeFolderPath;
+	private ObjectProperty<Challenge> challenge;
+	private StringProperty challengePath;
 	private StringProperty configFilePath;
-	private StringProperty resultsFilePath;
 
 	// ===================================
 	// view
@@ -75,26 +74,25 @@ public class ClassroomController extends Controller<AnchorPane> {
 		// properties
 
 		settings = new SimpleObjectProperty<>();
-		selectedChallenge = new SimpleObjectProperty<>();
-		challengeFolderPath = new SimpleStringProperty();
+		challenge = new SimpleObjectProperty<>();
+		challengePath = new SimpleStringProperty();
 		configFilePath = new SimpleStringProperty();
-		resultsFilePath = new SimpleStringProperty();
 
 		// bindings
 
-		challengeFolderPath.bindBidirectional(challengeFolderText.textProperty());
+		challengePath.bindBidirectional(challengeFolderText.textProperty());
+		
 		configFilePath.bindBidirectional(configFileText.textProperty());
 
 		recentChallengesCombo.itemsProperty().bind(Config.getConfig().recentChallengesProperty());
 
 		// listeners
 
-		recentChallengesCombo.getSelectionModel().selectedItemProperty()
-				.addListener((o, ov, nv) -> onRecentChallengeChanged(o, ov, nv));
+		recentChallengesCombo.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onRecentChallengeChanged(o, ov, nv));
 
 		getRoot().sceneProperty().addListener((o, ov, nv) -> {
 			if (nv != null) {
-				challengeFolderPath.set(null);
+				recentChallengesCombo.getSelectionModel().clearSelection();
 			}
 		});
 
@@ -106,38 +104,43 @@ public class ClassroomController extends Controller<AnchorPane> {
 
 	private void onRecentChallengeChanged(ObservableValue<? extends Challenge> o, Challenge ov, Challenge nv) {
 		if (nv != null) {
-			challengeFolderPath.set(nv.getChallengeFolder());
+			challengePath.set(nv.getChallengeFolder());
 			configFilePath.set(nv.getConfigFile());
+		} else {
+			challengePath.set("");
+			configFilePath.set("");			
 		}
 	}
 
 	@FXML
 	private void onOpenAction(ActionEvent e) {
+		
+		String challengePath = this.challengePath.get();
 
-		if (challengeFolderPath.get() == null || !new File(challengeFolderPath.get()).exists()) {
-			Dialogs.error("Challenge folder doesn't exist!", "Folder '" + challengeFolderPath.get() + "' can't be found.");
+		if (challengePath == null || !new File(challengePath).exists()) {
+			Dialogs.error("Challenge folder doesn't exist!", "Folder '" + challengePath + "' can't be found.");
 			return;
 		}
 
-		if (challengeFolderPath.get() == null || !new File(challengeFolderPath.get(), "start.rb").exists()) {
-			Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + challengeFolderPath.get() + "' doesn't contain 'start.rb' file.");
+		if (!new File(challengePath, "start.rb").exists()) {
+			Dialogs.error("Selected folder is not a Teuton challenge", "Folder '" + challengePath + "' doesn't contain 'start.rb' file.");
 			return;
 		}
 
 		// sets config file as config.yaml if empty
 		String configFilePath = this.configFilePath.get();
 		if (StringUtils.isBlank(configFilePath)) {
-			configFilePath = challengeFolderPath.get() + "/config.yaml";
+			configFilePath = challengePath + File.separator + "config.yaml";
 		}
 
 		// creates challenge
 		Challenge challenge = new Challenge();
-		challenge.setChallengeFolder(challengeFolderPath.get());
+		challenge.setChallengeFolder(challengePath);
 		challenge.setConfigFile(configFilePath);
-		challenge.setTitle(new File(challengeFolderPath.get()).getName());
+		challenge.setTitle(new File(challengePath).getName());
 
 		// set selected challenge (it's propagated to teacher controller)
-		setSelectedChallenge(challenge);
+		setChallenge(challenge);
 
 		// stores opened challenge info
 		Config.getConfig().addRecentChallenge(challenge);
@@ -151,17 +154,17 @@ public class ClassroomController extends Controller<AnchorPane> {
 	private void onChooseChallengeFolderAction(ActionEvent e) {
 		DirectoryChooser dialog = new DirectoryChooser();
 		dialog.setTitle("Choose challenge folder");
-		dialog.setInitialDirectory(challengeFolderPath.get() == null ? new File(".") : new File(challengeFolderPath.get()));
+		dialog.setInitialDirectory(challengePath.get() == null ? new File(".") : new File(challengePath.get()));
 		File file = dialog.showDialog(TeutonPanelApp.getPrimaryStage());
 		if (file != null) {
-			challengeFolderPath.set(file.getAbsolutePath());
+			challengePath.set(file.getAbsolutePath());
 		}
 	}
 
 	@FXML
 	private void onChooseConfigFileAction(ActionEvent e) {
 		
-		File initialDirectory = challengeFolderPath.get() == null || !(new File(challengeFolderPath.get()).exists())? new File(".") : new File(challengeFolderPath.get());
+		File initialDirectory = challengePath.get() == null || !(new File(challengePath.get()).exists())? new File(".") : new File(challengePath.get());
 		
 		FileChooser dialog = new FileChooser();
 		dialog.setTitle("Choose config file");
@@ -194,16 +197,16 @@ public class ClassroomController extends Controller<AnchorPane> {
 		this.settingsProperty().set(settings);
 	}
 
-	public final ObjectProperty<Challenge> selectedChallengeProperty() {
-		return this.selectedChallenge;
+	public final ObjectProperty<Challenge> challengeProperty() {
+		return this.challenge;
 	}
 
-	public final Challenge getSelectedChallenge() {
-		return this.selectedChallengeProperty().get();
+	public final Challenge getChallenge() {
+		return this.challengeProperty().get();
 	}
 
-	public final void setSelectedChallenge(final Challenge selectedChallenge) {
-		this.selectedChallengeProperty().set(selectedChallenge);
+	public final void setChallenge(final Challenge challenge) {
+		this.challengeProperty().set(challenge);
 	}
 
 }

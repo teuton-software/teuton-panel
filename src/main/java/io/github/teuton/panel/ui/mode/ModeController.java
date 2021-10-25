@@ -11,8 +11,8 @@ import io.github.teuton.panel.ui.settings.SettingsController;
 import io.github.teuton.panel.ui.utils.Controller;
 import io.github.teuton.panel.utils.DesktopUtils;
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +29,7 @@ public class ModeController extends Controller<AnchorPane> {
 	// model
 	// ===================================
 
-	private ObjectProperty<Settings> settings;
+	private ReadOnlyObjectWrapper<Settings> settings;
 
 	// ===================================
 	// view
@@ -47,7 +47,7 @@ public class ModeController extends Controller<AnchorPane> {
 
 		settingsController = new SettingsController();
 
-		settings = new SimpleObjectProperty<Settings>();
+		settings = new ReadOnlyObjectWrapper<>();
 		settings.bind(settingsController.settingsProperty());
 
 		// TODO remove these lines
@@ -96,17 +96,13 @@ public class ModeController extends Controller<AnchorPane> {
 	// ===================================
 	// properties
 	// ===================================
-
-	public final ObjectProperty<Settings> settingsProperty() {
-		return this.settings;
+	
+	public final ReadOnlyObjectProperty<Settings> settingsProperty() {
+		return this.settings.getReadOnlyProperty();
 	}
 
 	public final Settings getSettings() {
 		return this.settingsProperty().get();
-	}
-
-	public final void setSettings(final Settings settings) {
-		this.settingsProperty().set(settings);
 	}
 
 }

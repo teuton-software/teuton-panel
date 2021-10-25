@@ -201,6 +201,7 @@ public class TeacherController extends Controller<BorderPane> {
 	@FXML
 	private void onBackAction(ActionEvent e) {
 		if (Dialogs.confirm("Leaving the challenge", "Do you really want to do it?")) {
+			setChallenge(null);
 			show(ModeController.class);
 		}
 	}
@@ -220,7 +221,7 @@ public class TeacherController extends Controller<BorderPane> {
 			descriptionComponent.setLoading(nv.equals(State.RUNNING));
 		});
 		task.setOnSucceeded(e -> {
-			description.set(e.getSource().getValue().toString());
+			description.set(task.getValue());
 		});
 		task.setOnFailed(e -> {
 			Dialogs.exception(

@@ -18,9 +18,10 @@ public abstract class ParentController extends Controller<StackPane> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void registerController(Controller<?> controller) {
+	public Controller<?> registerController(Controller<?> controller) {
 		controllers.put((Class<? extends Controller<?>>) controller.getClass(), controller);
 		controller.shownProperty().bindBidirectional(shownProperty());
+		return controller;
 	}
 	
 	public final Map<Class<? extends Controller<?>>, Controller<?>> getControllers() {

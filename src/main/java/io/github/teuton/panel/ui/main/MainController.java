@@ -6,8 +6,14 @@ import java.util.ResourceBundle;
 import io.github.teuton.panel.ui.classroom.TeacherController;
 import io.github.teuton.panel.ui.classroom.ClassroomController;
 import io.github.teuton.panel.ui.mode.ModeController;
+import io.github.teuton.panel.ui.model.Settings;
 import io.github.teuton.panel.ui.standalone.StandaloneController;
+import io.github.teuton.panel.ui.utils.Challenge;
 import io.github.teuton.panel.ui.utils.ParentController;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
@@ -21,7 +27,15 @@ public class MainController extends ParentController {
 	private StandaloneController standaloneController;
 	private TeacherController teacherController;
 	private ClassroomController classroomController;
+
+	// ===================================
+	// model
+	// ===================================
 	
+	private ObjectProperty<Challenge> challenge;
+	private ObjectProperty<Settings> settings;
+	private BooleanProperty loading;
+
 	// ===================================
 	// view
 	// ===================================
@@ -36,22 +50,34 @@ public class MainController extends ParentController {
 		
 		view = new BorderPane();		
 		getRoot().getChildren().add(view);
+		
+		// create properties
+		
+		challenge = new SimpleObjectProperty<>();
+		settings = new SimpleObjectProperty<>();
+		loading = new SimpleBooleanProperty();
 
 		// create mode selector controller
 		modeController = new ModeController();
 
 		// create classroom mode controller
 		classroomController = new ClassroomController();
-		classroomController.settingsProperty().bind(modeController.settingsProperty());
+		classroomController.settingsProperty().bind(settings);
+		classroomController.loadingProperty().bindBidirectional(loading);
+		classroomController.challengeProperty().bindBidirectional(challenge);
 
 		// create teacher controller
 		teacherController = new TeacherController();
-		teacherController.challengeProperty().bind(classroomController.selectedChallengeProperty());
-		classroomController.loadingProperty().bind(teacherController.loadingProperty());
-		
+		teacherController.challengeProperty().bindBidirectional(challenge);
+		teacherController.loadingProperty().bindBidirectional(loading);
+
 		// create standalone mode controller
 		standaloneController = new StandaloneController();
 
+		// binding properties 
+		
+		settings.bind(modeController.settingsProperty());
+		
 		// register controllers
 		registerController(modeController);
 		registerController(classroomController);
