@@ -35,7 +35,7 @@ public class PlayTask extends Task<File> {
 		
 		appendMessage("---> PLAYING TEUTON...\n");
 		
-		Thread teutonThread = Teuton.play(challengeFolder, configFile, outputFolder, selectedCases, consumer, consumer);				
+		Thread teutonThread = Teuton.run(challengeFolder, configFile, outputFolder, selectedCases, consumer, consumer);				
 		teutonThread.join();
 
 		appendMessage("---> TEUTON FINISHED!\n");

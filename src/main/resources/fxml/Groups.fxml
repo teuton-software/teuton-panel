@@ -14,12 +14,9 @@
          <center>
             <TreeTableView fx:id="targetsTreeTable" BorderPane.alignment="CENTER">
               <columns>
-                <TreeTableColumn fx:id="descriptionColumn" prefWidth="${targetsTreeTable.width * 0.7}" text="Targets" />
-                <TreeTableColumn fx:id="scoreColumn" prefWidth="${targetsTreeTable.width * 0.3}" text="Score" />
+                <TreeTableColumn fx:id="descriptionColumn" prefWidth="${targetsTreeTable.width * 0.85}" text="Targets" />
+                <TreeTableColumn fx:id="scoreColumn" prefWidth="${targetsTreeTable.width * 0.15}" text="Score" />
               </columns>
-               <columnResizePolicy>
-                  <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
             </TreeTableView>
          </center>
          <padding>

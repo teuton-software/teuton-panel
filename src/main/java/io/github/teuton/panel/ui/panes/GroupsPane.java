@@ -68,7 +68,7 @@ public class GroupsPane extends SplitPane implements Initializable {
 		targetsTreeTable.setShowRoot(false);
 		
 		targetsTreeTable.getSelectionModel().selectedItemProperty().addListener((o, ov, nv) -> onTargetSelectedChanged(o, ov, nv));
-
+		
 		descriptionColumn.setCellValueFactory(v -> {
 			if (v.getValue().getValue() instanceof Group) {
 
@@ -91,6 +91,10 @@ public class GroupsPane extends SplitPane implements Initializable {
 			}
 			return new SimpleStringProperty("");
 		});
+		
+//		descriptionColumn.prefWidthProperty().bind(targetsTreeTable.widthProperty().multiply(0.80));
+//		scoreColumn.prefWidthProperty().bind(targetsTreeTable.widthProperty().multiply(0.20));
+
 		
 	}
 
